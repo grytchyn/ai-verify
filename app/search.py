@@ -38,6 +38,7 @@ async def duckduckgo_instant_answer(query: str) -> List[Dict]:
             
         return results[:3]
     except Exception as e:
-        # Return empty list on failure
-        print(f"Search error: {e}")
+        # Return empty list on failure — DuckDuckGo API is often blocked
+        import logging
+        logging.getLogger(__name__).warning(f"Search failed for '{query}': {type(e).__name__}: {e}")
         return []
