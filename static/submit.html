@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Compliance Check — Submit Your Company</title>
+    <title data-i18n="title">AI Compliance Check — Submit Your Company</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -62,6 +62,21 @@
             font-size: 14px; font-weight: 500; transition: color 0.2s;
         }
         .nav-back:hover { color: var(--text-primary); }
+        .lang-toggle {
+            display: flex; align-items: center; gap: 4px;
+            margin-left: auto; margin-right: 16px;
+        }
+        .lang-btn {
+            background: none; border: 1px solid var(--border);
+            color: var(--text-muted); padding: 4px 10px;
+            border-radius: 4px; font-size: 12px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+            text-transform: uppercase;
+        }
+        .lang-btn.active {
+            background: var(--brand); color: white; border-color: var(--brand);
+        }
+        .lang-btn:hover:not(.active) { color: var(--text-secondary); }
 
         .page-title {
             padding: 100px 24px 40px;
@@ -257,6 +272,10 @@
                 <div class="logo-icon">AC</div>
                 AI Compliance
             </a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="setLang('en')" id="langEn">EN</button>
+                <button class="lang-btn" onclick="setLang('de')" id="langDe">DE</button>
+            </div>
             <a href="/" class="nav-back">← Back</a>
         </div>
     </nav>
@@ -270,6 +289,7 @@
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
         <form id="complianceForm" onsubmit="return false;">
+            <input type="hidden" name="lang" id="langInput" value="en">
 
             <!-- Section 1: Company Information -->
             <div class="form-section">
@@ -282,32 +302,21 @@
                         <input type="text" name="company" required placeholder="e.g. TechVision GmbH">
                     </div>
                     <div class="form-group">
-                        <label>Website URL</label>
-                        <input type="url" name="url" placeholder="https://example.com">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
                         <label>Company Size</label>
                         <select name="company_size">
                             <option value="">Select size...</option>
-                            <option value="startup">Startup (1-10 employees)</option>
-                            <option value="sme">SME (11-250 employees)</option>
+                            <option value="startup">Startup (1-10)</option>
+                            <option value="sme">SME (11-250)</option>
                             <option value="mid">Mid-sized (251-1000)</option>
                             <option value="enterprise">Enterprise (1000+)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Sector / Industry</label>
-                        <input type="text" name="sector" placeholder="e.g. Healthcare, FinTech, E-commerce">
-                    </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Number of Employees</label>
-                        <input type="text" name="employees" placeholder="e.g. 50-200">
+                        <label>Sector / Industry</label>
+                        <input type="text" name="sector" placeholder="e.g. Healthcare, FinTech, E-commerce">
                     </div>
                     <div class="form-group">
                         <label>Annual Revenue</label>
@@ -321,8 +330,8 @@
                         <input type="text" name="hq_location" placeholder="e.g. Munich, Germany">
                     </div>
                     <div class="form-group">
-                        <label>Email (for report delivery)</label>
-                        <input type="email" name="email" placeholder="you@company.com">
+                        <label>Website URL</label>
+                        <input type="url" name="url" placeholder="https://example.com">
                     </div>
                 </div>
                 
@@ -557,20 +566,265 @@
     </div>
 
     <script>
-        // Checkbox UI toggle
-        document.querySelectorAll('.checkbox-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const input = item.querySelector('input[type="checkbox"]');
-                input.checked = !input.checked;
-                item.classList.toggle('checked');
+        // i18n translation table
+        const i18n = {
+            en: {
+                title: 'AI Compliance Check — Submit Your Company',
+                navBack: '← Back',
+                pageTitle: 'Check Your AI Compliance',
+                pageDesc: 'Fill in the details about your company and AI systems for a comprehensive EU AI Act analysis.',
+                s1Title: '📋 Company Information',
+                s1Desc: 'Basic information about your organization.',
+                companyLabel: 'Company Name *',
+                companyPlace: 'e.g. TechVision GmbH',
+                sizeLabel: 'Company Size',
+                sizeOpt0: 'Select size...',
+                sizeOpt1: 'Startup (1-10)',
+                sizeOpt2: 'SME (11-250)',
+                sizeOpt3: 'Mid-sized (251-1000)',
+                sizeOpt4: 'Enterprise (1000+)',
+                sectorLabel: 'Sector / Industry',
+                sectorPlace: 'e.g. Healthcare, FinTech, E-commerce',
+                revenueLabel: 'Annual Revenue',
+                revenuePlace: 'e.g. 10M-50M EUR',
+                hqLabel: 'HQ Location',
+                hqPlace: 'e.g. Munich, Germany',
+                urlLabel: 'Website URL',
+                urlPlace: 'e.g. https://example.com',
+                descLabel: 'Description of AI-related Activities',
+                descPlace: 'Briefly describe how your company uses AI systems...',
+                s2Title: '🤖 AI System Details',
+                s2Desc: 'Tell us about the AI systems you deploy.',
+                aiCountLabel: 'Number of AI Systems in Production',
+                aiNamesLabel: 'System Names',
+                aiNamesPlace: 'e.g. CustomerBot, FraudDetect',
+                aiPurposeLabel: 'Purpose of Your AI Systems',
+                aiPurposePlace: 'What do your AI systems do? e.g. Customer support chatbot, resume screening...',
+                deployLabel: 'Deployment Type',
+                decisionLabel: 'Decision Type',
+                dataSourcesLabel: 'Data Sources (training data origin)',
+                dataSourcesPlace: 'e.g. Public datasets, customer data, third-party APIs...',
+                riskSelfLabel: 'Risk Self-Assessment',
+                s3Title: '🔧 Technical Details',
+                s3Desc: 'Technical characteristics of your AI systems.',
+                modelTypesLabel: 'AI Model Types Used',
+                modelTypesPlace: 'e.g. LLMs (GPT, LLaMA), CNNs, Regression',
+                trainingDataLabel: 'Training Data Origin',
+                trainingDataPlace: 'Where does your training data come from?',
+                oversightLabel: 'Human Oversight Mechanisms',
+                oversightPlace: 'e.g. Manual review queue, approval workflow',
+                explLabel: 'Explainability / Interpretability',
+                explPlace: 'e.g. SHAP, LIME, attention visualization',
+                retentionLabel: 'Data Retention Policy',
+                retentionPlace: 'e.g. 30 days, 1 year, indefinite',
+                s4Title: '⚠️ High-Risk Categories',
+                s4Desc: 'Select which EU AI Act high-risk categories apply to your AI systems.',
+                s4Learn: 'Learn more',
+                s5Title: '📄 Current Compliance Status',
+                s5Desc: 'Where are you on your compliance journey?',
+                docLabel: 'Existing Compliance Documentation',
+                dpoLabel: 'DPO Appointed?',
+                gdprLabel: 'GDPR Compliance Status',
+                certsLabel: 'Existing Certifications',
+                certsPlace: 'e.g. ISO 27001, SOC 2, ISO 42001...',
+                auditsLabel: 'Previous Audit History',
+                auditsPlace: 'e.g. GDPR audit 2024, internal AI audit...',
+                ceLabel: 'CE Marking (for AI)',
+                cancel: '← Cancel',
+                submit: '→ Generate Compliance Report',
+                processing: '⏳ Processing...',
+                errorTxt: 'Error: ',
+                errorTry: '\\nPlease try again.',
+                validRequired: 'Company name is required',
+            },
+            de: {
+                title: 'KI-Compliance-Prüfung — Unternehmen einreichen',
+                navBack: '← Zurück',
+                pageTitle: 'KI-Compliance prüfen',
+                pageDesc: 'Geben Sie Details zu Ihrem Unternehmen und Ihren KI-Systemen für eine umfassende EU AI Act-Analyse an.',
+                s1Title: '📋 Unternehmensinformationen',
+                s1Desc: 'Grundlegende Informationen zu Ihrem Unternehmen.',
+                companyLabel: 'Unternehmensname *',
+                companyPlace: 'z.B. TechVision GmbH',
+                sizeLabel: 'Unternehmensgröße',
+                sizeOpt0: 'Größe wählen...',
+                sizeOpt1: 'Startup (1-10)',
+                sizeOpt2: 'KMU (11-250)',
+                sizeOpt3: 'Mittelstand (251-1000)',
+                sizeOpt4: 'Großunternehmen (1000+)',
+                sectorLabel: 'Branche',
+                sectorPlace: 'z.B. Gesundheitswesen, FinTech, E-Commerce',
+                revenueLabel: 'Jahresumsatz',
+                revenuePlace: 'z.B. 10M-50M EUR',
+                hqLabel: 'Hauptsitz',
+                hqPlace: 'z.B. München, Deutschland',
+                urlLabel: 'Webseite',
+                urlPlace: 'z.B. https://example.com',
+                descLabel: 'Beschreibung der KI-Aktivitäten',
+                descPlace: 'Beschreiben Sie kurz, wie Ihr Unternehmen KI-Systeme einsetzt...',
+                s2Title: '🤖 KI-System-Details',
+                s2Desc: 'Details zu Ihren eingesetzten KI-Systemen.',
+                aiCountLabel: 'Anzahl der KI-Systeme in Produktion',
+                aiNamesLabel: 'Systemnamen',
+                aiNamesPlace: 'z.B. CustomerBot, FraudDetect',
+                aiPurposeLabel: 'Zweck Ihrer KI-Systeme',
+                aiPurposePlace: 'Was tun Ihre KI-Systeme? z.B. Chatbot, Lebenslauf-Screening...',
+                deployLabel: 'Bereitstellungstyp',
+                decisionLabel: 'Entscheidungstyp',
+                dataSourcesLabel: 'Datenquellen (Trainingsdaten-Herkunft)',
+                dataSourcesPlace: 'z.B. Öffentliche Datensätze, Kundendaten, APIs...',
+                riskSelfLabel: 'Risiko-Selbsteinschätzung',
+                s3Title: '🔧 Technische Details',
+                s3Desc: 'Technische Merkmale Ihrer KI-Systeme.',
+                modelTypesLabel: 'Verwendete KI-Modelltypen',
+                modelTypesPlace: 'z.B. LLMs (GPT, LLaMA), CNNs, Regression',
+                trainingDataLabel: 'Trainingsdaten-Herkunft',
+                trainingDataPlace: 'Woher stammen Ihre Trainingsdaten?',
+                oversightLabel: 'Menschliche Aufsichtsmechanismen',
+                oversightPlace: 'z.B. Manuelle Überprüfung, Genehmigungsworkflow',
+                explLabel: 'Erklärbarkeit / Interpretierbarkeit',
+                explPlace: 'z.B. SHAP, LIME, Attention-Visualisierung',
+                retentionLabel: 'Datenaufbewahrungsrichtlinie',
+                retentionPlace: 'z.B. 30 Tage, 1 Jahr, unbegrenzt',
+                s4Title: '⚠️ Hochrisiko-Kategorien',
+                s4Desc: 'Wählen Sie, welche Hochrisiko-Kategorien des EU AI Act auf Ihre KI-Systeme zutreffen.',
+                s4Learn: 'Mehr erfahren',
+                s5Title: '📄 Aktueller Compliance-Status',
+                s5Desc: 'Wo stehen Sie auf Ihrem Compliance-Weg?',
+                docLabel: 'Vorhandene Compliance-Dokumentation',
+                dpoLabel: 'DSB ernannt?',
+                gdprLabel: 'DSGVO-Compliance-Status',
+                certsLabel: 'Vorhandene Zertifizierungen',
+                certsPlace: 'z.B. ISO 27001, SOC 2, ISO 42001...',
+                auditsLabel: 'Bisherige Audits',
+                auditsPlace: 'z.B. DSGVO-Audit 2024, internes KI-Audit...',
+                ceLabel: 'CE-Kennzeichnung (für KI)',
+                cancel: '← Abbrechen',
+                submit: '→ Compliance-Bericht erstellen',
+                processing: '⏳ Wird verarbeitet...',
+                errorTxt: 'Fehler: ',
+                errorTry: '\\nBitte versuchen Sie es erneut.',
+                validRequired: 'Unternehmensname ist erforderlich',
+            }
+        };
+
+        // Checkbox fix — use change event on real checkboxes, not click on label
+        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(input => {
+            input.addEventListener('change', function() {
+                this.closest('.checkbox-item').classList.toggle('checked', this.checked);
                 updateProgress();
+            });
+            // Init checked state from input
+            if (input.checked) {
+                input.closest('.checkbox-item').classList.add('checked');
+            }
+        });
+
+        // Language switching
+        function setLang(lang) {
+            const t = i18n[lang] || i18n.en;
+            document.getElementById('htmlRoot').lang = lang;
+            document.getElementById('langInput').value = lang;
+
+            // Toggle buttons
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('lang' + lang.charAt(0).toUpperCase() + lang.slice(1)).classList.add('active');
+
+            // Apply translations to elements with data-i18n or specific selectors
+            document.title = t.title;
+            document.querySelector('.page-title h1').textContent = t.pageTitle;
+            document.querySelector('.page-title p').textContent = t.pageDesc;
+
+            // Section 1
+            document.querySelector('.form-section:nth-of-type(1) h2').textContent = t.s1Title;
+            document.querySelector('.form-section:nth-of-type(1) .section-desc').textContent = t.s1Desc;
+            const s1labels = document.querySelectorAll('.form-section:nth-of-type(1) label');
+            s1labels[0].textContent = t.companyLabel;
+            document.querySelector('[name="company"]').placeholder = t.companyPlace;
+            s1labels[1].textContent = t.sizeLabel;
+            const sizeOpts = document.querySelector('[name="company_size"]').options;
+            sizeOpts[0].text = t.sizeOpt0; sizeOpts[1].text = t.sizeOpt1;
+            sizeOpts[2].text = t.sizeOpt2; sizeOpts[3].text = t.sizeOpt3; sizeOpts[4].text = t.sizeOpt4;
+            s1labels[2].textContent = t.sectorLabel;
+            document.querySelector('[name="sector"]').placeholder = t.sectorPlace;
+            s1labels[3].textContent = t.revenueLabel;
+            document.querySelector('[name="annual_revenue"]').placeholder = t.revenuePlace;
+            s1labels[4].textContent = t.hqLabel;
+            document.querySelector('[name="hq_location"]').placeholder = t.hqPlace;
+            s1labels[5].textContent = t.urlLabel;
+            document.querySelector('[name="url"]').placeholder = t.urlPlace;
+            s1labels[6].textContent = t.descLabel;
+            document.querySelector('[name="description"]').placeholder = t.descPlace;
+
+            // Section 2
+            document.querySelector('.form-section:nth-of-type(2) h2').textContent = t.s2Title;
+            document.querySelector('.form-section:nth-of-type(2) .section-desc').textContent = t.s2Desc;
+            const s2labels = document.querySelectorAll('.form-section:nth-of-type(2) label');
+            s2labels[0].textContent = t.aiCountLabel;
+            s2labels[1].textContent = t.aiNamesLabel;
+            document.querySelector('[name="ai_system_names"]').placeholder = t.aiNamesPlace;
+            s2labels[2].textContent = t.aiPurposeLabel;
+            document.querySelector('[name="ai_purpose"]').placeholder = t.aiPurposePlace;
+            s2labels[3].textContent = t.deployLabel;
+            s2labels[4].textContent = t.decisionLabel;
+            s2labels[5].textContent = t.dataSourcesLabel;
+            document.querySelector('[name="data_sources"]').placeholder = t.dataSourcesPlace;
+            s2labels[6].textContent = t.riskSelfLabel;
+
+            // Section 3
+            document.querySelector('.form-section:nth-of-type(3) h2').textContent = t.s3Title;
+            document.querySelector('.form-section:nth-of-type(3) .section-desc').textContent = t.s3Desc;
+            const s3labels = document.querySelectorAll('.form-section:nth-of-type(3) label');
+            s3labels[0].textContent = t.modelTypesLabel;
+            document.querySelector('[name="model_types"]').placeholder = t.modelTypesPlace;
+            s3labels[1].textContent = t.trainingDataLabel;
+            document.querySelector('[name="training_data_origin"]').placeholder = t.trainingDataPlace;
+            s3labels[2].textContent = t.oversightLabel;
+            document.querySelector('[name="human_oversight"]').placeholder = t.oversightPlace;
+            s3labels[3].textContent = t.explLabel;
+            document.querySelector('[name="explainability"]').placeholder = t.explPlace;
+            s3labels[4].textContent = t.retentionLabel;
+            document.querySelector('[name="data_retention"]').placeholder = t.retentionPlace;
+
+            // Section 4
+            document.querySelector('.form-section:nth-of-type(4) h2').textContent = t.s4Title;
+            document.querySelector('.form-section:nth-of-type(4) .section-desc').childNodes[0].textContent = t.s4Desc + ' ';
+
+            // Section 5
+            document.querySelector('.form-section:nth-of-type(5) h2').textContent = t.s5Title;
+            document.querySelector('.form-section:nth-of-type(5) .section-desc').textContent = t.s5Desc;
+            const s5labels = document.querySelectorAll('.form-section:nth-of-type(5) label');
+            s5labels[0].textContent = t.docLabel;
+            s5labels[1].textContent = t.dpoLabel;
+            s5labels[2].textContent = t.gdprLabel;
+            s5labels[3].textContent = t.certLabel;
+            document.querySelector('[name="existing_certifications"]').placeholder = t.certsPlace;
+            s5labels[4].textContent = t.auditsLabel;
+            document.querySelector('[name="previous_audits"]').placeholder = t.auditsPlace;
+            s5labels[5].textContent = t.ceLabel;
+
+            // Buttons
+            document.querySelector('.btn-secondary').textContent = t.cancel;
+            document.getElementById('submitBtn').textContent = t.submit;
+
+            localStorage.setItem('ai-compliance-lang', lang);
+        }
+
+        // Checkbox UI toggle — also keep click for label convenience
+        document.querySelectorAll('.checkbox-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'INPUT') {
+                    const input = this.querySelector('input[type="checkbox"]');
+                    input.checked = !input.checked;
+                    input.dispatchEvent(new Event('change'));
+                }
             });
         });
 
         // Progress bar
         function updateProgress() {
             const form = document.getElementById('complianceForm');
-            const inputs = form.querySelectorAll('input[type="text"], input[type="url"], input[type="email"], select, textarea');
+            const inputs = form.querySelectorAll('input[type="text"], input[type="url"], select, textarea');
             const checkboxes = form.querySelectorAll('input[type="checkbox"]');
             let filled = 0;
             let total = inputs.length + checkboxes.length;
@@ -596,6 +850,7 @@
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const form = document.getElementById('complianceForm');
+            const t = i18n[document.getElementById('langInput').value] || i18n.en;
             
             // Validate required
             const company = form.querySelector('[name="company"]');
@@ -606,7 +861,7 @@
             }
             
             btn.disabled = true;
-            btn.textContent = '⏳ Processing...';
+            btn.textContent = t.processing;
             
             const formData = new FormData(form);
             
@@ -623,10 +878,14 @@
                 window.location.href = '/result-page?id=' + data.id;
             } catch (err) {
                 btn.disabled = false;
-                btn.textContent = '→ Generate Compliance Report';
-                alert('Error: ' + err.message + '\nPlease try again.');
+                btn.textContent = t.submit;
+                alert(t.errorTxt + err.message + t.errorTry);
             }
         });
+
+        // Initialize language from localStorage
+        const savedLang = localStorage.getItem('ai-compliance-lang') || 'en';
+        setLang(savedLang);
     </script>
 </body>
 </html>

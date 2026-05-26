@@ -1,154 +1,267 @@
-# System prompt for EU AI Act compliance analysis
-SYSTEM_PROMPT = """Ты – эксперт по EU AI Act. Высокорисковые ИИ‑системы: биометрия, критичная инфраструктура, найм, кредит‑scoring, образование. Основные требования: риск‑менеджмент, управление данными, прозрачность, человеческий надзор, ведение журнала событий, оценка соответствия.
-Отвечай строго по пунктам, используй только факты из предоставленного контекста.
+# System prompt for EU AI Act compliance analysis — bilingual EN/DE
+# Language is injected by build_enhanced_prompt based on submission.lang
 
-Твой ответ должен быть на РУССКОМ языке (только термины на английском), строго в формате markdown."""
+SYSTEM_PROMPT_EN = """You are an expert on the EU AI Act. High-risk AI systems include: biometric identification, critical infrastructure, employment, credit scoring, education. Key requirements: risk management, data governance, transparency, human oversight, logging, conformity assessment.
+Respond strictly with facts from the provided context only, using markdown format.
 
-def build_company_profile(submission) -> str:
-    """Build structured company profile from submission data."""
+Your response MUST be in ENGLISH. Use technical terms in English only."""
+
+SYSTEM_PROMPT_DE = """Du bist ein Experte für den EU AI Act. Hochrisiko-KI-Systeme umfassen: biometrische Identifizierung, kritische Infrastruktur, Beschäftigung, Bonitätsbewertung, Bildung. Wichtige Anforderungen: Risikomanagement, Datenverwaltung, Transparenz, menschliche Aufsicht, Protokollierung, Konformitätsbewertung.
+Antworte ausschließlich mit Fakten aus dem bereitgestellten Kontext im Markdown-Format.
+
+Deine Antwort MUSS auf DEUTSCH erfolgen. Fachbegriffe dürfen auf Englisch bleiben."""
+
+SYSTEM_PROMPT = SYSTEM_PROMPT_EN  # default fallback
+
+def build_company_profile(submission, lang: str = "en") -> str:
+    """Build structured company profile from submission data.
+    lang: 'en' or 'de' — used for section labels."""
     import json
     
+    labels = {
+        "en": {"company": "Company", "website": "Website", "email": "Email", "size": "Company Size",
+               "sector": "Sector", "employees": "Employees", "revenue": "Annual Revenue",
+               "hq": "HQ Location", "not_specified": "Not specified", "ai_details": "AI System Details",
+               "ai_count": "AI Systems in Production", "ai_names": "System Names",
+               "ai_purpose": "AI Purpose", "deployment": "Deployment Type",
+               "data_sources": "Data Sources", "decision_type": "Decision Type",
+               "risk_self": "Risk Self-Assessment", "tech_details": "Technical Details",
+               "model_types": "Model Types", "training_data": "Training Data Origin",
+               "human_oversight": "Human Oversight", "explainability": "Explainability / Interpretability",
+               "data_retention": "Data Retention Policy", "compliance_status": "Compliance Status",
+               "documentation": "Documentation", "dpo": "DPO Appointed",
+               "gdpr": "GDPR Compliant", "certifications": "Certifications",
+               "audits": "Previous Audits", "ce_marking": "CE Marking",
+               "high_risk": "High-Risk Categories (selected)", "none_selected": "None selected",
+               "additional_info": "Additional Information", "ai_activity": "AI Activity Description",
+               "yes": "Yes", "no": "No"},
+        "de": {"company": "Unternehmen", "website": "Webseite", "email": "E-Mail", "size": "Unternehmensgröße",
+               "sector": "Branche", "employees": "Mitarbeiter", "revenue": "Jahresumsatz",
+               "hq": "Hauptsitz", "not_specified": "Nicht angegeben", "ai_details": "KI-System-Details",
+               "ai_count": "KI-Systeme in Produktion", "ai_names": "Systemnamen",
+               "ai_purpose": "KI-Zweck", "deployment": "Bereitstellungstyp",
+               "data_sources": "Datenquellen", "decision_type": "Entscheidungstyp",
+               "risk_self": "Risiko-Selbsteinschätzung", "tech_details": "Technische Details",
+               "model_types": "Modelltypen", "training_data": "Trainingsdaten-Herkunft",
+               "human_oversight": "Menschliche Aufsicht", "explainability": "Erklärbarkeit / Interpretierbarkeit",
+               "data_retention": "Datenaufbewahrungsrichtlinie", "compliance_status": "Compliance-Status",
+               "documentation": "Dokumentation", "dpo": "DSB ernannt",
+               "gdpr": "DSGVO-konform", "certifications": "Zertifizierungen",
+               "audits": "Vorherige Audits", "ce_marking": "CE-Kennzeichnung",
+               "high_risk": "Hochrisiko-Kategorien (ausgewählt)", "none_selected": "Keine ausgewählt",
+               "additional_info": "Zusätzliche Informationen", "ai_activity": "KI-Aktivitätsbeschreibung",
+               "yes": "Ja", "no": "Nein"}
+    }
+    L = labels.get(lang, labels["en"])
+    ns = L["not_specified"]
+    
     profile = []
-    profile.append(f"**Компания:** {submission.company or 'Не указано'}")
-    profile.append(f"**Веб-сайт:** {submission.url or 'Не указан'}")
-    profile.append(f"**Эл. почта:** {submission.email or 'Не указана'}")
-    profile.append(f"**Размер компании:** {submission.company_size or 'Не указан'}")
-    profile.append(f"**Сектор:** {submission.sector or 'Не указан'}")
-    profile.append(f"**Количество сотрудников:** {submission.employees or 'Не указано'}")
-    profile.append(f"**Годовой доход:** {submission.annual_revenue or 'Не указан'}")
-    profile.append(f"**Штаб-квартира:** {submission.hq_location or 'Не указана'}")
-    
+    profile.append(f"**{L['company']}:** {submission.company or ns}")
+    profile.append(f"**{L['website']}:** {submission.url or ns}")
+    profile.append(f"**{L['email']}:** {submission.email or ns}")
+    profile.append(f"**{L['size']}:** {submission.company_size or ns}")
+    profile.append(f"**{L['sector']}:** {submission.sector or ns}")
+    profile.append(f"**{L['employees']}:** {submission.employees or ns}")
+    profile.append(f"**{L['revenue']}:** {submission.annual_revenue or ns}")
+    profile.append(f"**{L['hq']}:** {submission.hq_location or ns}")
+    profile.append(f"### {L['ai_details']}")
+    profile.append(f"**{L['ai_count']}:** {submission.ai_systems_count or ns}")
+    profile.append(f"**{L['ai_names']}:** {submission.ai_system_names or ns}")
+    profile.append(f"**{L['ai_purpose']}:** {submission.ai_purpose or ns}")
+    profile.append(f"**{L['deployment']}:** {submission.deployment_type or ns}")
+    profile.append(f"**{L['data_sources']}:** {submission.data_sources or ns}")
+    profile.append(f"**{L['decision_type']}:** {submission.decision_type or ns}")
+    profile.append(f"**{L['risk_self']}:** {submission.risk_self_assessment or ns}")
+
     profile.append("")
-    profile.append("### Детали ИИ-систем")
-    profile.append(f"**Количество ИИ-систем:** {submission.ai_systems_count or 'Не указано'}")
-    profile.append(f"**Названия систем:** {submission.ai_system_names or 'Не указаны'}")
-    profile.append(f"**Назначение ИИ:** {submission.ai_purpose or 'Не указано'}")
-    profile.append(f"**Тип развертывания:** {submission.deployment_type or 'Не указан'}")
-    profile.append(f"**Источники данных:** {submission.data_sources or 'Не указаны'}")
-    profile.append(f"**Тип принятия решений:** {submission.decision_type or 'Не указан'}")
-    profile.append(f"**Самооценка риска:** {submission.risk_self_assessment or 'Не указана'}")
-    
+    profile.append(f"### {L['tech_details']}")
+    profile.append(f"**{L['model_types']}:** {submission.model_types or ns}")
+    profile.append(f"**{L['training_data']}:** {submission.training_data_origin or ns}")
+    profile.append(f"**{L['human_oversight']}:** {submission.human_oversight or ns}")
+    profile.append(f"**{L['explainability']}:** {submission.explainability or ns}")
+    profile.append(f"**{L['data_retention']}:** {submission.data_retention or ns}")
+
     profile.append("")
-    profile.append("### Технические детали")
-    profile.append(f"**Типы моделей:** {submission.model_types or 'Не указаны'}")
-    profile.append(f"**Происхождение данных:** {submission.training_data_origin or 'Не указано'}")
-    profile.append(f"**Механизмы человеческого контроля:** {submission.human_oversight or 'Не указаны'}")
-    profile.append(f"**Объяснимость:** {submission.explainability or 'Не указана'}")
-    profile.append(f"**Политика хранения данных:** {submission.data_retention or 'Не указана'}")
-    
+    profile.append(f"### {L['compliance_status']}")
+    profile.append(f"**{L['documentation']}:** {submission.has_documentation or ns}")
+    profile.append(f"**{L['dpo']}:** {submission.dpo_appointed or ns}")
+    profile.append(f"**{L['gdpr']}:** {submission.gdpr_compliant or ns}")
+    profile.append(f"**{L['certifications']}:** {submission.existing_certifications or ns}")
+    profile.append(f"**{L['audits']}:** {submission.previous_audits or ns}")
+    profile.append(f"**{L['ce_marking']}:** {submission.ce_marking or ns}")
+
     profile.append("")
-    profile.append("### Статус соответствия")
-    profile.append(f"**Документация:** {submission.has_documentation or 'Не указано'}")
-    profile.append(f"**Назначен DPO:** {submission.dpo_appointed or 'Не указано'}")
-    profile.append(f"**Соответствие GDPR:** {submission.gdpr_compliant or 'Не указано'}")
-    profile.append(f"**Сертификации:** {submission.existing_certifications or 'Не указаны'}")
-    profile.append(f"**Предыдущие аудиты:** {submission.previous_audits or 'Не указаны'}")
-    profile.append(f"**CE-маркировка:** {submission.ce_marking or 'Не указана'}")
-    
-    profile.append("")
-    profile.append("### Высокорисковые категории (отмеченные)")
+    profile.append(f"### {L['high_risk']}")
     active = submission.risk_categories_active() if hasattr(submission, 'risk_categories_active') else []
     if active:
         for cat in active:
             profile.append(f"- [x] {cat}")
     else:
-        profile.append("- Ни одна из категорий не отмечена")
-    
+        profile.append(f"- {L['none_selected']}")
+
     # Additional info JSON
     if submission.additional_info:
         try:
             extra = json.loads(submission.additional_info)
             if extra:
                 profile.append("")
-                profile.append("### Дополнительная информация")
+                profile.append(f"### {L['additional_info']}")
                 for k, v in extra.items():
                     profile.append(f"- **{k}:** {v}")
         except:
             pass
-    
+
     profile.append("")
     if submission.description:
-        profile.append(f"**Описание AI-деятельности:** {submission.description}")
-    
+        profile.append(f"**{L['ai_activity']}:** {submission.description}")
+
     return "\n".join(profile)
 
-def build_user_prompt(company: str, url: str, description: str, search_text: str) -> str:
+def build_user_prompt(company: str, url: str, description: str, search_text: str, lang: str = "en") -> str:
     """Compatibility: build user prompt from simple fields."""
     if not search_text:
-        search_text = "Данные из открытых источников не найдены."
-    prompt = f"""Проанализируй следующую компанию и её продукт с точки зрения EU AI Act.
-Компания: {company}
-Сайт: {url}
-Описание продукта: {description}
-Сведения из открытых источников:
+        search_text = "No open-source data found." if lang == "en" else "Keine öffentlichen Daten gefunden."
+    sections_en = "\n".join([
+        "Based on this data, determine:",
+        "1) Does the product fall under a high-risk category? (Yes/No/Insufficient data).",
+        "2) Which AI Act requirements are likely applicable (list).",
+        "3) Identified gaps (what is missing for compliance).",
+        "4) Specific recommendations (documents, processes, checkpoints).",
+        "Format the answer in markdown with sections: **Conclusion**, **Risk Category**, **Applicable Requirements**, **Gaps**, **Recommendations**, **Sources**.",
+        "If data is insufficient, indicate what information is needed."
+    ])
+    sections_de = "\n".join([
+        "Bestimme auf Basis dieser Daten:",
+        "1) Fällt das Produkt unter eine Hochrisiko-Kategorie? (Ja/Nein/Unzureichende Daten).",
+        "2) Welche AI Act-Anforderungen sind wahrscheinlich anwendbar (Liste).",
+        "3) Identifizierte Lücken (was fehlt zur Konformität).",
+        "4) Konkrete Empfehlungen (Dokumente, Prozesse, Kontrollpunkte).",
+        "Formatiere die Antwort in Markdown mit Abschnitten: **Fazit**, **Risikokategorie**, **Anwendbare Anforderungen**, **Lücken**, **Empfehlungen**, **Quellen**.",
+        "Bei unzureichenden Daten: gib an, welche Informationen benötigt werden."
+    ])
+    sections = sections_en if lang == "en" else sections_de
+    prompt = f"""Analyze the following company and its product for EU AI Act compliance.
+Company: {company}
+Website: {url}
+Product description: {description}
+Open-source data:
 {search_text}
-На основании этого определи:
-1) Попадает ли продукт под высокорисковую категорию (Да/Нет/Недостаточно данных).
-2) Какие требования AI Act вероятно применимы (список).
-3) Выявленные gaps (чего не хватает для соблюдения).
-4) Конкретные рекомендации (документы, процессы, контрольные точки).
-Ответ оформи в markdown с заголовками: **Вывод**, **Категория риска**, **Применимые требования**, **Gaps**, **Рекомендации**, **Источники**.
-Если данных недостаточно – укажи, какая информация нужна."""
+{sections}"""
     return prompt
 
-def build_enhanced_prompt(submission, search_text: str = "") -> str:
-    """Build enhanced prompt from complete submission object with all fields."""
-    profile = build_company_profile(submission)
+def build_enhanced_prompt(submission, search_text: str = "", lang: str = "en") -> str:
+    """Build enhanced prompt from complete submission object with all fields.
+    lang: 'en' or 'de'."""
+    profile = build_company_profile(submission, lang)
     
     if not search_text:
-        search_text = "Данные из открытых источников не найдены."
+        search_text = "No open-source data found." if lang == "en" else "Keine öffentlichen Daten gefunden."
     
-    prompt = f"""Проанализируй следующую компанию и её ИИ-системы с точки зрения EU AI Act.
+    if lang == "en":
+        prompt = f"""Analyze the following company and its AI systems for EU AI Act compliance.
 
-## Профиль компании
+## Company Profile
 
 {profile}
 
-Сведения из открытых источников:
+Open-source data:
 {search_text}
 
-На основании всех предоставленных данных определи и подробно опиши:
+Based on all provided data, determine and describe in detail:
 
-## 1. ОБЩИЙ ВЫВОД
-Попадает ли деятельность компании под регулирование EU AI Act? Какой общий уровень риска?
+## 1. OVERALL CONCLUSION
+Does the company's activity fall under EU AI Act regulation? What is the overall risk level?
 
-## 2. КЛАССИФИКАЦИЯ ПО EU AI ACT
-- Категория риска по EU AI Act (Unacceptable / High / Limited / Minimal)
-- Обоснование классификации со ссылками на конкретные статьи
-- Какие именно ИИ-системы компании подпадают под регулирование
+## 2. EU AI ACT CLASSIFICATION
+- Risk category under EU AI Act (Unacceptable / High / Limited / Minimal)
+- Justification with references to specific articles
+- Which AI systems fall under regulation
 
-## 3. ПРИМЕНИМЫЕ ТРЕБОВАНИЯ
-Детальный список требований EU AI Act, применимых к данному случаю:
-- Управление рисками (Article 9)
-- Управление данными и обучение (Article 10)
-- Техническая документация и прозрачность (Articles 11-12)
-- Автоматизированное принятие решений и человеческий надзор (Article 14)
-- Точность, устойчивость и кибербезопасность (Article 15)
-- Регистрация в базе данных EU (Article 49)
-- Требования к прозрачности для пользователей (Article 50)
+## 3. APPLICABLE REQUIREMENTS
+Detailed list of EU AI Act requirements applicable to this case:
+- Risk management (Article 9)
+- Data governance and training (Article 10)
+- Technical documentation and transparency (Articles 11-12)
+- Automated decision-making and human oversight (Article 14)
+- Accuracy, robustness and cybersecurity (Article 15)
+- EU database registration (Article 49)
+- Transparency obligations for users (Article 50)
 
-## 4. ВЫЯВЛЕННЫЕ ПРОБЕЛЫ (GAPS)
-Для каждого требования укажи, соответствует ли компания, и если нет — в чём конкретно пробел:
-- Отсутствующая документация
-- Недостаточные меры контроля
-- Проблемы с данными
-- Отсутствие человеческого надзора
-- Недостаточная прозрачность
+## 4. IDENTIFIED GAPS
+For each requirement, indicate whether the company complies, and if not — what specific gap exists:
+- Missing documentation
+- Insufficient control measures
+- Data issues
+- Lack of human oversight
+- Insufficient transparency
 
-## 5. КОНКРЕТНЫЕ РЕКОМЕНДАЦИИ
-Пошаговый план действий:
-- Какие документы нужно подготовить
-- Какие процессы внедрить
-- Какие технические меры реализовать
-- Сроки и приоритеты (немедленно / краткосрочно / долгосрочно)
-- Необходимость DPO и регистрации
+## 5. SPECIFIC RECOMMENDATIONS
+Step-by-step action plan:
+- What documents to prepare
+- What processes to implement
+- What technical measures to adopt
+- Deadlines and priorities (immediate / short-term / long-term)
+- DPO requirement and registration
 
-## 6. РИСКИ И ШТРАФЫ
-- Потенциальные штрафы за несоответствие (до 35 млн EUR или 7% оборота)
-- Репутационные риски
-- Риски приостановки деятельности
+## 6. RISKS AND PENALTIES
+- Potential fines for non-compliance (up to 35M EUR or 7% of global revenue)
+- Reputational risks
+- Risk of business suspension
 
-Ответ оформи в markdown с заголовками уровня ## (H2) и ### (H3).
-Используй таблицы, списки и жирный текст для акцентирования."""
+Format the answer in markdown with H2 (##) and H3 (###) headings.
+Use tables, lists, and bold text for emphasis."""
+    else:
+        prompt = f"""Analysiere das folgende Unternehmen und seine KI-Systeme auf EU AI Act-Konformität.
+
+## Unternehmensprofil
+
+{profile}
+
+Öffentliche Daten:
+{search_text}
+
+Bestimme und beschreibe auf Basis aller bereitgestellten Daten im Detail:
+
+## 1. GESAMTFAZIT
+Fällt die Geschäftstätigkeit des Unternehmens unter die EU AI Act-Regulierung? Wie hoch ist das Gesamtrisiko?
+
+## 2. EU AI ACT-EINSTUFUNG
+- Risikokategorie nach EU AI Act (Unacceptable / High / Limited / Minimal)
+- Begründung mit Verweisen auf konkrete Artikel
+- Welche KI-Systeme fallen unter die Regulierung
+
+## 3. ANWENDBARE ANFORDERUNGEN
+Detaillierte Liste der anwendbaren EU AI Act-Anforderungen:
+- Risikomanagement (Artikel 9)
+- Datenverwaltung und Training (Artikel 10)
+- Technische Dokumentation und Transparenz (Artikel 11-12)
+- Automatisierte Entscheidungsfindung und menschliche Aufsicht (Artikel 14)
+- Genauigkeit, Robustheit und Cybersicherheit (Artikel 15)
+- EU-Datenbankregistrierung (Artikel 49)
+- Transparenzpflichten für Nutzer (Artikel 50)
+
+## 4. IDENTIFIZIERTE LÜCKEN
+Für jede Anforderung: Gibt das Unternehmen die Konformität an, und wenn nicht — welche spezifische Lücke besteht:
+- Fehlende Dokumentation
+- Unzureichende Kontrollmaßnahmen
+- Datenprobleme
+- Fehlende menschliche Aufsicht
+- Unzureichende Transparenz
+
+## 5. KONKRETE EMPFEHLUNGEN
+Schritt-für-Schritt-Aktionsplan:
+- Welche Dokumente müssen erstellt werden
+- Welche Prozesse müssen implementiert werden
+- Welche technischen Maßnahmen sind erforderlich
+- Fristen und Prioritäten (sofort / kurzfristig / langfristig)
+- DSB-Anforderung und Registrierung
+
+## 6. RISIKEN UND STRAFEN
+- Mögliche Geldstrafen bei Nichteinhaltung (bis zu 35 Mio. EUR oder 7 % des Jahresumsatzes)
+- Reputationsrisiken
+- Risiko der Geschäftsaussetzung
+
+Formatiere die Antwort in Markdown mit Überschriften der Ebene ## (H2) und ### (H3).
+Verwende Tabellen, Listen und Fettdruck zur Hervorhebung."""
     
     return prompt

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your AI Compliance Report</title>
+    <title data-i18n="title">Your AI Compliance Report</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -57,6 +57,18 @@
         }
         .nav-back { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; }
         .nav-back:hover { color: var(--text-primary); }
+        .lang-toggle {
+            display: flex; align-items: center; gap: 4px;
+            margin-left: auto; margin-right: 16px;
+        }
+        .lang-btn {
+            background: none; border: 1px solid var(--border);
+            color: var(--text-muted); padding: 4px 10px;
+            border-radius: 4px; font-size: 12px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+        }
+        .lang-btn.active { background: var(--brand); color: white; border-color: var(--brand); }
+        .lang-btn:hover:not(.active) { color: var(--text-secondary); }
 
         .status-bar {
             margin-top: 72px;
@@ -185,6 +197,41 @@
             .report-header { flex-direction: column; }
             .report-body { padding: 24px; }
         }
+
+        /* Email section after report */
+        .email-section {
+            margin-top: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            text-align: center;
+        }
+        .email-section h3 { font-size: 18px; margin-bottom: 8px; }
+        .email-section p { font-size: 14px; color: var(--text-tertiary); margin-bottom: 16px; }
+        .email-input-group {
+            display: flex; gap: 12px; max-width: 480px; margin: 0 auto; justify-content: center;
+        }
+        .email-input-group input {
+            flex: 1; background: var(--bg); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 12px 14px;
+            color: var(--text-primary); font-size: 15px;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .email-input-group input:focus { outline: none; border-color: var(--brand); }
+        .email-input-group button {
+            background: var(--brand); color: white; border: none;
+            padding: 12px 24px; border-radius: var(--radius-sm);
+            font-size: 14px; font-weight: 500; cursor: pointer;
+            white-space: nowrap;
+        }
+        .email-input-group button:hover { background: var(--brand-hover); }
+        .email-sent { color: var(--success); font-size: 14px; margin-top: 8px; }
+
+        /* Fix overflow on report body */
+        .report-body { overflow-x: auto; word-wrap: break-word; }
+        .report-body img { max-width: 100%; height: auto; }
+        .report-body table { word-break: break-word; }
     </style>
 </head>
 <body>
@@ -194,7 +241,11 @@
                 <div class="logo-icon">AC</div>
                 AI Compliance
             </a>
-            <a href="/submit-page" class="nav-back">→ New Report</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="setLang('en')" id="langEn">EN</button>
+                <button class="lang-btn" onclick="setLang('de')" id="langDe">DE</button>
+            </div>
+            <a href="/submit-page" class="nav-back" data-i18n="newReport">→ New Report</a>
         </div>
     </nav>
 
@@ -233,9 +284,82 @@
     </div>
 
     <script>
+        const i18n = {
+            en: {
+                title: 'Your AI Compliance Report',
+                newReport: '→ New Report',
+                loading: 'Generating your compliance report...',
+                loadingDesc: 'AI is analyzing your company data against EU AI Act requirements',
+                loadingAttempt: 'Generating report... (attempt ',
+                reportTitle: 'AI Compliance Report',
+                generated: 'Generated: ',
+                company: 'Company',
+                regulation: 'EU AI Act',
+                analysisDepth: 'Analysis Depth',
+                sections: ' sections',
+                comprehensive: 'Comprehensive',
+                failed: '⚠️ Report Generation Failed',
+                failedDesc: 'An error occurred while generating the report. Please try again.',
+                tryAgain: '← Try Again',
+                noId: 'No report ID provided',
+                noIdDesc: 'Please submit the form first.',
+                startHere: '← Start Here',
+                download: '⬇ Download Report',
+                newReportBtn: '← New Report',
+                emailTitle: '📧 Send Report via Email',
+                emailDesc: 'Enter your email to receive a copy of this compliance report.',
+                emailPlaceholder: 'you@company.com',
+                emailBtn: 'Send Report',
+                emailSent: '✓ Report sent! Check your inbox.',
+                sending: 'Sending...',
+            },
+            de: {
+                title: 'Ihr KI-Compliance-Bericht',
+                newReport: '→ Neuer Bericht',
+                loading: 'Generiere Ihren Compliance-Bericht...',
+                loadingDesc: 'KI analysiert Ihre Unternehmensdaten auf EU AI Act-Anforderungen',
+                loadingAttempt: 'Generiere Bericht... (Versuch ',
+                reportTitle: 'KI-Compliance-Bericht',
+                generated: 'Generiert: ',
+                company: 'Unternehmen',
+                regulation: 'EU AI Act',
+                analysisDepth: 'Analysetiefe',
+                sections: ' Abschnitte',
+                comprehensive: 'Umfassend',
+                failed: '⚠️ Berichtserstellung fehlgeschlagen',
+                failedDesc: 'Bei der Erstellung des Berichts ist ein Fehler aufgetreten.',
+                tryAgain: '← Erneut versuchen',
+                noId: 'Keine Berichts-ID angegeben',
+                noIdDesc: 'Bitte senden Sie zuerst das Formular ab.',
+                startHere: '← Hier starten',
+                download: '⬇ Bericht herunterladen',
+                newReportBtn: '← Neuer Bericht',
+                emailTitle: '📧 Bericht per E-Mail senden',
+                emailDesc: 'Geben Sie Ihre E-Mail-Adresse ein, um eine Kopie dieses Berichts zu erhalten.',
+                emailPlaceholder: 'ihre@firma.de',
+                emailBtn: 'Bericht senden',
+                emailSent: '✓ Bericht gesendet! Prüfen Sie Ihr Postfach.',
+                sending: 'Wird gesendet...',
+            }
+        };
+
+        let currentLang = localStorage.getItem('ai-compliance-lang') || 'en';
+
+        function setLang(lang) {
+            currentLang = lang;
+            const t = i18n[lang] || i18n.en;
+            document.getElementById('htmlRoot').lang = lang;
+            document.title = t.title;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('lang' + lang.charAt(0).toUpperCase() + lang.slice(1)).classList.add('active');
+            document.querySelector('[data-i18n="newReport"]').textContent = t.newReport;
+            localStorage.setItem('ai-compliance-lang', lang);
+        }
+
         const subId = new URLSearchParams(window.location.search).get('id');
         if (!subId) {
-            document.getElementById('loading').innerHTML = '<h2>No report ID provided</h2><p>Please submit the form first.</p><a href="/submit-page" class="btn-new">← Start Here</a>';
+            const t = i18n[currentLang];
+            document.getElementById('loading').innerHTML = `<h2>${t.noId}</h2><p>${t.noIdDesc}</p><a href="/submit-page" class="btn-new">${t.startHere}</a>`;
         } else {
             pollReport(subId);
         }
@@ -243,10 +367,12 @@
         let reportMarkdown = '';
         let reportHtml = '';
         let companyName = '';
+        let submissionId = subId;
 
         async function pollReport(id) {
             const maxAttempts = 60;
             let attempt = 0;
+            const t = () => i18n[currentLang] || i18n.en;
             
             while (attempt < maxAttempts) {
                 try {
@@ -261,10 +387,9 @@
                         showError();
                         return;
                     } else {
-                        // Still processing
                         attempt++;
                         document.querySelector('#loading p').textContent = 
-                            'Generating report... (attempt ' + attempt + '/' + maxAttempts + ')';
+                            t().loadingAttempt + attempt + '/' + maxAttempts + ')';
                     }
                 } catch (err) {
                     console.error('Poll error:', err);
@@ -275,46 +400,67 @@
         }
 
         function showReport(data) {
+            const t = i18n[currentLang] || i18n.en;
             document.getElementById('loading').style.display = 'none';
             document.getElementById('reportContent').style.display = 'block';
             
             companyName = data.company || 'Your Company';
             reportHtml = data.html || '<p>No content</p>';
             reportMarkdown = data.markdown || '';
+            submissionId = subId;
             
-            document.getElementById('reportTitle').textContent = data.title || 'AI Compliance Report';
+            document.getElementById('reportTitle').textContent = data.title || t.reportTitle;
             document.getElementById('companyName').textContent = data.company || '';
-            document.getElementById('reportTime').textContent = 'Generated: ' + new Date().toLocaleString('de-DE');
+            document.getElementById('reportTime').textContent = t.generated + new Date().toLocaleString(currentLang === 'de' ? 'de-DE' : 'en-US');
             
-            // Render report body
             document.getElementById('reportBody').innerHTML = reportHtml;
             
-            // Generate summary cards
             const summary = document.getElementById('reportSummary');
+            const sectionCount = data.markdown ? (data.markdown.match(/##/g) || []).length + t.sections : t.comprehensive;
             summary.innerHTML = `
                 <div class="summary-card">
                     <div class="value" style="color: var(--accent);">${companyName}</div>
-                    <div class="label">Company</div>
+                    <div class="label">${t.company}</div>
                 </div>
                 <div class="summary-card">
                     <div class="value" style="color: var(--success);">EU AI Act</div>
-                    <div class="label">Regulation</div>
+                    <div class="label">${t.regulation}</div>
                 </div>
                 <div class="summary-card">
-                    <div class="value" style="color: var(--warning);">${data.markdown ? (data.markdown.match(/##/g) || []).length + ' sections' : 'Comprehensive'}</div>
-                    <div class="label">Analysis Depth</div>
+                    <div class="value" style="color: var(--warning);">${sectionCount}</div>
+                    <div class="label">${t.analysisDepth}</div>
                 </div>
             `;
+
+            // Add email section after report body
+            const emailSection = document.createElement('div');
+            emailSection.className = 'email-section';
+            emailSection.id = 'emailSection';
+            emailSection.innerHTML = `
+                <h3>${t.emailTitle}</h3>
+                <p>${t.emailDesc}</p>
+                <div class="email-input-group">
+                    <input type="email" id="reportEmailInput" placeholder="${t.emailPlaceholder}">
+                    <button onclick="sendReportEmail()" id="emailBtn">${t.emailBtn}</button>
+                </div>
+                <div class="email-sent" id="emailSent" style="display:none;">${t.emailSent}</div>
+            `;
+            document.getElementById('reportContent').appendChild(emailSection);
         }
 
         function showError() {
+            const t = i18n[currentLang] || i18n.en;
             document.getElementById('loading').style.display = 'none';
             document.getElementById('errorContent').style.display = 'block';
+            document.querySelector('#errorContent h2').textContent = t.failed;
+            document.querySelector('#errorContent p').textContent = t.failedDesc;
+            document.querySelector('#errorContent a').textContent = t.tryAgain;
         }
 
         function downloadReport() {
+            const t = i18n[currentLang] || i18n.en;
             if (!reportMarkdown) {
-                alert('Report not ready yet.');
+                alert(t.noId);
                 return;
             }
             const blob = new Blob([reportMarkdown], { type: 'text/markdown' });
@@ -325,6 +471,45 @@
             a.click();
             URL.revokeObjectURL(url);
         }
+
+        async function sendReportEmail() {
+            const t = i18n[currentLang] || i18n.en;
+            const input = document.getElementById('reportEmailInput');
+            const btn = document.getElementById('emailBtn');
+            const sent = document.getElementById('emailSent');
+            
+            if (!input.value || !input.value.includes('@')) {
+                input.style.borderColor = 'var(--danger)';
+                return;
+            }
+            input.style.borderColor = '';
+            
+            btn.disabled = true;
+            btn.textContent = t.sending;
+            
+            try {
+                const resp = await fetch('/send-report-email', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        id: submissionId,
+                        email: input.value,
+                        lang: currentLang
+                    })
+                });
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                sent.style.display = 'block';
+                btn.textContent = '✓';
+            } catch (err) {
+                alert(t.errorTxt + err.message);
+                btn.disabled = false;
+                btn.textContent = t.emailBtn;
+            }
+        }
+
+        // Init language
+        const savedLang = localStorage.getItem('ai-compliance-lang') || 'en';
+        setLang(savedLang);
     </script>
 </body>
 </html>

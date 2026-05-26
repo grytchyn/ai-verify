@@ -121,6 +121,7 @@ async def submit_full(
     risk_democratic: bool = Form(False),
     # Extra
     additional_info: str = Form("{}"),
+    lang: str = Form("en"),
 ):
     sub_id = str(uuid.uuid4())
     
@@ -170,6 +171,7 @@ async def submit_full(
         risk_justice=risk_justice,
         risk_democratic=risk_democratic,
         additional_info=json.dumps(extra_json),
+        lang=lang,
     )
     db.add(sub)
     db.commit()
@@ -242,11 +244,12 @@ async def process_submission(sub_id: str):
         
         # Build enhanced prompt
         logger.info("Building enhanced prompt with all fields")
-        full_prompt = build_enhanced_prompt(sub, search_text)
+        full_prompt = build_enhanced_prompt(sub, search_text, sub.lang)
         
-        # Add system prompt
-        from .prompts import SYSTEM_PROMPT
-        full_prompt = SYSTEM_PROMPT + "\n\n" + full_prompt
+        # Add system prompt based on language
+        from .prompts import SYSTEM_PROMPT_EN, SYSTEM_PROMPT_DE
+        system = SYSTEM_PROMPT_EN if sub.lang == "en" else SYSTEM_PROMPT_DE
+        full_prompt = system + "\n\n" + full_prompt
         
         # Call LLM
         logger.info("Calling Ollama with enhanced prompt")
@@ -265,3 +268,57 @@ async def process_submission(sub_id: str):
         db.commit()
     finally:
         db.close()
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+@app.post("/send-report-email")
+async def send_report_email(request: Request, db: Session = Depends(get_db)):
+    body = await request.json()
+    sub_id = body.get("id")
+    email = body.get("email")
+    lang = body.get("lang", "en")
+    
+    if not sub_id or not email:
+        raise HTTPException(status_code=400, detail="Missing id or email")
+    
+    sub = db.query(Submission).filter(Submission.id == sub_id).first()
+    if not sub or not sub.report_path:
+        raise HTTPException(status_code=404, detail="Report not found")
+    
+    # Read report
+    with open(sub.report_path, "r", encoding="utf-8") as f:
+        md = f.read()
+    
+    # For now: log the request (SMTP config needs user setup)
+    logger.info(f"Email requested: report {sub_id} → {email} (lang={lang})")
+    
+    # Try to send via SMTP if configured
+    smtp_host = os.getenv("SMTP_HOST", "")
+    if smtp_host:
+        try:
+            smtp_port = int(os.getenv("SMTP_PORT", "587"))
+            smtp_user = os.getenv("SMTP_USER", "")
+            smtp_pass = os.getenv("SMTP_PASS", "")
+            
+            msg = MIMEMultipart()
+            msg["Subject"] = f"AI Compliance Report: {sub.company}" if lang == "en" else f"KI-Compliance-Bericht: {sub.company}"
+            msg["From"] = smtp_user
+            msg["To"] = email
+            
+            html = markdown.markdown(md, extensions=['tables', 'fenced_code'])
+            msg.attach(MIMEText(html, "html"))
+            
+            with smtplib.SMTP(smtp_host, smtp_port) as server:
+                server.starttls()
+                server.login(smtp_user, smtp_pass)
+                server.send_message(msg)
+            
+            logger.info(f"Email sent: {sub_id} → {email}")
+            return {"status": "sent", "email": email}
+        except Exception as e:
+            logger.error(f"Email send failed: {str(e)}")
+            return {"status": "logged", "message": "Email logged but SMTP not configured"}
+    else:
+        return {"status": "logged", "message": "SMTP not configured. Configure SMTP_HOST in env."}

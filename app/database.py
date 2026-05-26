@@ -75,6 +75,9 @@ class Submission(Base):
     # Description from old form
     description = Column(Text, nullable=True)
     
+    # Language preference
+    lang = Column(String, default="en")
+    
     def to_dict(self):
         """Convert submission to dict for prompt building."""
         d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
