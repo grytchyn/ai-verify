@@ -533,23 +533,21 @@
         if (!subId) {
             document.getElementById('loading').innerHTML = '<h2>No report ID provided</h2><p>Please submit the form first.</p><a href="/submit-page" class="btn-new">← Start Here</a>';
         } else {
+            const attemptLabel = document.createElement('div');
+            attemptLabel.className = 'attempt-counter';
+            const neuralLoader = document.querySelector('.neural-loader');
+            if (neuralLoader) neuralLoader.appendChild(attemptLabel);
             pollReport(subId);
         }
 
-        let attemptLabel = document.createElement('div');
-        attemptLabel.className = 'attempt-counter';
-
         async function pollReport(id) {
-            const maxAttempts = 60;
+            const maxAttempts = 90;
             let attempt = 0;
-            document.querySelector('.neural-loader').appendChild(attemptLabel);
-
             while (attempt < maxAttempts) {
                 try {
                     const resp = await fetch('/report-html/' + id);
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     const data = await resp.json();
-
                     if (data.status === 'completed') {
                         showReport(data);
                         return;
@@ -558,10 +556,11 @@
                         return;
                     } else {
                         attempt++;
-                        attemptLabel.textContent = '↻ Polling attempt ' + attempt + '/' + maxAttempts;
+                        if (attemptLabel) attemptLabel.textContent = '↻ Polling attempt ' + attempt + '/' + maxAttempts;
                     }
                 } catch (err) {
                     console.error('Poll error:', err);
+                    attempt++;
                 }
                 await new Promise(r => setTimeout(r, 3000));
             }
