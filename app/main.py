@@ -11,6 +11,7 @@ from .llm import call_ollama
 from .search import duckduckgo_instant_answer
 from .prompts import build_user_prompt, build_enhanced_prompt
 from .utils import save_report
+from .website_analyzer import analyze_website
 import os
 import json
 import markdown
@@ -346,6 +347,21 @@ async def process_submission(sub_id: str):
         
         logger.info(f"Processing enhanced submission {sub_id} for {sub.company}")
         
+        # Website analysis
+        website_data = {}
+        company_url = str(sub.url or "")
+        if company_url:
+            logger.info(f"Analyzing website: {company_url}")
+            try:
+                website_data = await analyze_website(company_url)
+                logger.info(f"Website analysis complete: {len(website_data.get('legal_pages', {}))} legal pages, "
+                           f"{len(website_data.get('tech_stack', {}))} tech categories, "
+                           f"{sum(1 for v in website_data.get('gdpr_signals', {}).values() if v)} GDPR signals, "
+                           f"{sum(1 for v in website_data.get('ai_act_signals', {}).values() if v)} AI Act signals")
+            except Exception as e:
+                logger.error(f"Website analysis failed: {e}", exc_info=True)
+                website_data = {"error": str(e)}
+        
         # Search
         logger.info(f"Searching for {sub.company}")
         search_results = await duckduckgo_instant_answer(sub.company)
@@ -356,7 +372,7 @@ async def process_submission(sub_id: str):
         
         # Build enhanced prompt
         logger.info("Building enhanced prompt with all fields")
-        full_prompt = build_enhanced_prompt(sub, search_text, sub.lang)
+        full_prompt = build_enhanced_prompt(sub, search_text, sub.lang, website_data)
         
         # Add system prompt based on language
         from .prompts import SYSTEM_PROMPT_EN, SYSTEM_PROMPT_DE

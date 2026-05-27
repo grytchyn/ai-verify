@@ -149,10 +149,52 @@ Open-source data:
 {sections}"""
     return prompt
 
-def build_enhanced_prompt(submission, search_text: str = "", lang: str = "en") -> str:
+def build_enhanced_prompt(submission, search_text: str = "", lang: str = "en", website_data: dict = None) -> str:
     """Build enhanced prompt from complete submission object with all fields.
-    lang: 'en' or 'de'."""
+    lang: 'en' or 'de'.
+    website_data: dict from WebsiteAnalyzer.analyze()"""
     profile = build_company_profile(submission, lang)
+    
+    # Build website analysis section
+    website_section = ""
+    if website_data and "error" not in website_data:
+        parts = []
+        legal_pages = website_data.get("legal_pages", {})
+        if legal_pages:
+            pages_str = ", ".join(legal_pages.keys())
+            parts.append(f"Legal pages found: {pages_str}")
+        
+        tech_stack = website_data.get("tech_stack", {})
+        if tech_stack:
+            tech_str = "; ".join(f"{k}: {', '.join(v)}" for k, v in tech_stack.items() if v)
+            parts.append(f"Technology stack: {tech_str}")
+        
+        gdpr = website_data.get("gdpr_signals", {})
+        gdpr_found = [k for k, v in gdpr.items() if v]
+        if gdpr_found:
+            parts.append(f"GDPR compliance signals detected: {', '.join(gdpr_found)}")
+        
+        ai_act = website_data.get("ai_act_signals", {})
+        ai_act_found = [k for k, v in ai_act.items() if v]
+        if ai_act_found:
+            parts.append(f"EU AI Act disclosure signals detected: {', '.join(ai_act_found)}")
+        
+        chatbot = website_data.get("chatbot_detected")
+        if chatbot:
+            platform = website_data.get("chatbot_platform", "unknown")
+            parts.append(f"Chatbot detected on website: {platform}")
+        
+        cmp = website_data.get("cmp_detected")
+        if cmp:
+            parts.append(f"Cookie consent management platform: {cmp}")
+        
+        company_info = website_data.get("company_info", {})
+        if company_info:
+            info_str = ", ".join(f"{k}: {v}" for k, v in company_info.items() if v)
+            parts.append(f"Company info extracted: {info_str}")
+        
+        if parts:
+            website_section = "\n## Website Analysis\n\n" + "\n".join(f"- {p}" for p in parts)
     
     if not search_text:
         search_text = "No open-source data found." if lang == "en" else "Keine öffentlichen Daten gefunden."
@@ -166,6 +208,7 @@ def build_enhanced_prompt(submission, search_text: str = "", lang: str = "en") -
 
 Open-source data:
 {search_text}
+{website_section}
 
 Based on all provided data, determine and describe in detail:
 
@@ -219,6 +262,7 @@ Use tables, lists, and bold text for emphasis."""
 
 Öffentliche Daten:
 {search_text}
+{website_section}
 
 Bestimme und beschreibe auf Basis aller bereitgestellten Daten im Detail:
 
