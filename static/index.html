@@ -1,560 +1,706 @@
 <!DOCTYPE html>
-<html lang="en" id="htmlRoot">
+<html lang="de" id="htmlRoot">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Compliance Checker — EU AI Act Ready</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #08090a;
-            --surface: #0f1011;
-            --surface2: #191a1b;
-            --surface3: #23252a;
-            --brand: #5e6ad2;
-            --brand-hover: #828fff;
-            --accent: #7170ff;
-            --text-primary: #f7f8f8;
-            --text-secondary: #d0d6e0;
-            --text-tertiary: #8a8f98;
-            --text-muted: #62666d;
-            --border: rgba(255,255,255,0.08);
-            --border-subtle: rgba(255,255,255,0.05);
-            --danger: #f44336;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --radius: 8px;
-            --radius-sm: 6px;
-            --radius-lg: 12px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KI Compliance Checker — EU AI Act Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090a;
+  --surface: #0f1011;
+  --surface2: #191a1b;
+  --surface3: #23252a;
+  --brand: #2563EB;
+  --brand-hover: #3b82f6;
+  --accent: #3b82f6;
+  --success: #10B98A;
+  --text-primary: #f7f8f8;
+  --text-secondary: #d0d6e0;
+  --text-tertiary: #8a8f98;
+  --text-muted: #62666d;
+  --border: rgba(255,255,255,0.08);
+  --border-subtle: rgba(255,255,255,0.05);
+  --radius: 8px;
+  --radius-sm: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+/* Nav */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(8,9,10,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 18px; color: var(--text-primary);
+  text-decoration: none;
+}
+.logo-icon {
+  width: 32px; height: 32px; background: var(--brand); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: white;
+}
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text-primary); }
+.nav-cta {
+  background: var(--brand); color: white; border: none;
+  padding: 8px 20px; border-radius: var(--radius-sm); font-size: 14px;
+  font-weight: 500; cursor: pointer; transition: background 0.2s; text-decoration: none;
+}
+.nav-cta:hover { background: var(--brand-hover); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.hamburger span { width: 22px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: 0.2s; }
 
-        html { scroll-behavior: smooth; }
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 140px 24px 80px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 30%, rgba(59,130,246,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-content { max-width: 800px; text-align: center; position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3);
+  color: var(--accent); padding: 8px 20px; border-radius: 9999px;
+  font-size: 13px; font-weight: 500; margin-bottom: 32px;
+}
+.hero h1 {
+  font-size: 60px; font-weight: 600; line-height: 1.08; letter-spacing: -1.4px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero p {
+  font-size: 18px; font-weight: 400; line-height: 1.6; color: var(--text-tertiary);
+  max-width: 640px; margin: 0 auto 32px;
+}
+.hero-form {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  max-width: 560px; margin: 0 auto;
+}
+.hero-input {
+  flex: 1; min-width: 240px; padding: 14px 20px; border-radius: var(--radius);
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text-primary);
+  font-size: 15px; font-family: inherit; outline: none; transition: border-color 0.2s;
+}
+.hero-input:focus { border-color: var(--brand); }
+.hero-input::placeholder { color: var(--text-tertiary); }
+.hero-form .btn-primary {
+  background: var(--brand); color: white; border: none;
+  padding: 14px 28px; border-radius: var(--radius); font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; text-decoration: none; white-space: nowrap;
+  font-family: inherit;
+}
+.hero-form .btn-primary:hover { background: var(--brand-hover); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+.hero-note {
+  margin-top: 16px; font-size: 13px; color: var(--text-tertiary);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.stats {
+  display: flex; gap: 48px; justify-content: center; margin-top: 56px; flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-number { font-size: 32px; font-weight: 600; color: var(--text-primary); }
+.stat-label { font-size: 14px; color: var(--text-tertiary); margin-top: 4px; }
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
+/* Section shared */
+.section { padding: 100px 24px; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section.section-dark { background: var(--surface); }
+.section-label {
+  color: var(--brand); font-size: 14px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;
+}
+.section h2 {
+  font-size: 36px; font-weight: 600; line-height: 1.2; letter-spacing: -0.7px;
+  margin-bottom: 24px;
+}
+.section h2 span.gradient {
+  background: linear-gradient(135deg, var(--brand), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.section > .section-inner > p {
+  font-size: 16px; color: var(--text-tertiary); max-width: 600px; line-height: 1.7;
+}
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(8,9,10,0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-subtle);
-        }
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            font-size: 18px;
-            font-feature-settings: 'cv01', 'ss03';
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--brand), var(--accent));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--text-primary); }
-        .nav-cta {
-            background: var(--brand);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-decoration: none;
-        }
-        .nav-cta:hover { background: var(--brand-hover); }
+/* Problem grid */
+.problem-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 48px;
+}
+.problem-card {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 32px; transition: all 0.3s;
+}
+.problem-card:hover {
+  border-color: rgba(37,99,235,0.3); transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+.problem-icon { font-size: 32px; margin-bottom: 16px; }
+.problem-card h3 { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
+.problem-card p { font-size: 14px; color: var(--text-tertiary); max-width: 100%; }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 120px 24px 80px;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 30% 50%, rgba(94,106,210,0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 30%, rgba(113,112,255,0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .hero-content {
-            max-width: 800px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(94,106,210,0.15);
-            border: 1px solid rgba(94,106,210,0.3);
-            color: var(--accent);
-            padding: 6px 16px;
-            border-radius: 9999px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 32px;
-        }
-        .hero h1 {
-            font-size: 64px;
-            font-weight: 510;
-            line-height: 1.05;
-            letter-spacing: -1.4px;
-            font-feature-settings: 'cv01', 'ss03';
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero p {
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 1.6;
-            color: var(--text-tertiary);
-            max-width: 640px;
-            margin: 0 auto 40px;
-        }
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .btn-primary {
-            background: var(--brand);
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-primary:hover {
-            background: var(--brand-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(94,106,210,0.3);
-        }
-        .btn-secondary {
-            background: rgba(255,255,255,0.04);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            padding: 14px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.08);
-            color: var(--text-primary);
-        }
+/* How it works 3-step */
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px;
+}
+.step-card { text-align: center; padding: 40px 24px; position: relative; }
+.step-number {
+  width: 56px; height: 56px; background: rgba(37,99,235,0.12); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700; color: var(--brand); margin: 0 auto 20px;
+}
+.step-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+.step-card p { font-size: 14px; color: var(--text-tertiary); }
 
-        /* Stats / Social Proof */
-        .stats {
-            display: flex;
-            gap: 48px;
-            justify-content: center;
-            margin-top: 64px;
-            flex-wrap: wrap;
-        }
-        .stat-item { text-align: center; }
-        .stat-number {
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--text-primary);
-            font-feature-settings: 'cv01', 'ss03';
-        }
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-tertiary);
-            margin-top: 4px;
-        }
+/* Features 4-card */
+.features-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px;
+}
+.feature-card {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 32px 24px; text-align: center; transition: all 0.3s;
+}
+.feature-card:hover {
+  border-color: rgba(37,99,235,0.3); transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+.feature-icon {
+  width: 56px; height: 56px; background: rgba(37,99,235,0.12); border-radius: var(--radius-xl);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin: 0 auto 20px;
+}
+.feature-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+.feature-card p { font-size: 14px; color: var(--text-tertiary); }
 
-        /* Problem Section */
-        .section {
-            padding: 100px 24px;
-        }
-        .section-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .section-dark {
-            background: var(--surface);
-        }
-        .section-label {
-            color: var(--accent);
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-        .section h2 {
-            font-size: 36px;
-            font-weight: 510;
-            line-height: 1.2;
-            letter-spacing: -0.7px;
-            font-feature-settings: 'cv01', 'ss03';
-            margin-bottom: 24px;
-        }
-        .section h2 span {
-            background: linear-gradient(135deg, var(--brand), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .section p {
-            font-size: 16px;
-            color: var(--text-tertiary);
-            max-width: 600px;
-            line-height: 1.7;
-        }
+/* Testimonials */
+.testimonials-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px;
+}
+.testimonial-card {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 32px; position: relative;
+}
+.testimonial-card::before {
+  content: '"'; position: absolute; top: 12px; left: 20px;
+  font-size: 64px; color: var(--brand); opacity: 0.2; line-height: 1; font-family: Georgia, serif;
+}
+.testimonial-text { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+.testimonial-author { font-size: 14px; color: var(--text-tertiary); border-top: 1px solid var(--border); padding-top: 16px; }
 
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-top: 48px;
-        }
-        .problem-card {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 32px;
-            transition: all 0.3s;
-        }
-        .problem-card:hover {
-            border-color: rgba(94,106,210,0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.3);
-        }
-        .problem-icon {
-            font-size: 32px;
-            margin-bottom: 16px;
-        }
-        .problem-card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-        .problem-card p {
-            font-size: 14px;
-            color: var(--text-tertiary);
-            max-width: 100%;
-        }
+/* Pricing */
+.pricing-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; max-width: 800px; margin-left: auto; margin-right: auto;
+}
+.pricing-card {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 40px 32px; position: relative; transition: all 0.3s;
+}
+.pricing-card:hover { border-color: rgba(37,99,235,0.3); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.pricing-card.popular {
+  border: 1px solid var(--brand); background: linear-gradient(135deg, var(--surface2) 0%, rgba(37,99,235,0.06) 100%);
+}
+.pricing-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--brand); color: white; font-size: 12px; font-weight: 600;
+  padding: 4px 16px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.pricing-name { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+.pricing-price { font-size: 42px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.pricing-price span { font-size: 16px; font-weight: 400; color: var(--text-tertiary); }
+.pricing-desc { font-size: 14px; color: var(--text-tertiary); margin-bottom: 24px; }
+.pricing-features { list-style: none; margin-bottom: 32px; }
+.pricing-features li {
+  font-size: 14px; color: var(--text-secondary); padding: 8px 0;
+  display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-subtle);
+}
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-features li .check { color: var(--success); font-weight: 700; }
+.pricing-cta {
+  display: block; text-align: center; padding: 14px; border-radius: var(--radius);
+  font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  text-decoration: none;
+}
+.pricing-cta.primary {
+  background: var(--brand); color: white; border: none;
+}
+.pricing-cta.primary:hover { background: var(--brand-hover); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+.pricing-cta.secondary {
+  background: rgba(255,255,255,0.04); color: var(--text-secondary); border: 1px solid var(--border);
+}
+.pricing-cta.secondary:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
 
-        /* Features */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 48px;
-        }
-        .feature-card {
-            text-align: center;
-            padding: 40px 24px;
-        }
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: rgba(94,106,210,0.12);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin: 0 auto 20px;
-        }
-        .feature-card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        .feature-card p {
-            font-size: 14px;
-            color: var(--text-tertiary);
-        }
+/* FAQ */
+.faq-list { max-width: 720px; margin: 48px auto 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border-subtle); padding: 0; overflow: hidden;
+}
+.faq-question {
+  width: 100%; background: none; border: none; color: var(--text-primary);
+  font-size: 16px; font-weight: 500; font-family: inherit;
+  padding: 20px 0; cursor: pointer; display: flex; justify-content: space-between;
+  align-items: center; text-align: left; transition: color 0.2s;
+}
+.faq-question:hover { color: var(--brand); }
+.faq-question .faq-icon { font-size: 14px; color: var(--text-tertiary); transition: transform 0.2s; }
+.faq-item.open .faq-question .faq-icon { transform: rotate(45deg); }
+.faq-answer {
+  max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0;
+}
+.faq-item.open .faq-answer {
+  max-height: 300px; padding: 0 0 20px;
+}
+.faq-answer p { font-size: 14px; color: var(--text-tertiary); line-height: 1.7; }
 
-        /* CTA Section */
-        .cta-section {
-            text-align: center;
-            padding: 100px 24px;
-            background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
-        }
-        .cta-section h2 {
-            font-size: 40px;
-            font-weight: 510;
-            letter-spacing: -0.9px;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 16px;
-        }
-        .cta-section p {
-            font-size: 16px;
-            color: var(--text-tertiary);
-            max-width: 480px;
-            margin: 0 auto 40px;
-        }
+/* CTA section */
+.cta-section {
+  text-align: center; padding: 100px 24px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+}
+.cta-section h2 {
+  font-size: 40px; font-weight: 600; letter-spacing: -0.9px; margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.cta-section p { font-size: 16px; color: var(--text-tertiary); max-width: 480px; margin: 0 auto 40px; }
+.btn-primary-lg {
+  background: var(--brand); color: white; border: none;
+  padding: 16px 40px; border-radius: var(--radius); font-size: 16px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-flex;
+  align-items: center; gap: 8px;
+}
+.btn-primary-lg:hover { background: var(--brand-hover); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
 
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border-subtle);
-            padding: 40px 24px;
-            text-align: center;
-        }
-        footer p {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
+/* Footer */
+footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+.footer-brand .logo { margin-bottom: 12px; }
+.footer-brand p { font-size: 13px; color: var(--text-muted); max-width: 320px; line-height: 1.7; }
+.footer-links h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+.footer-links a { display: block; font-size: 13px; color: var(--text-tertiary); text-decoration: none; padding: 4px 0; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text-primary); }
+.footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 24px; text-align: center; }
+.footer-bottom p { font-size: 13px; color: var(--text-muted); }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 40px; letter-spacing: -0.8px; }
-            .hero p { font-size: 16px; }
-            .nav-links { display: none; }
-            .stats { gap: 24px; }
-            .stat-number { font-size: 24px; }
-            .section h2 { font-size: 28px; }
-            .problem-grid { grid-template-columns: 1fr; }
-            .features-grid { grid-template-columns: 1fr; }
-            .cta-section h2 { font-size: 28px; }
-        }
-    </style>
+/* Animations */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .hero h1 { font-size: 36px; letter-spacing: -0.8px; }
+  .hero p { font-size: 16px; }
+  .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(8,9,10,0.95); backdrop-filter: blur(16px); padding: 20px 24px; gap: 16px; border-bottom: 1px solid var(--border); }
+  .nav-links.open { display: flex; }
+  .hamburger { display: flex; }
+  .stats { gap: 24px; }
+  .stat-number { font-size: 24px; }
+  .section h2 { font-size: 28px; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .cta-section h2 { font-size: 28px; }
+  .hero-form { flex-direction: column; }
+  .hero-input { min-width: 100%; }
+  .hero-form .btn-primary { width: 100%; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 28px; }
+  .section { padding: 60px 20px; }
+}
+</style>
 </head>
 <body>
-    <nav>
-        <div class="nav-inner">
-            <a href="/" class="logo">
-                <div class="logo-icon">AC</div>
-                AI Compliance
-            </a>
-            <div class="nav-links">
-                <a href="#problem">Problem</a>
-                <a href="#how">How It Works</a>
-                <a href="#features">Features</a>
-                <a href="/submit-page" class="nav-cta">Check Your Company →</a>
-            </div>
-        </div>
-    </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">⚡ EU AI Act enforcement starts 2026</div>
-            <h1>Is your AI system<br>compliant with EU AI Act?</h1>
-            <p>
-                The EU AI Act introduces strict requirements for all AI systems operating in Europe. 
-                From risk management to documentation — non-compliance can cost up to <strong>35M EUR or 7% of global revenue</strong>.
-            </p>
-            <div class="hero-actions">
-                <a href="/submit-page" class="btn-primary">
-                    → Check Your Company Free
-                </a>
-                <a href="#problem" class="btn-secondary">
-                    Learn More
-                </a>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">AI Regulations Checked</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">35M€</div>
-                    <div class="stat-label">Maximum Fine</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">&lt; 5 min</div>
-                    <div class="stat-label">Instant Report</div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon">AC</div>
+      AI Compliance
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#problem">Problem</a>
+      <a href="#how">So funktioniert's</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Preise</a>
+      <a href="/submit-page" class="nav-cta">Jetzt prüfen →</a>
+    </div>
+  </div>
+</nav>
 
-    <section id="problem" class="section section-dark">
-        <div class="section-inner">
-            <div class="section-label">The Problem</div>
-            <h2>AI Regulation is already <span>here and you need to act</span></h2>
-            <p>The EU AI Act classifies AI systems by risk level. Most AI systems in business use fall under "High Risk" — requiring strict conformity assessment, documentation, and transparency obligations.</p>
-            
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-icon">⚠️</div>
-                    <h3>90% of businesses aren't ready</h3>
-                    <p>Most companies using AI don't realize their systems already fall under EU AI Act regulation. The grace period ends in 2026.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">📋</div>
-                    <h3>Complex documentation requirements</h3>
-                    <p>Risk management systems, data governance, technical documentation — the requirements are extensive and non-obvious.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">💰</div>
-                    <h3>Fines up to 35M EUR or 7% revenue</h3>
-                    <p>Non-compliance carries severe consequences. Know your obligations before the regulators come knocking.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">🔍</div>
-                    <h3>High-risk classification is broad</h3>
-                    <p>From HR AI tools to customer support chatbots — many everyday AI applications are unexpectedly classified as high-risk.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">🔄</div>
-                    <h3>Ongoing compliance</h3>
-                    <p>It's not a one-time checkbox. AI Act requires continuous monitoring, incident reporting, and periodic reassessment.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">🌍</div>
-                    <h3>Applies globally</h3>
-                    <p>If your AI systems affect EU citizens, you're subject to EU AI Act — regardless of where your company is based.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">⚡ EU AI Act Enforcement ab August 2026</div>
+    <h1>KI-Compliance Made Simple<br>für Ihr Unternehmen</h1>
+    <p>Prüfen Sie Ihre Website auf EU AI Act Konformität in nur 30 Sekunden. Kostenlos. Keine Fachkenntnisse nötig.</p>
+    <form class="hero-form" action="/submit-page" method="GET">
+      <input type="text" class="hero-input" placeholder="https://ihre-firma.de" name="url" required>
+      <button type="submit" class="btn-primary">Jetzt kostenlos prüfen</button>
+    </form>
+    <div class="hero-note">🔒 Nur öffentliche Inhalte. Keine Server-Anmeldung nötig.</div>
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">AI-Regulationen</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">35M€</div>
+        <div class="stat-label">Maximalstrafe</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">&lt; 1 Min</div>
+        <div class="stat-label">Ergebnis</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="how" class="section">
-        <div class="section-inner">
-            <div class="section-label">How It Works</div>
-            <h2>Get your compliance report in <span>3 simple steps</span></h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">1</div>
-                    <h3>Fill in your company data</h3>
-                    <p>Tell us about your AI systems, their purpose, data sources, and current compliance status.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">2</div>
-                    <h3>AI-powered analysis</h3>
-                    <p>Our engine cross-references your data with EU AI Act requirements and identifies all applicable obligations.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">3</div>
-                    <h3>Get actionable report</h3>
-                    <p>Receive a detailed compliance report with risk classification, gaps, recommendations, and priority action items.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Problem Section -->
+<section id="problem" class="section section-dark">
+  <div class="section-inner">
+    <div class="section-label">Das Problem</div>
+    <h2>KI-Regulierung ist bereits <span class="gradient">da — und Sie müssen handeln</span></h2>
+    <p>Das EU AI Act stuft KI-Systeme nach Risikostufen ein. Die meisten geschäftlichen KI-Anwendungen gelten als „Hohes Risiko" — mit strengen Auflagen.</p>
+    <div class="problem-grid">
+      <div class="problem-card fade-up">
+        <div class="problem-icon">⚠️</div>
+        <h3>90 % der KMU sind nicht vorbereitet</h3>
+        <p>Die meisten Unternehmen erkennen nicht, dass ihre KI-Systeme bereits unter das EU AI Act fallen. Die Übergangsfrist endet 2026.</p>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="problem-icon">📋</div>
+        <h3>Komplexe Dokumentation</h3>
+        <p>Risikomanagement, Data Governance, technische Dokumentation — die Anforderungen sind umfangreich und nicht offensichtlich.</p>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="problem-icon">💰</div>
+        <h3>Strafen bis zu 35 Mio. €</h3>
+        <p>Nicht-Einhaltung hat schwerwiegende Konsequenzen. Kennen Sie Ihre Pflichten, bevor die Aufsichtsbehörden kommen.</p>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="problem-icon">🔍</div>
+        <h3>Überraschend breite Einstufung</h3>
+        <p>Von HR-KI-Tools bis zu Chatbots — viele alltägliche KI-Anwendungen gelten unerwartet als hochriskant.</p>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="problem-icon">🔄</div>
+        <h3>Laufende Compliance</h3>
+        <p>Kein einmaliger Check. Das AI Act erfordert kontinuierliche Überwachung, Meldungen und regelmäßige Neubewertungen.</p>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="problem-icon">🌍</div>
+        <h3>Global gültig</h3>
+        <p>Wenn Ihre KI-Systeme EU-Bürger betreffen, unterliegen Sie dem EU AI Act — unabhängig vom Standort Ihres Unternehmens.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="features" class="section section-dark">
-        <div class="section-inner">
-            <div class="section-label">Features</div>
-            <h2>Comprehensive <span>EU AI Act Analysis</span></h2>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-icon">🏷️</div>
-                    <h3>Risk Classification</h3>
-                    <p>Determine if your AI is Unacceptable, High, Limited, or Minimal risk under EU AI Act.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">📊</div>
-                    <h3>Gap Analysis</h3>
-                    <p>Identify exactly where your AI system falls short of compliance requirements.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">📝</div>
-                    <h3>Action Plan</h3>
-                    <p>Get a prioritized roadmap: what to do now, this quarter, and long-term.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">⚖️</div>
-                    <h3>Penalty Assessment</h3>
-                    <p>Understand potential financial and operational risks of non-compliance.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">🛡️</div>
-                    <h3>DPO Requirements</h3>
-                    <p>Know if you need a Data Protection Officer and how to register.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">🔗</div>
-                    <h3>Cross-Regulation Check</h3>
-                    <p>How EU AI Act intersects with GDPR, CRA, and other regulations.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- How It Works -->
+<section id="how" class="section">
+  <div class="section-inner">
+    <div class="section-label">So funktioniert's</div>
+    <h2>Ihr Compliance-Report in <span class="gradient">3 einfachen Schritten</span></h2>
+    <div class="steps-grid">
+      <div class="step-card fade-up">
+        <div class="step-number">1</div>
+        <h3>🔍 URL eingeben</h3>
+        <p>Geben Sie Ihre Website-Adresse ein — das war's schon.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-number">2</div>
+        <h3>⚡ KI-Scan in 30 Sekunden</h3>
+        <p>Unser AI Scanner analysiert automatisch Chatbots, Formulare, Tracking und mehr.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-number">3</div>
+        <h3>📋 Report erhalten</h3>
+        <p>Klare Risikobewertung mit Handlungsempfehlungen — verständlich und sofort umsetzbar.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="cta-section">
-        <div class="section-inner">
-            <h2>Don't wait for the fine</h2>
-            <p>Check your company's AI compliance now — it takes less than 5 minutes and it's completely free.</p>
-            <a href="/submit-page" class="btn-primary">→ Check Your Company Free</a>
-        </div>
-    </section>
+<!-- Features -->
+<section id="features" class="section section-dark">
+  <div class="section-inner">
+    <div class="section-label">Features</div>
+    <h2>Das bietet der <span class="gradient">KI Compliance Checker</span></h2>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🔍</div>
+        <h3>Automatisches Scannen</h3>
+        <p>Ergebnis in unter einer Minute statt Wochen bei externen Beratern.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📊</div>
+        <h3>Verständlicher Bericht</h3>
+        <p>Klare Risikobewertung von A bis F, erklärt in einfacher Sprache.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">💰</div>
+        <h3>Kostenlos starten</h3>
+        <p>Basisbericht immer kostenlos. Professional Plan ab 29 €/Monat.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🇩🇪</div>
+        <h3>Für KMU gemacht</h3>
+        <p>Speziell entwickelt für kleine Unternehmen ohne IT-Abteilung.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        <div class="section-inner">
-            <p>AI Compliance Consultant — Automated EU AI Act analysis tool. Not legal advice.</p>
+<!-- Testimonials -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Erfahrungsberichte</div>
+    <h2>Was unsere Nutzer <span class="gradient">sagen</span></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-text">
+          Als Bäckereibesitzer hatte ich große Sorgen wegen des KI-Gesetzes. Dieser Dienst hat mir genau gezeigt, was ich reparieren muss – und das kostenlos!
         </div>
-    </footer>
+        <div class="testimonial-author">— Anna M., Bäckerei Müller, Berlin</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-text">
+          Hat mir Stunden Anwaltszeit gespart. Jetzt schlafe ich wieder ruhig.
+        </div>
+        <div class="testimonial-author">— Thomas S., Inhaber, Einzelhandel</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // English-only — no i18n needed, text is hardcoded in HTML
-    </script>
+<!-- Pricing -->
+<section id="pricing" class="section section-dark">
+  <div class="section-inner">
+    <div class="section-label">Preise</div>
+    <h2>Der richtige Plan für <span class="gradient">Ihre Compliance</span></h2>
+    <div class="pricing-grid">
+      <div class="pricing-card fade-up">
+        <div class="pricing-name">Free</div>
+        <div class="pricing-price">0 € <span>/ Monat</span></div>
+        <div class="pricing-desc">Erste Risikoeinschätzung für Einsteiger</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Compliance Score</li>
+          <li><span class="check">✓</span> Risikostufe (Risk Level)</li>
+          <li><span class="check">✓</span> Top 3 Probleme</li>
+          <li><span class="check">✓</span> Basisempfehlungen</li>
+          <li><span class="check">✓</span> 3 Scans / Monat</li>
+        </ul>
+        <a href="/submit-page" class="pricing-cta secondary">Kostenlos starten</a>
+      </div>
+      <div class="pricing-card popular fade-up">
+        <div class="pricing-badge">Empfohlen</div>
+        <div class="pricing-name">Pro</div>
+        <div class="pricing-price">29 € <span>/ Monat</span></div>
+        <div class="pricing-desc">Vollständige Analyse für Unternehmen</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Vollständiger Bericht</li>
+          <li><span class="check">✓</span> Persönlicher Aktionsplan</li>
+          <li><span class="check">✓</span> PDF Export</li>
+          <li><span class="check">✓</span> E-Mail Erinnerungen</li>
+          <li><span class="check">✓</span> Unlimitierte Scans</li>
+          <li><span class="check">✓</span> Prioritätssupport</li>
+        </ul>
+        <a href="/submit-page" class="pricing-cta primary">Pro starten</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section">
+  <div class="section-inner">
+    <div class="section-label">FAQ</div>
+    <h2>Häufig gestellte <span class="gradient">Fragen</span></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">
+          Brauche ich technische Vorkenntnisse?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Nein. Der KI Compliance Checker wurde speziell für Unternehmen ohne IT-Abteilung entwickelt. Sie geben einfach Ihre Website-URL ein und erhalten einen verständlichen Report in einfacher Sprache.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Was wird gescannt?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Unser Scanner analysiert Chatbots, Personalisierungssysteme, Tracking-Dienste, Formulare und andere KI-gestützte Elemente auf Ihrer Website, die unter das EU AI Act fallen könnten.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Ist die Eingabe sicher?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Ja, wir scannen nur öffentlich zugängliche Inhalte. Es ist keine Server-Anmeldung nötig, und Ihre Daten werden nicht gespeichert oder an Dritte weitergegeben.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Was passiert bei Problemen?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Sie erhalten konkrete Handlungsempfehlungen mit Prioritäten. Jeder Problembereich wird erklärt und mit einer verständlichen Lösung versehen – kein Juristendeutsch.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Wie oft sollte ich scannen?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Wir empfehlen mindestens quartalsweise Scans, da sich sowohl Ihre Website als auch die regulatorischen Anforderungen laufend ändern können.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-inner">
+    <h2>Jetzt kostenlos prüfen</h2>
+    <p>In unter einer Minute erfahren Sie, ob Ihre Website EU AI Act konform ist. Keine Haken, keine Kosten.</p>
+    <a href="/submit-page" class="btn-primary-lg">→ Jetzt kostenlos prüfen</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <div class="logo-icon">AC</div>
+          AI Compliance
+        </a>
+        <p>Automatisierte EU AI Act Analyse für kleine und mittelständische Unternehmen. Keine Rechtsberatung.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Links</h4>
+        <a href="#problem">Über uns</a>
+        <a href="#how">Wie es funktioniert</a>
+        <a href="#pricing">Preise</a>
+        <a href="#">Blog</a>
+        <a href="#">Kontakt</a>
+      </div>
+      <div class="footer-links">
+        <h4>Rechtliches</h4>
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 KI Compliance Checker. Alle Rechte vorbehalten.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Hamburger menu toggle
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+if (hamburger) {
+  hamburger.addEventListener('click', function() {
+    navLinks.classList.toggle('open');
+  });
+  // Close on link click
+  navLinks.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      navLinks.classList.remove('open');
+    });
+  });
+}
+
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = this.parentElement;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(i) {
+      i.classList.remove('open');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+    }
+  });
+});
+
+// Smooth scroll for anchor links (fallback for older browsers)
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+// Scroll-triggered fade-up animations
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
 </body>
 </html>
