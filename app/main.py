@@ -291,33 +291,6 @@ async def get_report_score(sub_id: str, db: Session = Depends(get_db)):
     }
 
 
-@app.get("/download-pdf/{sub_id}")
-async def download_pdf(sub_id: str, db: Session = Depends(get_db)):
-    """Generate and download a professional PDF compliance report."""
-    sub = db.query(Submission).filter(Submission.id == sub_id).first()
-    if not sub:
-        raise HTTPException(status_code=404, detail="Not found")
-    if sub.status != "completed" or not sub.report_path:
-        return {"status": sub.status, "error": "Report not ready yet"}
-    
-    try:
-        from .pdf_generator import generate_pdf_report
-        pdf_path = generate_pdf_report(sub_id, db)
-        filename = f"AI_Compliance_Report_{sub.company.replace(' ', '_')}.pdf"
-        return FileResponse(
-            path=pdf_path, 
-            media_type='application/pdf', 
-            filename=filename,
-            headers={
-                "Cache-Control": "no-cache",
-                "Content-Disposition": f'attachment; filename="{filename}"'
-            }
-        )
-    except Exception as e:
-        logger.error(f"PDF generation failed: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail="PDF generation failed")
-
-
 @app.get("/report-html/{sub_id}")
 async def get_report_html(sub_id: str, db: Session = Depends(get_db)):
     """Return report as JSON with HTML-rendered content for the result page."""
@@ -388,16 +361,15 @@ async def process_submission(sub_id: str):
         logger.info(f"Search results: {len(search_results)} items")
         search_text = "\n".join([r.get("content", "") for r in search_results if r.get("content")])
         if not search_text:
-            search_text = "Данные из открытых источников не найдены."
+            search_text = "No open-source data found."
         
         # Build enhanced prompt
         logger.info("Building enhanced prompt with all fields")
         full_prompt = build_enhanced_prompt(sub, search_text, sub.lang, website_data)
         
-        # Add system prompt based on language
-        from .prompts import SYSTEM_PROMPT_EN, SYSTEM_PROMPT_DE
-        system = SYSTEM_PROMPT_EN if sub.lang == "en" else SYSTEM_PROMPT_DE
-        full_prompt = system + "\n\n" + full_prompt
+        # Add system prompt
+        from .prompts import SYSTEM_PROMPT_EN
+        full_prompt = SYSTEM_PROMPT_EN + "\n\n" + full_prompt
         
         # Call LLM
         logger.info("Calling Ollama with enhanced prompt")
@@ -416,57 +388,3 @@ async def process_submission(sub_id: str):
         db.commit()
     finally:
         db.close()
-
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-@app.post("/send-report-email")
-async def send_report_email(request: Request, db: Session = Depends(get_db)):
-    body = await request.json()
-    sub_id = body.get("id")
-    email = body.get("email")
-    lang = body.get("lang", "en")
-    
-    if not sub_id or not email:
-        raise HTTPException(status_code=400, detail="Missing id or email")
-    
-    sub = db.query(Submission).filter(Submission.id == sub_id).first()
-    if not sub or not sub.report_path:
-        raise HTTPException(status_code=404, detail="Report not found")
-    
-    # Read report
-    with open(sub.report_path, "r", encoding="utf-8") as f:
-        md = f.read()
-    
-    # For now: log the request (SMTP config needs user setup)
-    logger.info(f"Email requested: report {sub_id} → {email} (lang={lang})")
-    
-    # Try to send via SMTP if configured
-    smtp_host = os.getenv("SMTP_HOST", "")
-    if smtp_host:
-        try:
-            smtp_port = int(os.getenv("SMTP_PORT", "587"))
-            smtp_user = os.getenv("SMTP_USER", "")
-            smtp_pass = os.getenv("SMTP_PASS", "")
-            
-            msg = MIMEMultipart()
-            msg["Subject"] = f"AI Compliance Report: {sub.company}" if lang == "en" else f"KI-Compliance-Bericht: {sub.company}"
-            msg["From"] = smtp_user
-            msg["To"] = email
-            
-            html = markdown.markdown(md, extensions=['tables', 'fenced_code'])
-            msg.attach(MIMEText(html, "html"))
-            
-            with smtplib.SMTP(smtp_host, smtp_port) as server:
-                server.starttls()
-                server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
-            
-            logger.info(f"Email sent: {sub_id} → {email}")
-            return {"status": "sent", "email": email}
-        except Exception as e:
-            logger.error(f"Email send failed: {str(e)}")
-            return {"status": "logged", "message": "Email logged but SMTP not configured"}
-    else:
-        return {"status": "logged", "message": "SMTP not configured. Configure SMTP_HOST in env."}

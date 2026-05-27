@@ -1,21 +1,14 @@
-# System prompt for EU AI Act compliance analysis — bilingual EN/DE
-# Language is injected by build_enhanced_prompt based on submission.lang
+# System prompt for EU AI Act compliance analysis — English only
 
 SYSTEM_PROMPT_EN = """You are an expert on the EU AI Act. High-risk AI systems include: biometric identification, critical infrastructure, employment, credit scoring, education. Key requirements: risk management, data governance, transparency, human oversight, logging, conformity assessment.
 Respond strictly with facts from the provided context only, using markdown format.
 
 Your response MUST be in ENGLISH. Use technical terms in English only."""
 
-SYSTEM_PROMPT_DE = """Du bist ein Experte für den EU AI Act. Hochrisiko-KI-Systeme umfassen: biometrische Identifizierung, kritische Infrastruktur, Beschäftigung, Bonitätsbewertung, Bildung. Wichtige Anforderungen: Risikomanagement, Datenverwaltung, Transparenz, menschliche Aufsicht, Protokollierung, Konformitätsbewertung.
-Antworte ausschließlich mit Fakten aus dem bereitgestellten Kontext im Markdown-Format.
-
-Deine Antwort MUSS auf DEUTSCH erfolgen. Fachbegriffe dürfen auf Englisch bleiben."""
-
-SYSTEM_PROMPT = SYSTEM_PROMPT_EN  # default fallback
+SYSTEM_PROMPT = SYSTEM_PROMPT_EN  # English always
 
 def build_company_profile(submission, lang: str = "en") -> str:
-    """Build structured company profile from submission data.
-    lang: 'en' or 'de' — used for section labels."""
+    """Build structured company profile from submission data."""
     import json
     
     labels = {
@@ -35,24 +28,8 @@ def build_company_profile(submission, lang: str = "en") -> str:
                "high_risk": "High-Risk Categories (selected)", "none_selected": "None selected",
                "additional_info": "Additional Information", "ai_activity": "AI Activity Description",
                "yes": "Yes", "no": "No"},
-        "de": {"company": "Unternehmen", "website": "Webseite", "email": "E-Mail", "size": "Unternehmensgröße",
-               "sector": "Branche", "employees": "Mitarbeiter", "revenue": "Jahresumsatz",
-               "hq": "Hauptsitz", "not_specified": "Nicht angegeben", "ai_details": "KI-System-Details",
-               "ai_count": "KI-Systeme in Produktion", "ai_names": "Systemnamen",
-               "ai_purpose": "KI-Zweck", "deployment": "Bereitstellungstyp",
-               "data_sources": "Datenquellen", "decision_type": "Entscheidungstyp",
-               "risk_self": "Risiko-Selbsteinschätzung", "tech_details": "Technische Details",
-               "model_types": "Modelltypen", "training_data": "Trainingsdaten-Herkunft",
-               "human_oversight": "Menschliche Aufsicht", "explainability": "Erklärbarkeit / Interpretierbarkeit",
-               "data_retention": "Datenaufbewahrungsrichtlinie", "compliance_status": "Compliance-Status",
-               "documentation": "Dokumentation", "dpo": "DSB ernannt",
-               "gdpr": "DSGVO-konform", "certifications": "Zertifizierungen",
-               "audits": "Vorherige Audits", "ce_marking": "CE-Kennzeichnung",
-               "high_risk": "Hochrisiko-Kategorien (ausgewählt)", "none_selected": "Keine ausgewählt",
-               "additional_info": "Zusätzliche Informationen", "ai_activity": "KI-Aktivitätsbeschreibung",
-               "yes": "Ja", "no": "Nein"}
     }
-    L = labels.get(lang, labels["en"])
+    L = labels["en"]
     ns = L["not_specified"]
     
     profile = []
@@ -197,10 +174,9 @@ def build_enhanced_prompt(submission, search_text: str = "", lang: str = "en", w
             website_section = "\n## Website Analysis\n\n" + "\n".join(f"- {p}" for p in parts)
     
     if not search_text:
-        search_text = "No open-source data found." if lang == "en" else "Keine öffentlichen Daten gefunden."
-    
-    if lang == "en":
-        prompt = f"""Analyze the following company and its AI systems for EU AI Act compliance.
+        search_text = "No open-source data found."
+
+    prompt = f"""Analyze the following company and its AI systems for EU AI Act compliance.
 
 ## Company Profile
 
@@ -253,59 +229,5 @@ Step-by-step action plan:
 
 Format the answer in markdown with H2 (##) and H3 (###) headings.
 Use tables, lists, and bold text for emphasis."""
-    else:
-        prompt = f"""Analysiere das folgende Unternehmen und seine KI-Systeme auf EU AI Act-Konformität.
 
-## Unternehmensprofil
-
-{profile}
-
-Öffentliche Daten:
-{search_text}
-{website_section}
-
-Bestimme und beschreibe auf Basis aller bereitgestellten Daten im Detail:
-
-## 1. GESAMTFAZIT
-Fällt die Geschäftstätigkeit des Unternehmens unter die EU AI Act-Regulierung? Wie hoch ist das Gesamtrisiko?
-
-## 2. EU AI ACT-EINSTUFUNG
-- Risikokategorie nach EU AI Act (Unacceptable / High / Limited / Minimal)
-- Begründung mit Verweisen auf konkrete Artikel
-- Welche KI-Systeme fallen unter die Regulierung
-
-## 3. ANWENDBARE ANFORDERUNGEN
-Detaillierte Liste der anwendbaren EU AI Act-Anforderungen:
-- Risikomanagement (Artikel 9)
-- Datenverwaltung und Training (Artikel 10)
-- Technische Dokumentation und Transparenz (Artikel 11-12)
-- Automatisierte Entscheidungsfindung und menschliche Aufsicht (Artikel 14)
-- Genauigkeit, Robustheit und Cybersicherheit (Artikel 15)
-- EU-Datenbankregistrierung (Artikel 49)
-- Transparenzpflichten für Nutzer (Artikel 50)
-
-## 4. IDENTIFIZIERTE LÜCKEN
-Für jede Anforderung: Gibt das Unternehmen die Konformität an, und wenn nicht — welche spezifische Lücke besteht:
-- Fehlende Dokumentation
-- Unzureichende Kontrollmaßnahmen
-- Datenprobleme
-- Fehlende menschliche Aufsicht
-- Unzureichende Transparenz
-
-## 5. KONKRETE EMPFEHLUNGEN
-Schritt-für-Schritt-Aktionsplan:
-- Welche Dokumente müssen erstellt werden
-- Welche Prozesse müssen implementiert werden
-- Welche technischen Maßnahmen sind erforderlich
-- Fristen und Prioritäten (sofort / kurzfristig / langfristig)
-- DSB-Anforderung und Registrierung
-
-## 6. RISIKEN UND STRAFEN
-- Mögliche Geldstrafen bei Nichteinhaltung (bis zu 35 Mio. EUR oder 7 % des Jahresumsatzes)
-- Reputationsrisiken
-- Risiko der Geschäftsaussetzung
-
-Formatiere die Antwort in Markdown mit Überschriften der Ebene ## (H2) und ### (H3).
-Verwende Tabellen, Listen und Fettdruck zur Hervorhebung."""
-    
     return prompt

@@ -60,19 +60,6 @@
         }
         .nav-back { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; }
         .nav-back:hover { color: var(--text-primary); }
-        .lang-toggle {
-            display: flex; align-items: center; gap: 4px;
-            margin-left: auto; margin-right: 16px;
-        }
-        .lang-btn {
-            background: none; border: 1px solid var(--border);
-            color: var(--text-muted); padding: 4px 10px;
-            border-radius: 4px; font-size: 12px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; text-transform: uppercase;
-        }
-        .lang-btn.active { background: var(--brand); color: white; border-color: var(--brand); }
-        .lang-btn:hover:not(.active) { color: var(--text-secondary); }
-
         .status-bar {
             margin-top: 72px;
             padding: 40px 24px;
@@ -115,14 +102,6 @@
         .report-header-actions {
             display: flex; gap: 12px; flex-wrap: wrap;
         }
-        .btn-download {
-            background: var(--brand); color: white; border: none;
-            padding: 10px 24px; border-radius: var(--radius-sm);
-            font-size: 14px; font-weight: 500; cursor: pointer;
-            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-            transition: background 0.2s;
-        }
-        .btn-download:hover { background: var(--brand-hover); }
         .btn-new {
             background: rgba(255,255,255,0.04); color: var(--text-secondary);
             border: 1px solid var(--border); padding: 10px 24px;
@@ -349,63 +328,6 @@
             font-size: 13px; color: var(--text-tertiary);
         }
 
-        /* ========= SHARE BUTTONS ========= */
-        .share-section {
-            margin-top: 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 24px 32px;
-            text-align: center;
-        }
-        .share-section h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-secondary);
-        }
-        .share-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .share-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: var(--surface2);
-            color: var(--text-secondary);
-            transition: all 0.2s;
-        }
-        .share-btn:hover {
-            background: var(--surface3);
-            color: var(--text-primary);
-            border-color: var(--text-muted);
-        }
-        .share-btn .share-icon {
-            font-size: 18px;
-        }
-        .share-btn.telegram:hover { border-color: #0088cc; color: #0088cc; }
-        .share-btn.linkedin:hover { border-color: #0077b5; color: #0077b5; }
-        .share-btn.email:hover { border-color: var(--brand); color: var(--brand); }
-        .share-btn.copy:hover { border-color: var(--success); color: var(--success); }
-        .share-toast {
-            font-size: 13px;
-            color: var(--success);
-            margin-top: 8px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .share-toast.visible { opacity: 1; }
-
         @media (max-width: 768px) {
             .report-header { flex-direction: column; }
             .report-body { padding: 24px; }
@@ -415,38 +337,6 @@
             .score-ring { width: 120px; height: 120px; }
             .score-ring-value { font-size: 30px; }
         }
-
-        /* Email section after report */
-        .email-section {
-            margin-top: 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            text-align: center;
-        }
-        .email-section h3 { font-size: 18px; margin-bottom: 8px; }
-        .email-section p { font-size: 14px; color: var(--text-tertiary); margin-bottom: 16px; }
-        .email-input-group {
-            display: flex; gap: 12px; max-width: 480px; margin: 0 auto; justify-content: center;
-        }
-        .email-input-group input {
-            flex: 1; background: var(--bg); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); padding: 12px 14px;
-            color: var(--text-primary); font-size: 15px;
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        .email-input-group input:focus { outline: none; border-color: var(--brand); }
-        .email-input-group button {
-            background: var(--brand); color: white; border: none;
-            padding: 12px 24px; border-radius: var(--radius-sm);
-            font-size: 14px; font-weight: 500; cursor: pointer;
-            white-space: nowrap;
-        }
-        .email-input-group button:hover { background: var(--brand-hover); }
-        .email-sent { color: var(--success); font-size: 14px; margin-top: 8px; }
-
-        /* Fix overflow on report body */
         .report-body { overflow-x: auto; word-wrap: break-word; }
         .report-body img { max-width: 100%; height: auto; }
         .report-body table { word-break: break-word; }
@@ -459,10 +349,6 @@
                 <div class="logo-icon">AC</div>
                 AI Compliance
             </a>
-            <div class="lang-toggle">
-                <button class="lang-btn active" onclick="setLang('en')" id="langEn">EN</button>
-                <button class="lang-btn" onclick="setLang('de')" id="langDe">DE</button>
-            </div>
             <a href="/submit-page" class="nav-back" data-i18n="newReport">→ New Report</a>
         </div>
     </nav>
@@ -483,8 +369,6 @@
                 </div>
                 <div class="report-header-actions">
                     <a href="/submit-page" class="btn-new">← New Report</a>
-                    <button class="btn-download" onclick="downloadPDF()" id="pdfBtn" style="margin-right:8px;">⬇ Download PDF</button>
-                    <button class="btn-download" onclick="downloadReport()" style="background:rgba(255,255,255,0.04);" id="mdBtn">⬇ Download Markdown</button>
                 </div>
             </div>
 
@@ -521,34 +405,16 @@
                 </div>
             </div>
 
-            <!-- CARDS SECTION (warnings / suggestions / success) -->
+            <!-- CARDS SECTION -->
             <div class="cards-section" id="cardsSection"></div>
 
-            <div class="report-summary" id="reportSummary"></div>
-
+            <!-- REPORT BODY -->
             <div class="report-body" id="reportBody">
                 <!-- Report content rendered here -->
             </div>
 
-            <!-- SHARE SECTION -->
-            <div class="share-section" id="shareSection">
-                <h3 id="shareTitle">📤 Share This Report</h3>
-                <div class="share-buttons">
-                    <a class="share-btn telegram" id="shareTelegram" href="#" target="_blank" rel="noopener">
-                        <span class="share-icon">✈️</span> Telegram
-                    </a>
-                    <a class="share-btn linkedin" id="shareLinkedin" href="#" target="_blank" rel="noopener">
-                        <span class="share-icon">🔗</span> LinkedIn
-                    </a>
-                    <a class="share-btn email" id="shareEmail" href="#">
-                        <span class="share-icon">📧</span> Email
-                    </a>
-                    <button class="share-btn copy" id="shareCopy">
-                        <span class="share-icon">📋</span> Copy Link
-                    </button>
-                </div>
-                <div class="share-toast" id="shareToast">✓ Link copied to clipboard!</div>
-            </div>
+            <!-- SUMMARY CARDS -->
+            <div class="report-summary" id="reportSummary"></div>
         </div>
 
         <div class="error-section" id="errorContent" style="display:none;">
@@ -559,153 +425,19 @@
     </div>
 
     <script>
-        const i18n = {
-            en: {
-                title: 'Your AI Compliance Report',
-                newReport: '→ New Report',
-                loading: 'Generating your compliance report...',
-                loadingDesc: 'AI is analyzing your company data against EU AI Act requirements',
-                loadingAttempt: 'Generating report... (attempt ',
-                reportTitle: 'AI Compliance Report',
-                generated: 'Generated: ',
-                company: 'Company',
-                regulation: 'EU AI Act',
-                analysisDepth: 'Analysis Depth',
-                sections: ' sections',
-                comprehensive: 'Comprehensive',
-                failed: '⚠️ Report Generation Failed',
-                failedDesc: 'An error occurred while generating the report. Please try again.',
-                tryAgain: '← Try Again',
-                noId: 'No report ID provided',
-                noIdDesc: 'Please submit the form first.',
-                startHere: '← Start Here',
-                download: '⬇ Download Report',
-                newReportBtn: '← New Report',
-                emailTitle: '📧 Send Report via Email',
-                emailDesc: 'Enter your email to receive a copy of this compliance report.',
-                emailPlaceholder: 'you@company.com',
-                emailBtn: 'Send Report',
-                emailSent: '✓ Report sent! Check your inbox.',
-                sending: 'Sending...',
-                // Score gauge
-                scoreTitle: 'Compliance Score',
-                scoreDesc: 'Your AI compliance score is calculated based on risk factors and current compliance measures.',
-                scoreLabel: 'COMPLIANCE',
-                levelLowRisk: 'Low Risk',
-                levelMedium: 'Medium Risk',
-                levelHighRisk: 'High Risk',
-                bdLow: 'Low Risk (71-100)',
-                bdMedium: 'Medium (40-70)',
-                bdHigh: 'High Risk (0-39)',
-                // Cards
-                cardWarning: '⚠️ Areas requiring attention',
-                cardSuccess: '✅ Compliant areas',
-                cardInfo: '💡 Recommendations',
-                // Share
-                shareTitle: '📤 Share This Report',
-                copySuccess: '✓ Link copied to clipboard!',
-            },
-            de: {
-                title: 'Ihr KI-Compliance-Bericht',
-                newReport: '→ Neuer Bericht',
-                loading: 'Generiere Ihren Compliance-Bericht...',
-                loadingDesc: 'KI analysiert Ihre Unternehmensdaten auf EU AI Act-Anforderungen',
-                loadingAttempt: 'Generiere Bericht... (Versuch ',
-                reportTitle: 'KI-Compliance-Bericht',
-                generated: 'Generiert: ',
-                company: 'Unternehmen',
-                regulation: 'EU AI Act',
-                analysisDepth: 'Analysetiefe',
-                sections: ' Abschnitte',
-                comprehensive: 'Umfassend',
-                failed: '⚠️ Berichtserstellung fehlgeschlagen',
-                failedDesc: 'Bei der Erstellung des Berichts ist ein Fehler aufgetreten.',
-                tryAgain: '← Erneut versuchen',
-                noId: 'Keine Berichts-ID angegeben',
-                noIdDesc: 'Bitte senden Sie zuerst das Formular ab.',
-                startHere: '← Hier starten',
-                download: '⬇ Bericht herunterladen',
-                newReportBtn: '← Neuer Bericht',
-                emailTitle: '📧 Bericht per E-Mail senden',
-                emailDesc: 'Geben Sie Ihre E-Mail-Adresse ein, um eine Kopie dieses Berichts zu erhalten.',
-                emailPlaceholder: 'ihre@firma.de',
-                emailBtn: 'Bericht senden',
-                emailSent: '✓ Bericht gesendet! Prüfen Sie Ihr Postfach.',
-                sending: 'Wird gesendet...',
-                // Score gauge
-                scoreTitle: 'Compliance-Punktzahl',
-                scoreDesc: 'Ihre KI-Compliance-Punktzahl basiert auf Risikofaktoren und aktuellen Compliance-Maßnahmen.',
-                scoreLabel: 'COMPLIANCE',
-                levelLowRisk: 'Niedriges Risiko',
-                levelMedium: 'Mittleres Risiko',
-                levelHighRisk: 'Hohes Risiko',
-                bdLow: 'Niedrig (71-100)',
-                bdMedium: 'Mittel (40-70)',
-                bdHigh: 'Hoch (0-39)',
-                // Cards
-                cardWarning: '⚠️ Bereiche mit Handlungsbedarf',
-                cardSuccess: '✅ Konforme Bereiche',
-                cardInfo: '💡 Empfehlungen',
-                // Share
-                shareTitle: '📤 Bericht teilen',
-                copySuccess: '✓ Link in Zwischenablage kopiert!',
-            }
-        };
-
-        let currentLang = localStorage.getItem('ai-compliance-lang') || 'en';
-
-        function setLang(lang) {
-            currentLang = lang;
-            const t = i18n[lang] || i18n.en;
-            document.getElementById('htmlRoot').lang = lang;
-            document.title = t.title;
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('lang' + lang.charAt(0).toUpperCase() + lang.slice(1)).classList.add('active');
-            document.querySelector('[data-i18n="newReport"]').textContent = t.newReport;
-            localStorage.setItem('ai-compliance-lang', lang);
-            // Update UI strings if report is visible
-            updateScoreStrings(t);
-            updateCardsStrings(t);
-            updateShareStrings(t);
-        }
-
-        function updateScoreStrings(t) {
-            const el = id => document.getElementById(id);
-            if (el('scoreTitle')) el('scoreTitle').textContent = t.scoreTitle;
-            if (el('scoreDesc')) el('scoreDesc').textContent = t.scoreDesc;
-            if (el('scoreLabel')) el('scoreLabel').textContent = t.scoreLabel;
-            if (el('bdLow')) el('bdLow').textContent = t.bdLow;
-            if (el('bdMedium')) el('bdMedium').textContent = t.bdMedium;
-            if (el('bdHigh')) el('bdHigh').textContent = t.bdHigh;
-        }
-
-        function updateCardsStrings(t) {
-            // Cards are dynamic, handled in renderCards()
-        }
-
-        function updateShareStrings(t) {
-            const el = id => document.getElementById(id);
-            if (el('shareTitle')) el('shareTitle').textContent = t.shareTitle;
-            if (el('shareToast')) el('shareToast').textContent = t.copySuccess;
-        }
-
         const subId = new URLSearchParams(window.location.search).get('id');
         if (!subId) {
-            const t = i18n[currentLang];
-            document.getElementById('loading').innerHTML = `<h2>${t.noId}</h2><p>${t.noIdDesc}</p><a href="/submit-page" class="btn-new">${t.startHere}</a>`;
+            document.getElementById('loading').innerHTML = '<h2>No report ID provided</h2><p>Please submit the form first.</p><a href="/submit-page" class="btn-new">← Start Here</a>';
         } else {
             pollReport(subId);
         }
 
-        let reportMarkdown = '';
         let reportHtml = '';
         let companyName = '';
-        let submissionId = subId;
 
         async function pollReport(id) {
             const maxAttempts = 60;
             let attempt = 0;
-            const t = () => i18n[currentLang] || i18n.en;
             
             while (attempt < maxAttempts) {
                 try {
@@ -721,8 +453,7 @@
                         return;
                     } else {
                         attempt++;
-                        document.querySelector('#loading p').textContent = 
-                            t().loadingAttempt + attempt + '/' + maxAttempts + ')';
+                        document.querySelector('#loading p').textContent = 'Generating report... (attempt ' + attempt + '/' + maxAttempts + ')';
                     }
                 } catch (err) {
                     console.error('Poll error:', err);
@@ -733,116 +464,76 @@
         }
 
         function showReport(data) {
-            const t = i18n[currentLang] || i18n.en;
             document.getElementById('loading').style.display = 'none';
             document.getElementById('reportContent').style.display = 'block';
             
             companyName = data.company || 'Your Company';
             reportHtml = data.html || '<p>No content</p>';
-            reportMarkdown = data.markdown || '';
-            submissionId = subId;
             
-            document.getElementById('reportTitle').textContent = data.title || t.reportTitle;
+            document.getElementById('reportTitle').textContent = data.title || 'AI Compliance Report';
             document.getElementById('companyName').textContent = data.company || '';
-            document.getElementById('reportTime').textContent = t.generated + new Date().toLocaleString(currentLang === 'de' ? 'de-DE' : 'en-US');
+            document.getElementById('reportTime').textContent = 'Generated: ' + new Date().toLocaleString('en-US');
             
-            // Render score gauge
             renderScoreGauge(data);
-            
-            // Render info/warning/success cards
             renderCards(data);
-            
-            // Render report body
             document.getElementById('reportBody').innerHTML = reportHtml;
             
-            // Render summary cards
             const summary = document.getElementById('reportSummary');
-            const sectionCount = data.markdown ? (data.markdown.match(/##/g) || []).length + t.sections : t.comprehensive;
+            const sectionCount = data.markdown ? (data.markdown.match(/##/g) || []).length + ' sections' : 'Comprehensive';
             summary.innerHTML = `
                 <div class="summary-card">
                     <div class="value" style="color: var(--accent);">${companyName}</div>
-                    <div class="label">${t.company}</div>
+                    <div class="label">Company</div>
                 </div>
                 <div class="summary-card">
                     <div class="value" style="color: var(--success);">EU AI Act</div>
-                    <div class="label">${t.regulation}</div>
+                    <div class="label">Regulation</div>
                 </div>
                 <div class="summary-card">
                     <div class="value" style="color: var(--warning);">${sectionCount}</div>
-                    <div class="label">${t.analysisDepth}</div>
+                    <div class="label">Analysis Depth</div>
                 </div>
             `;
-
-            // Setup share buttons
-            setupShareButtons(data);
-
-            // Add email section after report body
-            const emailSection = document.createElement('div');
-            emailSection.className = 'email-section';
-            emailSection.id = 'emailSection';
-            emailSection.innerHTML = `
-                <h3>${t.emailTitle}</h3>
-                <p>${t.emailDesc}</p>
-                <div class="email-input-group">
-                    <input type="email" id="reportEmailInput" placeholder="${t.emailPlaceholder}">
-                    <button onclick="sendReportEmail()" id="emailBtn">${t.emailBtn}</button>
-                </div>
-                <div class="email-sent" id="emailSent" style="display:none;">${t.emailSent}</div>
-            `;
-            document.getElementById('reportContent').appendChild(emailSection);
         }
 
         function renderScoreGauge(data) {
             const score = data.score !== undefined ? data.score : 0;
-            const level = data.level || 'medium';
-            const t = i18n[currentLang] || i18n.en;
 
-            // Determine color
             let color, levelText;
             if (score < 40) {
                 color = 'var(--score-red)';
-                levelText = t.levelHighRisk;
+                levelText = 'High Risk';
             } else if (score <= 70) {
                 color = 'var(--score-yellow)';
-                levelText = t.levelMedium;
+                levelText = 'Medium Risk';
             } else {
                 color = 'var(--score-green)';
-                levelText = t.levelLowRisk;
+                levelText = 'Low Risk';
             }
 
-            // SVG circle: radius=58, circumference=2*pi*58 ≈ 364.42
             const circumference = 2 * Math.PI * 58;
             const offset = circumference - (score / 100) * circumference;
 
             const circle = document.getElementById('scoreValueCircle');
             circle.style.stroke = color;
             circle.setAttribute('stroke-dasharray', circumference);
-            // Trigger animation after a microtask
             requestAnimationFrame(() => {
                 circle.style.strokeDashoffset = offset;
             });
 
-            const ringValue = document.getElementById('scoreRingValue');
             document.getElementById('scoreNumber').textContent = score;
             document.getElementById('scoreNumber').style.color = color;
-            const levelEl = document.getElementById('scoreLevel');
-            levelEl.textContent = levelText;
-            levelEl.style.color = color;
-
-            // Update breakdown colors
-            document.getElementById('scoreLabel').textContent = t.scoreLabel;
+            document.getElementById('scoreLevel').textContent = levelText;
+            document.getElementById('scoreLevel').style.color = color;
         }
 
         function renderCards(data) {
-            const t = i18n[currentLang] || i18n.en;
             const recommendations = data.recommendations || [];
-            const level = data.level || 'medium';
             const score = data.score !== undefined ? data.score : 0;
 
             const container = document.getElementById('cardsSection');
             let cardsHtml = '';
 
-            // Warning card: items needing action
             const warnings = recommendations.filter(r => 
                 r.toLowerCase().includes('implement') || 
                 r.toLowerCase().includes('address') || 
@@ -855,7 +546,7 @@
                     <div class="warning-card">
                         <div class="icon">⚠️</div>
                         <div class="card-text">
-                            <strong>${t.cardWarning}</strong>
+                            <strong>Areas requiring attention</strong>
                             <ul style="margin-top:6px;padding-left:18px;">
                                 ${warnings.map(r => `<li>${r}</li>`).join('')}
                             </ul>
@@ -864,7 +555,6 @@
                 `;
             }
 
-            // Success card: compliant areas
             const successes = [];
             if (data.has_documentation === 'yes' || !recommendations.some(r => r.includes('documentation'))) {
                 successes.push('Documentation standards maintained');
@@ -875,14 +565,13 @@
             if (data.gdpr_compliant === 'yes' || !recommendations.some(r => r.includes('GDPR'))) {
                 successes.push('GDPR compliance in place');
             }
-            // If score is good and no warnings, show positive message
             if (successes.length > 0 || score >= 70) {
                 const successItems = successes.length > 0 ? successes : ['Overall compliance posture is strong'];
                 cardsHtml += `
                     <div class="success-card">
                         <div class="icon">✅</div>
                         <div class="card-text">
-                            <strong>${t.cardSuccess}</strong>
+                            <strong>Compliant areas</strong>
                             <ul style="margin-top:6px;padding-left:18px;">
                                 ${successItems.map(s => `<li>${s}</li>`).join('')}
                             </ul>
@@ -891,13 +580,12 @@
                 `;
             }
 
-            // Info card: all recommendations summary
             if (recommendations.length > 0) {
                 cardsHtml += `
                     <div class="info-card">
                         <div class="icon">💡</div>
                         <div class="card-text">
-                            <strong>${t.cardInfo}</strong>
+                            <strong>Recommendations</strong>
                             <ul style="margin-top:6px;padding-left:18px;">
                                 ${recommendations.map(r => `<li>${r}</li>`).join('')}
                             </ul>
@@ -909,114 +597,10 @@
             container.innerHTML = cardsHtml;
         }
 
-        function setupShareButtons(data) {
-            const t = i18n[currentLang] || i18n.en;
-            const reportUrl = window.location.href;
-            const title = encodeURIComponent(data.title || 'AI Compliance Report');
-            const summary = encodeURIComponent(`AI Compliance Report for ${data.company || 'Your Company'} — Score: ${data.score}/100`);
-
-            // Telegram
-            const tgLink = document.getElementById('shareTelegram');
-            tgLink.href = `https://t.me/share/url?url=${encodeURIComponent(reportUrl)}&text=${summary}`;
-
-            // LinkedIn
-            const liLink = document.getElementById('shareLinkedin');
-            liLink.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(reportUrl)}`;
-
-            // Email
-            const emailLink = document.getElementById('shareEmail');
-            emailLink.href = `mailto:?subject=${title}&body=${summary}%0A%0A${encodeURIComponent(reportUrl)}`;
-
-            // Copy link
-            const copyBtn = document.getElementById('shareCopy');
-            copyBtn.onclick = function() {
-                navigator.clipboard.writeText(reportUrl).then(() => {
-                    const toast = document.getElementById('shareToast');
-                    toast.textContent = t.copySuccess;
-                    toast.classList.add('visible');
-                    setTimeout(() => toast.classList.remove('visible'), 2500);
-                });
-            };
-        }
-
         function showError() {
-            const t = i18n[currentLang] || i18n.en;
             document.getElementById('loading').style.display = 'none';
             document.getElementById('errorContent').style.display = 'block';
-            document.querySelector('#errorContent h2').textContent = t.failed;
-            document.querySelector('#errorContent p').textContent = t.failedDesc;
-            document.querySelector('#errorContent a').textContent = t.tryAgain;
         }
-
-        function downloadReport() {
-            const t = i18n[currentLang] || i18n.en;
-            if (!reportMarkdown) {
-                alert(t.noId);
-                return;
-            }
-            const blob = new Blob([reportMarkdown], { type: 'text/markdown' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'ai-compliance-report-' + companyName.replace(/[^a-zA-Z0-9]/g, '-') + '.md';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function downloadPDF() {
-            const t = i18n[currentLang] || i18n.en;
-            if (!submissionId) {
-                alert(t.noId);
-                return;
-            }
-            const btn = document.getElementById('pdfBtn');
-            btn.textContent = '⏳ Generating PDF...';
-            btn.disabled = true;
-            window.location.href = '/download-pdf/' + submissionId;
-            setTimeout(() => {
-                btn.textContent = '⬇ Download PDF';
-                btn.disabled = false;
-            }, 3000);
-        }
-
-        async function sendReportEmail() {
-            const t = i18n[currentLang] || i18n.en;
-            const input = document.getElementById('reportEmailInput');
-            const btn = document.getElementById('emailBtn');
-            const sent = document.getElementById('emailSent');
-            
-            if (!input.value || !input.value.includes('@')) {
-                input.style.borderColor = 'var(--danger)';
-                return;
-            }
-            input.style.borderColor = '';
-            
-            btn.disabled = true;
-            btn.textContent = t.sending;
-            
-            try {
-                const resp = await fetch('/send-report-email', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        id: submissionId,
-                        email: input.value,
-                        lang: currentLang
-                    })
-                });
-                if (!resp.ok) throw new Error('HTTP ' + resp.status);
-                sent.style.display = 'block';
-                btn.textContent = '✓';
-            } catch (err) {
-                alert('Error: ' + err.message);
-                btn.disabled = false;
-                btn.textContent = t.emailBtn;
-            }
-        }
-
-        // Init language
-        const savedLang = localStorage.getItem('ai-compliance-lang') || 'en';
-        setLang(savedLang);
     </script>
 </body>
 </html>

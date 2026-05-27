@@ -107,19 +107,6 @@
             text-decoration: none;
         }
         .nav-cta:hover { background: var(--brand-hover); }
-        .lang-toggle {
-            display: flex; align-items: center; gap: 4px;
-            margin-left: auto; margin-right: 16px;
-        }
-        .lang-btn {
-            background: none; border: 1px solid var(--border);
-            color: var(--text-muted); padding: 4px 10px;
-            border-radius: 4px; font-size: 12px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; text-transform: uppercase;
-        }
-        .lang-btn.active { background: var(--brand); color: white; border-color: var(--brand); }
-        .lang-btn:hover:not(.active) { color: var(--text-secondary); }
-        @media (max-width: 768px) { .lang-toggle { margin-right: 8px; } .lang-btn { font-size: 10px; padding: 3px 6px; } }
 
         /* Hero Section */
         .hero {
@@ -410,11 +397,7 @@
                 <a href="#problem" data-i18n="problem">Problem</a>
                 <a href="#how" data-i18n="how">How It Works</a>
                 <a href="#features" data-i18n="features">Features</a>
-                <div class="lang-toggle">
-                    <button class="lang-btn active" onclick="setLang('en')" id="langEn">EN</button>
-                    <button class="lang-btn" onclick="setLang('de')" id="langDe">DE</button>
-                </div>
-                <a href="/submit-page" class="nav-cta" data-i18n="checkCta">Check Your Company →</a>
+                <a href="/submit-page" class="nav-cta">Check Your Company →</a>
             </div>
         </div>
     </nav>
@@ -571,145 +554,7 @@
     </footer>
 
     <script>
-        const i18n = {
-            en: {
-                problem: 'Problem',
-                how: 'How It Works',
-                features: 'Features',
-                checkCta: 'Check Your Company →',
-                heroBadge: '⚡ EU AI Act enforcement starts 2026',
-                heroTitle: 'Is your AI system<br>compliant with EU AI Act?',
-                heroDesc: 'The EU AI Act introduces strict requirements for all AI systems operating in Europe. From risk management to documentation — non-compliance can cost up to <strong>35M EUR or 7% of global revenue</strong>.',
-                heroCheck: '→ Check Your Company Free',
-                heroLearn: 'Learn More',
-                stat1: 'AI Regulations Checked',
-                stat2: 'Maximum Fine',
-                stat3: 'Instant Report',
-                problemSection: 'The Problem',
-                problemTitle: 'AI Regulation is already <span>here and you need to act</span>',
-                problemDesc: 'The EU AI Act classifies AI systems by risk level. Most AI systems in business use fall under "High Risk" — requiring strict conformity assessment, documentation, and transparency obligations.',
-                howTitle: 'Get your compliance report in <span>3 simple steps</span>',
-                step1Title: 'Fill in your company data',
-                step1Desc: 'Tell us about your AI systems, their purpose, data sources, and current compliance status.',
-                step2Title: 'AI-powered analysis',
-                step2Desc: 'Our engine cross-references your data with EU AI Act requirements and identifies all applicable obligations.',
-                step3Title: 'Get actionable report',
-                step3Desc: 'Receive a detailed compliance report with risk classification, gaps, recommendations, and priority action items.',
-                featuresTitle: 'Comprehensive EU AI Act Analysis',
-                feat1: 'Risk Classification',
-                feat2: 'Gap Analysis',
-                feat3: 'Action Plan',
-                feat4: 'Penalty Assessment',
-                feat5: 'DPO Requirements',
-                feat6: 'Cross-Regulation Check',
-                feat1Desc: 'Determine if your AI systems are high-risk, limited, or minimal under EU AI Act Annex III.',
-                feat2Desc: 'Identify specific gaps in documentation, data governance, human oversight, and transparency.',
-                feat3Desc: 'Get a prioritized roadmap: what to do now, this quarter, and long-term.',
-                feat4Desc: 'Understand potential financial and operational risks of non-compliance.',
-                feat5Desc: 'Know if you need a Data Protection Officer and how to register.',
-                feat6Desc: 'How EU AI Act intersects with GDPR, CRA, and other regulations.',
-                ctaTitle: "Don't wait for the fine",
-                ctaDesc: "Check your company's AI compliance now — it takes less than 5 minutes and it's completely free.",
-                ctaBtn: '→ Check Your Company Free',
-                footer: 'AI Compliance Consultant — Automated EU AI Act analysis tool. Not legal advice.',
-            },
-            de: {
-                problem: 'Problem',
-                how: 'So funktioniert es',
-                features: 'Funktionen',
-                checkCta: 'Unternehmen prüfen →',
-                heroBadge: '⚡ EU AI Act Durchsetzung beginnt 2026',
-                heroTitle: 'Ist Ihr KI-System<br>konform mit dem EU AI Act?',
-                heroDesc: 'Der EU AI Act führt strenge Anforderungen für alle KI-Systeme in Europa ein. Vom Risikomanagement bis zur Dokumentation — die Nichteinhaltung kann bis zu <strong>35 Mio. EUR oder 7 % des Jahresumsatzes</strong> kosten.',
-                heroCheck: '→ Kostenlos prüfen',
-                heroLearn: 'Mehr erfahren',
-                stat1: 'Geprüfte KI-Regulierungen',
-                stat2: 'Maximale Geldstrafe',
-                stat3: 'Sofortbericht',
-                problemSection: 'Das Problem',
-                problemTitle: 'KI-Regulierung ist bereits <span>da und Sie müssen handeln</span>',
-                problemDesc: 'Der EU AI Act stuft KI-Systeme nach Risikostufen ein. Die meisten KI-Systeme in Unternehmen fallen unter "Hohes Risiko" — mit strengen Konformitätsbewertungs-, Dokumentations- und Transparenzpflichten.',
-                howTitle: 'Erhalten Sie Ihren Compliance-Bericht in <span>3 einfachen Schritten</span>',
-                step1Title: 'Unternehmensdaten eingeben',
-                step1Desc: 'Teilen Sie uns Informationen zu Ihren KI-Systemen, deren Zweck, Datenquellen und aktuellem Compliance-Status mit.',
-                step2Title: 'KI-gestützte Analyse',
-                step2Desc: 'Unsere Engine gleicht Ihre Daten mit den EU AI Act-Anforderungen ab und identifiziert alle anwendbaren Verpflichtungen.',
-                step3Title: 'Handlungsbericht erhalten',
-                step3Desc: 'Erhalten Sie einen detaillierten Compliance-Bericht mit Risikoeinstufung, Lücken, Empfehlungen und priorisierten Maßnahmen.',
-                featuresTitle: 'Umfassende EU AI Act-Analyse',
-                feat1: 'Risikoeinstufung',
-                feat2: 'Lückenanalyse',
-                feat3: 'Aktionsplan',
-                feat4: 'Strafbewertung',
-                feat5: 'DSB-Anforderungen',
-                feat6: 'Regulierungsübergreifende Prüfung',
-                feat1Desc: 'Bestimmen Sie, ob Ihre KI-Systeme unter hohes, begrenztes oder minimales Risiko nach EU AI Act Anhang III fallen.',
-                feat2Desc: 'Identifizieren Sie spezifische Lücken in Dokumentation, Datenverwaltung, menschlicher Aufsicht und Transparenz.',
-                feat3Desc: 'Erhalten Sie eine priorisierte Roadmap: was jetzt, in diesem Quartal und langfristig zu tun ist.',
-                feat4Desc: 'Verstehen Sie die potenziellen finanziellen und operativen Risiken der Nichteinhaltung.',
-                feat5Desc: 'Erfahren Sie, ob Sie einen Datenschutzbeauftragten benötigen und wie Sie sich registrieren.',
-                feat6Desc: 'Wie der EU AI Act mit der DSGVO, dem CRA und anderen Vorschriften zusammenhängt.',
-                ctaTitle: 'Warten Sie nicht auf die Geldstrafe',
-                ctaDesc: 'Prüfen Sie jetzt die KI-Compliance Ihres Unternehmens — es dauert weniger als 5 Minuten und ist völlig kostenlos.',
-                ctaBtn: '→ Kostenlos prüfen',
-                footer: 'KI-Compliance-Berater — Automatisiertes EU AI Act-Analysetool. Keine Rechtsberatung.',
-            }
-        };
-
-        function setLang(lang) {
-            const t = i18n[lang] || i18n.en;
-            document.getElementById('htmlRoot').lang = lang;
-            
-            // Toggle buttons
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('lang' + lang.charAt(0).toUpperCase() + lang.slice(1)).classList.add('active');
-            
-            // Nav
-            document.querySelector('[data-i18n="problem"]').textContent = t.problem;
-            document.querySelector('[data-i18n="how"]').textContent = t.how;
-            document.querySelector('[data-i18n="features"]').textContent = t.features;
-            document.querySelector('[data-i18n="checkCta"]').textContent = t.checkCta;
-            
-            // Hero
-            document.querySelector('.hero-badge').textContent = t.heroBadge;
-            document.querySelector('.hero h1').innerHTML = t.heroTitle;
-            document.querySelector('.hero p').innerHTML = t.heroDesc;
-            document.querySelector('.hero-actions .btn-primary').innerHTML = t.heroCheck;
-            document.querySelector('.hero-actions .btn-secondary').innerHTML = t.heroLearn;
-            
-            // Stats
-            document.querySelectorAll('.stat-label')[0].textContent = t.stat1;
-            document.querySelectorAll('.stat-label')[1].textContent = t.stat2;
-            document.querySelectorAll('.stat-label')[2].textContent = t.stat3;
-            
-            // Problem section
-            document.getElementById('problem').querySelector('.section-label').textContent = t.problemSection;
-            document.getElementById('problem').querySelector('h2').innerHTML = t.problemTitle;
-            document.getElementById('problem').querySelector('p').textContent = t.problemDesc;
-            
-            // How section
-            document.getElementById('how').querySelector('h2').innerHTML = t.howTitle;
-            const steps = document.getElementById('how').querySelectorAll('.feature-card h3');
-            const stepDescs = document.getElementById('how').querySelectorAll('.feature-card p');
-            steps[0].textContent = t.step1Title; stepDescs[0].textContent = t.step1Desc;
-            steps[1].textContent = t.step2Title; stepDescs[1].textContent = t.step2Desc;
-            steps[2].textContent = t.step3Title; stepDescs[2].textContent = t.step3Desc;
-            
-            // Features section
-            document.getElementById('features').querySelector('.section-label').textContent = t.featuresTitle;
-            const feats = document.querySelectorAll('.feature-card'); // second group
-            document.querySelector('.cta-section h2').innerHTML = t.ctaTitle;
-            document.querySelector('.cta-section p').textContent = t.ctaDesc;
-            document.querySelector('.cta-section .btn-primary').innerHTML = t.ctaBtn;
-            
-            // Footer
-            document.querySelector('[data-i18n="footer"]').textContent = t.footer;
-            
-            localStorage.setItem('ai-compliance-lang', lang);
-        }
-
-        const savedLang = localStorage.getItem('ai-compliance-lang') || 'en';
-        setLang(savedLang);
+        // English-only — no i18n needed, text is hardcoded in HTML
     </script>
 </body>
 </html>
