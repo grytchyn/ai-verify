@@ -41,6 +41,36 @@ app.add_middleware(
 def health():
     return {"status": "ok"}
 
+@app.get("/analyze-url")
+async def analyze_url(url: str = ""):
+    """Auto-detect company info from URL without creating a submission."""
+    from urllib.parse import urlparse
+    result = {"company_name": "", "sector": "", "hq_location": "", "page_title": ""}
+    if not url.strip():
+        return result
+    try:
+        # Use website_analyzer
+        from .website_analyzer import analyze_website
+        wd = analyze_website(url)
+        if wd.get("company_name"):
+            result["company_name"] = wd["company_name"]
+        if wd.get("sector"):
+            result["sector"] = wd["sector"]
+        if wd.get("hq_location"):
+            result["hq_location"] = wd["hq_location"]
+        if wd.get("page_title"):
+            result["page_title"] = wd["page_title"]
+    except Exception as e:
+        logger.warning(f"URL analysis failed: {e}")
+        # Fallback: extract from domain
+        try:
+            parsed = urlparse(url if url.startswith(("http://", "https://")) else f"https://{url}")
+            domain = parsed.netloc or parsed.path
+            result["company_name"] = domain.replace("www.", "").split(".")[0].title()
+        except:
+            pass
+    return result
+
 def get_db():
     db = SessionLocal()
     try:
@@ -85,7 +115,6 @@ async def submit_full(
     # Company info
     company: str = Form(""),
     url: str = Form(""),
-    email: str = Form(""),
     company_size: str = Form(""),
     sector: str = Form(""),
     annual_revenue: str = Form(""),
@@ -162,7 +191,6 @@ async def submit_full(
         status="processing",
         company=company or "Unknown Company",
         url=url,
-        email=email,
         company_size=company_size,
         sector=sector,
         annual_revenue=annual_revenue,

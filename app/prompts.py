@@ -35,7 +35,6 @@ def build_company_profile(submission, lang: str = "en") -> str:
     profile = []
     profile.append(f"**{L['company']}:** {submission.company or ns}")
     profile.append(f"**{L['website']}:** {submission.url or ns}")
-    profile.append(f"**{L['email']}:** {submission.email or ns}")
     profile.append(f"**{L['size']}:** {submission.company_size or ns}")
     profile.append(f"**{L['sector']}:** {submission.sector or ns}")
     profile.append(f"**{L['employees']}:** {submission.employees or ns}")
@@ -186,48 +185,35 @@ Open-source data:
 {search_text}
 {website_section}
 
-Based on all provided data, determine and describe in detail:
+Based on all provided data, provide a SHORT, CONCISE compliance report.
 
-## 1. OVERALL CONCLUSION
-Does the company's activity fall under EU AI Act regulation? What is the overall risk level?
+IMPORTANT FORMAT RULES:
+- MAXIMUM 3-4 sentences per section. No long paragraphs.
+- Use short bullet points (max 5 per section), not long lists.
+- NO tables unless absolutely necessary.
+- Focus on the MOST CRITICAL findings only — don't list everything.
+- The report should be EASY TO SCAN in 30 seconds.
 
-## 2. EU AI ACT CLASSIFICATION
-- Risk category under EU AI Act (Unacceptable / High / Limited / Minimal)
-- Justification with references to specific articles
-- Which AI systems fall under regulation
+Provide these sections:
 
-## 3. APPLICABLE REQUIREMENTS
-Detailed list of EU AI Act requirements applicable to this case:
-- Risk management (Article 9)
-- Data governance and training (Article 10)
-- Technical documentation and transparency (Articles 11-12)
-- Automated decision-making and human oversight (Article 14)
-- Accuracy, robustness and cybersecurity (Article 15)
-- EU database registration (Article 49)
-- Transparency obligations for users (Article 50)
+## 1. OVERALL CONCLUSION (1-2 sentences only)
+Is the company's activity regulated by the EU AI Act? What is the overall risk level?
 
-## 4. IDENTIFIED GAPS
-For each requirement, indicate whether the company complies, and if not — what specific gap exists:
-- Missing documentation
-- Insufficient control measures
-- Data issues
-- Lack of human oversight
-- Insufficient transparency
+## 2. KEY FINDINGS (3-5 bullet points max)
+Most critical compliance issues found.
 
-## 5. SPECIFIC RECOMMENDATIONS
-Step-by-step action plan:
-- What documents to prepare
-- What processes to implement
-- What technical measures to adopt
-- Deadlines and priorities (immediate / short-term / long-term)
-- DPO requirement and registration
+## 3. RISK LEVEL (one line)
+Unacceptable / High / Limited / Minimal — with one sentence justification.
 
-## 6. RISKS AND PENALTIES
-- Potential fines for non-compliance (up to 35M EUR or 7% of global revenue)
-- Reputational risks
-- Risk of business suspension
+## 4. CRITICAL GAPS (3-5 bullet points max)
+Only the most urgent compliance gaps.
 
-Format the answer in markdown with H2 (##) and H3 (###) headings.
-Use tables, lists, and bold text for emphasis."""
+## 5. TOP RECOMMENDATIONS (3-5 bullet points max)
+Priority actions to take — ordered by urgency (immediate / short-term / long-term).
+
+## 6. PENALTY RISK (1-2 sentences)
+Potential fines and consequences if not addressed.
+
+Keep the entire response under 2000 characters total. Short and actionable. Write like a lawyer advising a client — direct, clear, no fluff."""
 
     return prompt

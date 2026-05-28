@@ -27,7 +27,6 @@ class Submission(Base):
     # Company info
     company = Column(String, index=True)
     url = Column(String, nullable=True)
-    email = Column(String, nullable=True)
     company_size = Column(String, nullable=True)       # startup, sme, mid, enterprise
     sector = Column(String, nullable=True)              # industry sector
     employees = Column(String, nullable=True)           # count range
