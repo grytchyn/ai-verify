@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your AI Compliance Report</title>
+    <title>Your AI Compliance Report — AI Verify</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta property="og:title" content="AI Verify — Compliance Report">
+    <meta property="og:description" content="Your EU AI Act compliance report is ready. AI-powered analysis with actionable recommendations.">
+    <meta property="og:image" content="https://ai-verify-trpv.onrender.com/static/og-image.png">
+    <meta property="og:url" content="https://ai-verify-trpv.onrender.com/result-page">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Verify — Compliance Report">
+    <meta name="twitter:description" content="Your EU AI Act compliance report.">
+    <meta name="twitter:image" content="https://ai-verify-trpv.onrender.com/static/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -434,7 +444,7 @@
                 <div class="logo-icon">◈</div>
                 AI Verify
             </a>
-            <a href="index.html" class="nav-cta" style="background:none;border:1px solid var(--border);color:var(--text-secondary);padding:8px 12px;">← Back</a>
+            <a href="/submit-page" class="nav-back">→ New Report</a>
         </div>
     </nav>
 
@@ -468,7 +478,7 @@
                     <p class="time" id="reportTime"></p>
                 </div>
                 <div class="report-header-actions">
-                    <a href="submit.html" class="btn-new">← New Report</a>
+                    <a href="/submit-page" class="btn-new">← New Report</a>
                 </div>
             </div>
 
@@ -524,7 +534,7 @@
         <div class="error-section" id="errorContent" style="display:none;">
             <h2>⚠️ Report Generation Failed</h2>
             <p>An error occurred while generating the report. Please try again.</p>
-            <a href="submit.html" class="btn-new">← Try Again</a>
+            <a href="/submit-page" class="btn-new">← Try Again</a>
         </div>
     </div>
 
@@ -532,7 +542,7 @@
         let attemptLabel = null;
         const subId = new URLSearchParams(window.location.search).get('id');
         if (!subId) {
-            document.getElementById('loading').innerHTML = '<h2>No report ID provided</h2><p>Please submit the form first.</p><a href="submit.html" class="btn-new">← Start Here</a>';
+            document.getElementById('loading').innerHTML = '<h2>No report ID provided</h2><p>Please submit the form first.</p><a href="/submit-page" class="btn-new">← Start Here</a>';
         } else {
             attemptLabel = document.createElement('div');
             attemptLabel.className = 'attempt-counter';
@@ -546,7 +556,7 @@
             let attempt = 0;
             while (attempt < maxAttempts) {
                 try {
-                    const resp = await fetch('https://ai-verify.onrender.com/report-html/' + id);
+                    const resp = await fetch('/report-html/' + id);
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     const data = await resp.json();
                     if (data.status === 'completed') {

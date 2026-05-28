@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Verify — Check Your Company</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta property="og:title" content="AI Verify — Check Your Company">
+    <meta property="og:description" content="Check your website for EU AI Act compliance in 30 seconds. Free compliance report with actionable recommendations.">
+    <meta property="og:image" content="https://ai-verify-trpv.onrender.com/static/og-image.png">
+    <meta property="og:url" content="https://ai-verify-trpv.onrender.com/submit-page">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Verify — Check Your Company">
+    <meta name="twitter:description" content="Free EU AI Act compliance check in 30 seconds.">
+    <meta name="twitter:image" content="https://ai-verify-trpv.onrender.com/static/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -263,6 +273,7 @@
                 <div class="logo-icon">◈</div>
                 AI Verify
             </a>
+            <a href="/" class="nav-back">← Back</a>
         </div>
     </nav>
 
@@ -885,7 +896,7 @@
             </div>
 
             <div class="form-actions">
-                <a href="index.html" class="btn-secondary">← Cancel</a>
+                <a href="/" class="btn-secondary">← Cancel</a>
                 <button type="submit" class="btn-primary" id="submitBtn">
                     → Generate Compliance Report
                 </button>
@@ -972,14 +983,14 @@
             const formData = new FormData(form);
 
             try {
-                const resp = await fetch('https://ai-verify.onrender.com/submit', {
+                const resp = await fetch('/submit', {
                     method: 'POST',
                     body: formData
                 });
                 if (!resp.ok) throw new Error('HTTP ' + resp.status);
                 const data = await resp.json();
                 if (!data.id) throw new Error('No ID returned');
-                window.location.href = 'result.html?id=' + data.id;
+                window.location.href = '/result-page?id=' + data.id;
             } catch (err) {
                 btn.disabled = false;
                 btn.textContent = '→ Generate Compliance Report';
