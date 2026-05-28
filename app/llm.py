@@ -7,8 +7,8 @@ logger = logging.getLogger(__name__)
 # Ollama Cloud OpenAI-compatible endpoint
 DEFAULT_URL = "https://ollama.com/v1/chat/completions"
 # Available models on Ollama Cloud (as of May 2026):
-# ministral-3:8b, gemma4:31b, kimi-k2.6, qwen3-next:80b, glm-4.7, gpt-oss:20b, gemini-3-flash-preview
-DEFAULT_MODEL = "ministral-3:8b"
+# deepseek-v4-flash ⭐ (default), ministral-3:8b, gemma4:31b, kimi-k2.6, qwen3-next:80b
+DEFAULT_MODEL = "deepseek-v4-flash"
 
 OLLAMA_URL = os.getenv("OLLAMA_API_BASE", DEFAULT_URL)
 MODEL = os.getenv("OLLAMA_MODEL", DEFAULT_MODEL)
