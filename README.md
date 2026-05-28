@@ -2,7 +2,7 @@
 
 A SaaS MVP that automatically checks whether an AI product or service complies with the EU AI Act, providing instant analysis and recommendations.
 
-Website: https://grytchyn.github.io/ai-compliance-consultant/
+Website: https://ai-compliance-consultant.onrender.com/
 
 ## Features
 
