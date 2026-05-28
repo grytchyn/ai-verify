@@ -8,7 +8,7 @@ import httpx
 import sys
 import os
 
-BACKEND_URL = os.environ.get("BACKEND_URL", "https://ai-compliance-consultant.onrender.com")
+BACKEND_URL = os.environ.get("BACKEND_URL", "https://ai-verify.onrender.com")
 
 def test_endpoint(method, path, **kwargs):
     """Test an endpoint and return status + response."""

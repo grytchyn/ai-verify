@@ -8,7 +8,7 @@ import time
 import sys
 import httpx
 
-BACKEND_URL = "https://ai-compliance-consultant.onrender.com"
+BACKEND_URL = "https://ai-verify.onrender.com"
 
 # Test companies (rotate)
 TEST_COMPANIES = [

@@ -1,8 +1,9 @@
-# AI Compliance Consultant
+# AI Verify — EU AI Act Compliance Checker
 
-A SaaS MVP that automatically checks whether an AI product or service complies with the EU AI Act, providing instant analysis and recommendations.
+A SaaS MVP that automatically checks whether a website or AI system complies with the EU AI Act, providing instant analysis and recommendations.
 
-Website: https://ai-compliance-consultant.onrender.com/
+Website: https://ai-verify.onrender.com/
+GitHub Pages: https://grytchyn.github.io/ai-verify/
 
 ## Features
 

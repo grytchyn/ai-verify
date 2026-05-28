@@ -546,7 +546,7 @@
             let attempt = 0;
             while (attempt < maxAttempts) {
                 try {
-                    const resp = await fetch('https://ai-compliance-consultant.onrender.com/report-html/' + id);
+                    const resp = await fetch('https://ai-verify.onrender.com/report-html/' + id);
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     const data = await resp.json();
                     if (data.status === 'completed') {
