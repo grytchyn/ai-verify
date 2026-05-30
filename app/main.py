@@ -1,7 +1,8 @@
 import uuid
+import asyncio
 import logging
 from typing import List
-from fastapi import FastAPI, Form, Request, BackgroundTasks, HTTPException, Depends
+from fastapi import FastAPI, Form, Request, HTTPException, Depends
 from fastapi.responses import HTMLResponse, FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -235,7 +236,6 @@ async def result_page():
 
 @app.post("/submit")
 async def submit_full(
-    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     # Company info
     company: str = Form(""),
@@ -353,7 +353,8 @@ async def submit_full(
     db.commit()
     db.refresh(sub)
     
-    background_tasks.add_task(process_submission, sub_id)
+    loop = asyncio.get_event_loop()
+    loop.create_task(process_submission(sub_id))
     return {"id": sub_id, "status": "processing"}
 
 @app.get("/report/{sub_id}")
