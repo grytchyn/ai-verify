@@ -692,26 +692,30 @@ async def process_submission(sub_id: str):
         
         logger.info(f"Processing enhanced submission {sub_id} for {sub.company}")
         
-        # Website analysis
+        # Website analysis (sync function wrapped in run_in_executor to avoid blocking event loop)
         website_data = {}
         company_url = str(sub.url or "")
         if company_url:
             logger.info(f"Analyzing website: {company_url}")
             try:
-                website_data = analyze_website(company_url)
-                logger.info(f"Website analysis complete: {len(website_data.get('legal_pages', {}))} legal pages, "
-                           f"{len(website_data.get('tech_stack', {}))} tech categories, "
-                           f"{sum(1 for v in website_data.get('gdpr_signals', {}).values() if v)} GDPR signals, "
-                           f"{sum(1 for v in website_data.get('ai_act_signals', {}).values() if v)} AI Act signals")
+                import asyncio
+                website_data = await asyncio.get_event_loop().run_in_executor(
+                    None, analyze_website, company_url
+                )
+                logger.info(f"Website analysis complete for {company_url}")
             except Exception as e:
                 logger.error(f"Website analysis failed: {e}", exc_info=True)
                 website_data = {"error": str(e)}
         
         # Search
         logger.info(f"Searching for {sub.company}")
-        search_results = await duckduckgo_instant_answer(sub.company)
-        logger.info(f"Search results: {len(search_results)} items")
-        search_text = "\n".join([r.get("content", "") for r in search_results if r.get("content")])
+        try:
+            search_results = await duckduckgo_instant_answer(sub.company)
+            logger.info(f"Search results: {len(search_results)} items")
+            search_text = "\n".join([r.get("content", "") for r in search_results if r.get("content")])
+        except Exception as e:
+            logger.error(f"Search failed: {e}", exc_info=True)
+            search_text = "No open-source data found."
         if not search_text:
             search_text = "No open-source data found."
         
