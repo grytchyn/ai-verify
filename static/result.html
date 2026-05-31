@@ -48,6 +48,77 @@
             --radius-sm: 6px;
             --radius-lg: 12px;
         }
+
+        /* ─── MODERN DESIGN ELEMENTS ─── */
+        .pill-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 14px; border-radius: 100px;
+            font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+        }
+        .pill-badge.danger { background: rgba(244,67,54,0.12); color: #f87171; }
+        .pill-badge.warning { background: rgba(245,158,11,0.12); color: #fbbf24; }
+        .pill-badge.success { background: rgba(16,185,129,0.12); color: #34d399; }
+        .pill-badge.info { background: rgba(94,106,210,0.12); color: #818cf8; }
+
+        .gradient-border {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            padding: 1px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--brand), var(--accent), var(--success));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .glass-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .stat-pill {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: var(--surface2);
+            border: 1px solid var(--border-subtle);
+            padding: 3px 10px; border-radius: 6px;
+            font-size: 12px; color: var(--text-tertiary);
+        }
+        .stat-pill .stat-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        .stat-pill .stat-dot.green { background: var(--success); }
+        .stat-pill .stat-dot.yellow { background: var(--warning); }
+        .stat-pill .stat-dot.red { background: var(--danger); }
+        
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .score-bar {
+            height: 4px; border-radius: 2px; margin: 8px 0;
+            background: var(--surface3);
+            overflow: hidden;
+        }
+        .score-bar .score-fill {
+            height: 100%; border-radius: 2px;
+            transition: width 1s ease;
+        }
+
+        .icon-ring {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .icon-ring svg { width: 20px; height: 20px; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { min-height: 100vh; }
         body {
@@ -255,12 +326,7 @@
             display: flex; flex-direction: column; gap: 20px;
         }
 
-        .section-block {
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            position: relative;
-        }
+
         .section-block.danger {
             background: var(--danger-bg);
             border-left: 4px solid var(--danger);
@@ -295,11 +361,6 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 18px; flex-shrink: 0;
         }
-        .section-block.danger .section-icon { background: rgba(244,67,54,0.2); }
-        .section-block.warning .section-icon { background: rgba(245,158,11,0.2); }
-        .section-block.success .section-icon { background: rgba(16,185,129,0.2); }
-        .section-block.info .section-icon { background: rgba(94,106,210,0.2); }
-        .section-block.collapsed .section-icon { background: rgba(255,255,255,0.06); }
 
         .section-title-block h3 {
             font-size: 16px; font-weight: 600;
@@ -335,6 +396,22 @@
             border-radius: var(--radius);
             margin-bottom: 8px;
             border: 1px solid var(--border-subtle);
+            transition: all 0.2s;
+        }
+        .rec-card:hover {
+            border-color: rgba(255,255,255,0.12);
+            transform: translateX(4px);
+        }
+        .section-block {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .section-block:hover {
+            border-color: rgba(255,255,255,0.12);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
         .rec-card:last-child { margin-bottom: 0; }
         .rec-card .rec-icon {
@@ -580,11 +657,35 @@
                         </span>
                     </div>
                 </div>
+                    <div class="score-bar" style="margin-top:16px;">
+                        <div class="score-fill" id="scoreFillBar" style="width:0%;background:var(--score-green);"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- INFOGRAPHIC CONTENT -->
             <div class="infographic" id="infographicArea">
                 <!-- Rendered dynamically -->
+            </div>
+
+            <!-- METHODOLOGY (collapsible, separate) -->
+            <div class="raw-report-section" id="methodologySection">
+                <div class="raw-report-toggle" id="methToggle" onclick="toggleMeth()">
+                    <span id="methToggleIcon">▶</span>
+                    <span data-i18n="rawToggleMethodology">🔬 Methodology & Score Calculation</span>
+                </div>
+                <div class="raw-report-body" id="methReportBody">
+                    <p style="margin-bottom: 16px; color: var(--text-tertiary);">Your compliance score is based on a weighted assessment of these factors:</p>
+                    <div class="details-grid" id="methDetailsGrid">
+                        <div class="detail-item positive"><span class="detail-icon">▲</span>Base score: 100 points</div>
+                    </div>
+                    <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">
+                        <strong>Methodology:</strong> AI Verify uses a rule-based scoring engine aligned with EU AI Act Articles 6–20. 
+                        Each risk factor (AI system type, deployment context, human oversight, data sources) is evaluated against regulatory requirements. 
+                        The score is recalculated in real-time based on your inputs. 
+                        <a href="/privacy#ai-act-compliance" style="color:var(--brand);text-decoration:none;">Learn more about our compliance →</a>
+                    </p>
+                </div>
             </div>
 
             <!-- RAW FULL REPORT (collapsible) -->
@@ -781,6 +882,13 @@
             icon.textContent = body.classList.contains('open') ? '▼' : '▶';
         }
 
+        function toggleMeth() {
+            const body = document.getElementById('methReportBody');
+            const icon = document.getElementById('methToggleIcon');
+            body.classList.toggle('open');
+            icon.textContent = body.classList.contains('open') ? '▼' : '▶';
+        }
+
         function showReport(data) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('reportContent').style.display = 'block';
@@ -795,6 +903,18 @@
             renderScoreGauge(data);
             renderInfographic(data);
 
+            // Populate methodology details
+            const methGrid = document.getElementById('methDetailsGrid');
+            if (methGrid && data.details) {
+                let methHtml = '<div class="detail-item positive"><span class="detail-icon">▲</span>Base score: 100 points</div>';
+                Object.entries(data.details).forEach(([k,v]) => {
+                    const cls = v.startsWith('-') ? 'negative' : 'positive';
+                    const icon = v.startsWith('-') ? '▼' : '▲';
+                    methHtml += `<div class="detail-item ${cls}"><span class="detail-icon">${icon}</span>${v}</div>`;
+                });
+                methGrid.innerHTML = methHtml;
+            }
+            
             // Raw report body
             document.getElementById('rawReportBody').innerHTML = reportHtml;
         }
@@ -828,6 +948,15 @@
             document.getElementById('scoreNumber').style.color = color;
             document.getElementById('scoreLevel').textContent = levelText;
             document.getElementById('scoreLevel').style.color = color;
+            
+            // Animate score bar
+            const scoreBar = document.getElementById('scoreFillBar');
+            if (scoreBar) {
+                scoreBar.style.background = color;
+                requestAnimationFrame(() => {
+                    scoreBar.style.width = score + '%';
+                });
+            }
         }
 
         // ─── PARSE SECTIONS FROM MARKDOWN HTML ───
@@ -958,7 +1087,12 @@
                 html += `
                     <div class="section-block danger">
                         <div class="section-header">
-                            <div class="section-icon">🚨</div>
+                            <div class="icon-ring" style="background:rgba(244,67,54,0.12);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                                    <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                            </div>
                             <div class="section-title-block">
                                 <h3>Critical Gaps & Risks</h3>
                                 <p>Issues requiring immediate attention</p>
@@ -973,7 +1107,11 @@
                 html += `
                     <div class="section-block warning">
                         <div class="section-header">
-                            <div class="section-icon">⚖️</div>
+                            <div class="icon-ring" style="background:rgba(245,158,11,0.12);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2v20M4 5l8-3 8 3M6 3v5a6 6 0 006 6 6 6 0 006-6V3"/>
+                                </svg>
+                            </div>
                             <div class="section-title-block">
                                 <h3>EU AI Act Classification</h3>
                                 <p>${sections.classification.title}</p>
@@ -988,7 +1126,12 @@
                 html += `
                     <div class="section-block warning">
                         <div class="section-header">
-                            <div class="section-icon">📋</div>
+                            <div class="icon-ring" style="background:rgba(245,158,11,0.12);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                            </div>
                             <div class="section-title-block">
                                 <h3>Applicable Requirements</h3>
                                 <p>EU AI Act Articles that apply</p>
@@ -1009,7 +1152,11 @@
                 html += `
                     <div class="section-block success">
                         <div class="section-header">
-                            <div class="section-icon">📊</div>
+                            <div class="icon-ring" style="background:rgba(16,185,129,0.12);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                            </div>
                             <div class="section-title-block">
                                 <h3>Compliance Strengths</h3>
                                 <p>Positive factors boosting your score</p>
@@ -1019,32 +1166,6 @@
                     </div>`;
             }
 
-            // ── SECTION: METHODOLOGY (COLLAPSIBLE SPOILER) ──
-            html += `
-                <div class="raw-report-section" style="margin-top:24px;">
-                    <div class="raw-report-toggle" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('span:first-child').textContent = this.nextElementSibling.classList.contains('open') ? '▼' : '▶';">
-                        <span>▶</span>
-                        <span>🔬 Methodology & Score Calculation</span>
-                    </div>
-                    <div class="raw-report-body" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-                        <p style="margin-bottom: 16px; color: var(--text-tertiary);">Your compliance score is based on a weighted assessment of these factors:</p>
-                        <div class="details-grid">
-                            <div class="detail-item positive"><span class="detail-icon">▲</span>Base score: 100 points</div>
-                            ${Object.entries(details).filter(([k,v]) => v.startsWith('-')).map(([k,v]) =>
-                                `<div class="detail-item negative"><span class="detail-icon">▼</span>${v}</div>`
-                            ).join('')}
-                            ${Object.entries(details).filter(([k,v]) => v.startsWith('+')).map(([k,v]) =>
-                                `<div class="detail-item positive"><span class="detail-icon">▲</span>${v}</div>`
-                            ).join('')}
-                        </div>
-                        <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">
-                            <strong>Methodology:</strong> AI Verify uses a rule-based scoring engine aligned with EU AI Act Articles 6–20. 
-                            Each risk factor (AI system type, deployment context, human oversight, data sources) is evaluated against regulatory requirements. 
-                            The score is recalculated in real-time based on your inputs. 
-                            <a href="/privacy#ai-act-compliance" style="color:var(--brand);text-decoration:none;">Learn more about our compliance →</a>
-                        </p>
-                    </div>
-                </div>`;
 
             // ── SECTION: OVERALL CONCLUSION (DYNAMIC COLOR — LAST BLOCK) ──
             let verdictText;
@@ -1088,7 +1209,12 @@
             html += `
                 <div class="section-block" style="background:${conclusionBg};border-left:4px solid ${conclusionColor};border-color:${conclusionColor}33 !important;margin-top:24px;">
                     <div class="section-header">
-                        <div class="section-icon" style="background:${conclusionColor}20;">${conclusionIcon}</div>
+                        <div class="icon-ring" style="background:${conclusionColor}20;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="${conclusionColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                        </div>
                         <div class="section-title-block">
                             <h3 style="color:${conclusionColor};">Overall Conclusion</h3>
                             <p>${conclusionTitle}</p>
