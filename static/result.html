@@ -761,7 +761,8 @@
                 verdictMedium: "Your AI systems show MODERATE compliance. Targeted improvements are recommended to reduce risk exposure and strengthen your compliance posture.",
                 verdictHigh: "Your AI systems present HIGH RISK under EU AI Act. Immediate compliance actions are required to avoid penalties and regulatory sanctions.",
                 score: "Score",
-                classification: "Classification"
+                classification: "Classification",
+                generatedLabel: "Generated: "
             },
             de: {
                 navTitle: "AI Verify",
@@ -810,7 +811,8 @@
                 verdictMedium: "Ihre KI-Systeme zeigen MITTLERE Compliance. Gezielte Verbesserungen werden empfohlen, um das Risiko zu reduzieren und Ihre Compliance-Position zu stärken.",
                 verdictHigh: "Ihre KI-Systeme stellen ein HOHES RISIKO nach dem EU AI Act dar. Sofortige Compliance-Maßnahmen sind erforderlich, um Strafen und regulatorische Sanktionen zu vermeiden.",
                 score: "Wertung",
-                classification: "Einstufung"
+                classification: "Einstufung",
+                generatedLabel: "Erstellt: "
             }
         };
 
@@ -896,9 +898,9 @@
             const companyName = data.company || 'Your Company';
             const reportHtml = data.html || '<p>No content</p>';
 
-            document.getElementById('reportTitle').textContent = data.title || 'AI Compliance Report';
+            document.getElementById('reportTitle').textContent = translations[currentLang]?.reportTitle || 'AI Compliance Report';
             document.getElementById('companyName').textContent = data.company || '';
-            document.getElementById('reportTime').textContent = 'Generated: ' + new Date().toLocaleString('en-US');
+            document.getElementById('reportTime').textContent = (translations[currentLang]?.generatedLabel || 'Generated: ') + new Date().toLocaleString(currentLang === 'de' ? 'de-DE' : 'en-US');
 
             renderScoreGauge(data);
             renderInfographic(data);
@@ -922,17 +924,18 @@
         function renderScoreGauge(data) {
             const score = data.score !== undefined ? data.score : 0;
 
-            let color, levelText;
+            let color, levelKey, levelText;
             if (score < 40) {
                 color = 'var(--score-red)';
-                levelText = 'High Risk';
+                levelKey = 'scoreHigh';
             } else if (score <= 70) {
                 color = 'var(--score-yellow)';
-                levelText = 'Medium Risk';
+                levelKey = 'scoreMedium';
             } else {
                 color = 'var(--score-green)';
-                levelText = 'Low Risk';
+                levelKey = 'scoreLow';
             }
+            levelText = translations[currentLang]?.[levelKey] || translations['en'][levelKey];
 
             const circumference = 2 * Math.PI * 58;
             const offset = circumference - (score / 100) * circumference;

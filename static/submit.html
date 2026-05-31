@@ -416,68 +416,68 @@
                 <div class="form-group">
                     <label data-i18n="labelAiUseCases">AI Use Cases <span style="color: var(--text-muted); font-size: 12px;" data-i18n="aiUseCasesHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="ai_purpose">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labelai_purpose">AI Use Cases</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="chatbot" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="chatbot" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="chatbot" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optChatbot">Customer support chatbot</span>
                             </label>
-                            <label class="ms-option" data-value="content_gen" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="content_gen" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="content_gen" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optContentGen">Content generation</span>
                             </label>
-                            <label class="ms-option" data-value="fraud_detection" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="fraud_detection" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="fraud_detection" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optFraudDetection">Fraud detection / Risk analysis</span>
                             </label>
-                            <label class="ms-option" data-value="recommendation" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="recommendation" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="recommendation" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optRecommendation">Recommendation engine</span>
                             </label>
-                            <label class="ms-option" data-value="image_video" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="image_video" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="image_video" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optImageVideo">Image / Video analysis</span>
                             </label>
-                            <label class="ms-option" data-value="document_processing" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="document_processing" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="document_processing" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optDocProcessing">Document processing / OCR</span>
                             </label>
-                            <label class="ms-option" data-value="predictive" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="predictive" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="predictive" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optPredictive">Predictive analytics</span>
                             </label>
-                            <label class="ms-option" data-value="speech" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="speech" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="speech" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optSpeech">Speech / Voice recognition</span>
                             </label>
-                            <label class="ms-option" data-value="code_gen" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="code_gen" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="code_gen" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optCodeGen">Code generation</span>
                             </label>
-                            <label class="ms-option" data-value="autonomous" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="autonomous" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="autonomous" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optAutonomous">Autonomous systems</span>
                             </label>
-                            <label class="ms-option" data-value="cv_screening" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="cv_screening" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="cv_screening" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optCvScreening">Resume / CV screening</span>
                             </label>
-                            <label class="ms-option" data-value="other" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="other" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="other" name="ai_purpose">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optOtherAi">Other (specify in report)</span>
@@ -542,53 +542,53 @@
                 <div class="form-group">
                     <label data-i18n="labelDataSources">Data Sources <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="data_sources">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labeldata_sources">Data Sources</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="public_datasets" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="public_datasets" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="public_datasets" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optPublicDatasets">Public datasets</span>
                             </label>
-                            <label class="ms-option" data-value="customer_data" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="customer_data" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="customer_data" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optCustomerData">Customer data</span>
                             </label>
-                            <label class="ms-option" data-value="third_party_apis" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="third_party_apis" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="third_party_apis" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optThirdPartyApis">Third-party APIs</span>
                             </label>
-                            <label class="ms-option" data-value="user_generated" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="user_generated" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="user_generated" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optUserGenerated">User-generated content</span>
                             </label>
-                            <label class="ms-option" data-value="web_scraping" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="web_scraping" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="web_scraping" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optWebScraping">Web scraping</span>
                             </label>
-                            <label class="ms-option" data-value="proprietary" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="proprietary" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="proprietary" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optProprietaryDatasets">Proprietary datasets</span>
                             </label>
-                            <label class="ms-option" data-value="synthetic" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="synthetic" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="synthetic" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optSyntheticData">Synthetic data</span>
                             </label>
-                            <label class="ms-option" data-value="open_gov" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="open_gov" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="open_gov" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optOpenGov">Open government data</span>
                             </label>
-                            <label class="ms-option" data-value="purchased" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="purchased" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="purchased" name="data_sources">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optPurchasedData">Purchased data</span>
@@ -606,58 +606,58 @@
                 <div class="form-group">
                     <label data-i18n="labelModelTypes">AI Model Types Used <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="model_types">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labelmodel_types">AI Model Types Used</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="llm" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="llm" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="llm" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optLLM">Large Language Models (LLM)</span>
                             </label>
-                            <label class="ms-option" data-value="cnn" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="cnn" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="cnn" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optCNN">Convolutional Neural Networks (CNN)</span>
                             </label>
-                            <label class="ms-option" data-value="transformer" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="transformer" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="transformer" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optTransformer">Transformer models</span>
                             </label>
-                            <label class="ms-option" data-value="diffusion" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="diffusion" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="diffusion" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optDiffusion">Diffusion models</span>
                             </label>
-                            <label class="ms-option" data-value="regression" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="regression" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="regression" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optRegression">Regression / Statistical models</span>
                             </label>
-                            <label class="ms-option" data-value="decision_tree" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="decision_tree" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="decision_tree" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optDecisionTree">Decision Trees / Random Forest</span>
                             </label>
-                            <label class="ms-option" data-value="reinforcement" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="reinforcement" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="reinforcement" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optReinforcement">Reinforcement Learning</span>
                             </label>
-                            <label class="ms-option" data-value="gan" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="gan" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="gan" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optGan">GANs / Generative models</span>
                             </label>
-                            <label class="ms-option" data-value="recommender" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="recommender" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="recommender" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optRecommender">Recommendation systems</span>
                             </label>
-                            <label class="ms-option" data-value="other" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="other" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="other" name="model_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optOtherNotSure">Other / Not sure</span>
@@ -669,43 +669,43 @@
                 <div class="form-group">
                     <label data-i18n="labelHumanOversight">Human Oversight Mechanisms <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="human_oversight">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labelhuman_oversight">Human Oversight Mechanisms</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="manual_review" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="manual_review" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="manual_review" name="human_oversight">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optManualReview">Manual review queue</span>
                             </label>
-                            <label class="ms-option" data-value="approval_workflow" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="approval_workflow" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="approval_workflow" name="human_oversight">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optApprovalWorkflow">Approval workflow</span>
                             </label>
-                            <label class="ms-option" data-value="exception_handling" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="exception_handling" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="exception_handling" name="human_oversight">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optExceptionHandling">Exception / escalation handling</span>
                             </label>
-                            <label class="ms-option" data-value="human_in_loop" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="human_in_loop" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="human_in_loop" name="human_oversight">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optHumanInLoopOversight">Human-in-the-loop for decisions</span>
                             </label>
-                            <label class="ms-option" data-value="audit_logs" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="audit_logs" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="audit_logs" name="human_oversight">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optAuditLogs">Audit logs / monitoring</span>
                             </label>
-                            <label class="ms-option" data-value="override" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="override" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="override" name="human_oversight">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optOverride">Human override capability</span>
                             </label>
-                            <label class="ms-option" data-value="none" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="none" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="none" name="human_oversight">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optNoOversight">No human oversight</span>
@@ -717,43 +717,43 @@
                 <div class="form-group">
                     <label data-i18n="labelExplainability">Explainability Methods <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="explainability">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labelexplainability">Explainability Methods</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="shap" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="shap" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="shap" name="explainability">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optShap">SHAP</span>
                             </label>
-                            <label class="ms-option" data-value="lime" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="lime" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="lime" name="explainability">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optLime">LIME</span>
                             </label>
-                            <label class="ms-option" data-value="attention" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="attention" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="attention" name="explainability">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optAttention">Attention visualization</span>
                             </label>
-                            <label class="ms-option" data-value="feature_importance" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="feature_importance" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="feature_importance" name="explainability">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optFeatureImportance">Feature importance</span>
                             </label>
-                            <label class="ms-option" data-value="decision_tree_explain" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="decision_tree_explain" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="decision_tree_explain" name="explainability">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optDecisionTreeExplain">Decision tree explanations</span>
                             </label>
-                            <label class="ms-option" data-value="counterfactual" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="counterfactual" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="counterfactual" name="explainability">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optCounterfactual">Counterfactual explanations</span>
                             </label>
-                            <label class="ms-option" data-value="not_applicable" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="not_applicable" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="not_applicable" name="explainability">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optNotApplicableNone">Not applicable / None</span>
@@ -798,53 +798,53 @@
                 <p class="section-desc" data-i18n="sec4Desc">Select which EU AI Act high-risk categories apply to your AI systems. <a href="https://artificialintelligenceact.eu/high-risk/" target="_blank" style="color: var(--accent);" data-i18n="learnMore">Learn more</a></p>
                 
                 <div class="custom-multiselect" data-name="high_risk_categories">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labelhigh_risk_categories">High-Risk Categories</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="risk_biometrics" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="risk_biometrics" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_biometrics" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optBiometrics">Biometric identification / Remote biometric ID</span>
                             </label>
-                            <label class="ms-option" data-value="risk_critical_infra" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_critical_infra" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_critical_infra" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optCriticalInfra">Critical infrastructure management</span>
                             </label>
-                            <label class="ms-option" data-value="risk_education" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_education" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_education" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optEducationTraining">Education & vocational training</span>
                             </label>
-                            <label class="ms-option" data-value="risk_employment" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_employment" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_employment" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optEmployment">Employment & worker management</span>
                             </label>
-                            <label class="ms-option" data-value="risk_credit" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_credit" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_credit" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optCredit">Credit assessment & essential services</span>
                             </label>
-                            <label class="ms-option" data-value="risk_law_enforcement" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_law_enforcement" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_law_enforcement" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optLawEnforcement">Law enforcement</span>
                             </label>
-                            <label class="ms-option" data-value="risk_migration" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_migration" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_migration" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optMigration">Migration, asylum & border control</span>
                             </label>
-                            <label class="ms-option" data-value="risk_justice" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_justice" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_justice" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optJustice">Administration of justice</span>
                             </label>
-                            <label class="ms-option" data-value="risk_democratic" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="risk_democratic" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="risk_democratic" name="high_risk_categories">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optDemocratic">Democratic processes (elections/voting)</span>
@@ -904,43 +904,43 @@
                 <div class="form-group">
                     <label data-i18n="labelCertifications">Existing Certifications <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="existing_certifications">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labelexisting_certifications">Existing Certifications</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="iso_27001" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="iso_27001" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="iso_27001" name="existing_certifications">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optIso27001">ISO 27001</span>
                             </label>
-                            <label class="ms-option" data-value="iso_42001" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="iso_42001" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="iso_42001" name="existing_certifications">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optIso42001">ISO 42001 (AI Management)</span>
                             </label>
-                            <label class="ms-option" data-value="soc2" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="soc2" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="soc2" name="existing_certifications">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optSoc2">SOC 2</span>
                             </label>
-                            <label class="ms-option" data-value="iso_27701" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="iso_27701" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="iso_27701" name="existing_certifications">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optIso27701">ISO 27701 (Privacy)</span>
                             </label>
-                            <label class="ms-option" data-value="pcidss" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="pcidss" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="pcidss" name="existing_certifications">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optPcidss">PCI DSS</span>
                             </label>
-                            <label class="ms-option" data-value="hipaa" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="hipaa" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="hipaa" name="existing_certifications">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optHipaa">HIPAA</span>
                             </label>
-                            <label class="ms-option" data-value="none" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="none" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="none" name="existing_certifications">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optNoneYetCert">None yet</span>
@@ -969,38 +969,38 @@
                 <div class="form-group" id="audit-details" style="display:none;">
                     <label data-i18n="labelAuditTypes">Audit Types <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="audit_types">
-                        <button type="button" class="ms-trigger" onclick="toggleMS(this)">
+                        <button type="button" class="ms-trigger" onclick="toggleMS(this, event)">
                             <span class="ms-label" data-i18n="labelaudit_types">Audit Types</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
                         </button>
                         <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="gdpr" onclick="toggleMSOption(this)">
+                                                        <label class="ms-option" data-value="gdpr" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="gdpr" name="audit_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optGdprAudit">GDPR audit</span>
                             </label>
-                            <label class="ms-option" data-value="iso" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="iso" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="iso" name="audit_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optIsoAudit">ISO certification audit</span>
                             </label>
-                            <label class="ms-option" data-value="internal_ai" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="internal_ai" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="internal_ai" name="audit_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optInternalAiAudit">Internal AI audit</span>
                             </label>
-                            <label class="ms-option" data-value="third_party_ai" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="third_party_ai" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="third_party_ai" name="audit_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optThirdPartyAiAudit">Third-party AI audit</span>
                             </label>
-                            <label class="ms-option" data-value="security" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="security" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="security" name="audit_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optSecurityTest">Security / penetration test</span>
                             </label>
-                            <label class="ms-option" data-value="other" onclick="toggleMSOption(this)">
+                            <label class="ms-option" data-value="other" onclick="toggleMSOption(this, event)">
                                 <input type="checkbox" value="other" name="audit_types">
                                 <span class="ms-check-icon"></span>
                                 <span class="ms-check-text" data-i18n="optOtherAudit">Other</span>
@@ -1442,8 +1442,8 @@
 
 
         // ── Custom Multiselect Functions ──
-        function toggleMS(btn) {
-            event.stopPropagation();
+        function toggleMS(btn, evt) {
+            (evt || event).stopPropagation();
             const dd = btn.nextElementSibling;
             const overlay = document.getElementById('msOverlay');
             const wasOpen = dd.classList.contains('open');
@@ -1455,12 +1455,12 @@
             }
         }
 
-        function toggleMSOption(label) {
+        function toggleMSOption(label, evt) {
             const cb = label.querySelector('input[type="checkbox"]');
             cb.checked = !cb.checked;
             label.classList.toggle('selected', cb.checked);
             // Prevent event from closing
-            event.stopPropagation();
+            (evt || event).stopPropagation();
             updateMSLabel(label.closest('.custom-multiselect'));
         }
 
@@ -1549,9 +1549,8 @@
             }
             const cancelBtn = document.querySelector('a.btn-secondary');
             if (cancelBtn) cancelBtn.textContent = translations[currentLang]?.btnCancel || '← Cancel';
-        }
-        // Also update multiselect labels on language change
-        document.querySelectorAll('.custom-multiselect').forEach(el => updateMSLabel(el));
+            // Also update multiselect labels on language change
+            document.querySelectorAll('.custom-multiselect').forEach(el => updateMSLabel(el));
         }
         applyLanguage();
 
@@ -1746,10 +1745,10 @@
                 const data = await resp.json();
                 if (!data.id) throw new Error('No ID returned');
                 clearFormCache();
-                window.location.href = '/result-page?id=' + data.id;
+                window.location.href = '/result-page?id=' + data.id + '&lang=' + currentLang;
             } catch (err) {
                 btn.disabled = false;
-                btn.textContent = '→ Generate Compliance Report';
+                btn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Compliance Report';
                 // Show error with retry — data still in cache
                 document.getElementById('errorBox').style.display = '';
                 document.getElementById('errorMsg').textContent = err.message;
