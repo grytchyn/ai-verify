@@ -506,12 +506,12 @@
                     <div class="auth-avatar" id="authAvatar"></div>
                     <span class="auth-name" id="authName"></span>
                     <div class="auth-dropdown" id="authDropdown">
-                        <a href="/result-page?user=results">📊 My Results</a>
+                        <a href="/result-page?user=results" data-i18n="navMyResults">📊 My Results</a>
                         <div class="divider"></div>
-                        <button onclick="handleLogout()">🚪 Sign Out</button>
+                        <button onclick="handleLogout()" data-i18n="navSignOut">🚪 Sign Out</button>
                     </div>
                 </div>
-                <a href="/submit-page" class="nav-back" style="margin-left:4px;">→ New Report</a>
+                <a href="/submit-page" class="nav-back" style="margin-left:4px;" data-i18n="navNewReport">→ New Report</a>
             </div>
         </div>
     </nav>
@@ -533,15 +533,15 @@
                     <div class="neural-line"></div>
                     <div class="neural-scan"></div>
                 </div>
-                <h2>Scanning your compliance data</h2>
-                <p>Analyzing against EU AI Act requirements</p>
+                <h2 data-i18n="loadingTitle">Scanning your compliance data</h2>
+                <p data-i18n="loadingDesc">Analyzing against EU AI Act requirements</p>
             </div>
         </div>
 
         <div class="report-container" id="reportContent" style="display:none;">
             <div class="report-header">
                 <div class="report-header-info">
-                    <h1 id="reportTitle">AI Compliance Report</h1>
+                    <h1 id="reportTitle" data-i18n="reportTitle">AI Compliance Report</h1>
                     <p class="company" id="companyName"></p>
                     <p class="time" id="reportTime"></p>
                 </div>
@@ -561,22 +561,22 @@
                     </svg>
                     <div class="score-ring-value" id="scoreRingValue">
                         <span id="scoreNumber">—</span>
-                        <span class="score-label" id="scoreLabel">COMPLIANCE</span>
+                        <span class="score-label" id="scoreLabel" data-i18n="scoreLabel">COMPLIANCE</span>
                         <span class="score-level" id="scoreLevel"></span>
                     </div>
                 </div>
                 <div class="score-info">
-                    <h3 id="scoreTitle">Compliance Score</h3>
-                    <p id="scoreDesc">Your AI compliance score is calculated based on risk factors and current compliance measures.</p>
+                    <h3 data-i18n="scoreTitle">Compliance Score</h3>
+                    <p data-i18n="scoreDesc">Your AI compliance score is calculated based on risk factors and current compliance measures.</p>
                     <div class="score-breakdown">
                         <span class="score-breakdown-item">
-                            <span class="dot dot-success"></span> <span>Low Risk (71-100)</span>
+                            <span class="dot dot-success"></span> <span data-i18n="scoreLow">Low Risk (71-100)</span>
                         </span>
                         <span class="score-breakdown-item">
-                            <span class="dot dot-warning"></span> <span>Medium (40-70)</span>
+                            <span class="dot dot-warning"></span> <span data-i18n="scoreMedium">Medium (40-70)</span>
                         </span>
                         <span class="score-breakdown-item">
-                            <span class="dot dot-danger"></span> <span>High Risk (0-39)</span>
+                            <span class="dot dot-danger"></span> <span data-i18n="scoreHigh">High Risk (0-39)</span>
                         </span>
                     </div>
                 </div>
@@ -591,7 +591,7 @@
             <div class="raw-report-section">
                 <div class="raw-report-toggle" id="rawToggle" onclick="toggleRaw()">
                     <span id="rawToggleIcon">▶</span>
-                    <span>📄 View Full Report (raw markdown)</span>
+                    <span data-i18n="rawToggle">📄 View Full Report (raw markdown)</span>
                 </div>
                 <div class="raw-report-body" id="rawReportBody">
                     <!-- Raw markdown HTML goes here -->
@@ -611,10 +611,134 @@
     </footer>
 
     <script>
+        // ── Translation system ──
+        const translations = {
+            en: {
+                navTitle: "AI Verify",
+                navNewReport: "→ New Report",
+                navMyResults: "📊 My Results",
+                navSignOut: "🚪 Sign Out",
+                loadingTitle: "Scanning your compliance data",
+                loadingDesc: "Analyzing against EU AI Act requirements",
+                reportTitle: "AI Compliance Report",
+                noReportId: "No report ID provided",
+                noReportDesc: "Please submit the form first.",
+                noReportBtn: "← Start Here",
+                scoreLabel: "COMPLIANCE",
+                scoreTitle: "Compliance Score",
+                scoreDesc: "Your AI compliance score is calculated based on risk factors and current compliance measures.",
+                scoreLow: "Low Risk (71-100)",
+                scoreMedium: "Medium (40-70)",
+                scoreHigh: "High Risk (0-39)",
+                rawToggle: "📄 View Full Report (raw markdown)",
+                rawToggleMethodology: "🔬 Methodology & Score Calculation",
+                sectionCriticalGaps: "Critical Gaps & Risks",
+                sectionCriticalGapsDesc: "Issues requiring immediate attention",
+                sectionClassification: "EU AI Act Classification",
+                sectionRequirements: "Applicable Requirements",
+                sectionRequirementsDesc: "EU AI Act Articles that apply",
+                sectionStrengths: "Compliance Strengths",
+                sectionStrengthsDesc: "Positive factors boosting your score",
+                sectionConclusion: "Overall Conclusion",
+                conclusionLow: "Low Risk — Good Compliance",
+                conclusionMedium: "Medium Risk — Improvements Needed",
+                conclusionHigh: "High Risk — Action Required",
+                keyRecs: "Key Recommendations",
+                pollAttempt: "↻ Polling attempt",
+                errorHeader: "Analysis Failed",
+                errorDesc: "We couldn't complete your compliance analysis. This may be due to a temporary issue. Please try again.",
+                errorBtn: "← Form",
+                footerAIVerify: "AI Verify",
+                footerPrivacy: "Privacy",
+                footerImprint: "Imprint",
+                footerCopyright: "© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.",
+                methodologyDesc: "Your compliance score is based on a weighted assessment of these factors:",
+                methodologyDetail: "AI Verify uses a rule-based scoring engine aligned with EU AI Act Articles 6–20. Each risk factor (AI system type, deployment context, human oversight, data sources) is evaluated against regulatory requirements. The score is recalculated in real-time based on your inputs.",
+                methodologyLink: "Learn more about our compliance →",
+                baseScore: "Base score: 100 points",
+                verdictLow: "Your AI systems show GOOD compliance with EU AI Act requirements. Continue monitoring and maintaining your current practices.",
+                verdictMedium: "Your AI systems show MODERATE compliance. Targeted improvements are recommended to reduce risk exposure and strengthen your compliance posture.",
+                verdictHigh: "Your AI systems present HIGH RISK under EU AI Act. Immediate compliance actions are required to avoid penalties and regulatory sanctions.",
+                score: "Score",
+                classification: "Classification"
+            },
+            de: {
+                navTitle: "AI Verify",
+                navNewReport: "→ Neuer Bericht",
+                navMyResults: "📊 Meine Ergebnisse",
+                navSignOut: "🚪 Abmelden",
+                loadingTitle: "Compliance-Daten werden gescannt",
+                loadingDesc: "Analyse nach EU AI Act-Anforderungen",
+                reportTitle: "KI-Compliance-Bericht",
+                noReportId: "Keine Berichts-ID vorhanden",
+                noReportDesc: "Bitte senden Sie zuerst das Formular ab.",
+                noReportBtn: "← Hier starten",
+                scoreLabel: "COMPLIANCE",
+                scoreTitle: "Compliance-Wertung",
+                scoreDesc: "Ihre KI-Compliance-Wertung basiert auf Risikofaktoren und aktuellen Compliance-Maßnahmen.",
+                scoreLow: "Niedriges Risiko (71-100)",
+                scoreMedium: "Mittleres Risiko (40-70)",
+                scoreHigh: "Hohes Risiko (0-39)",
+                rawToggle: "📄 Vollständigen Bericht anzeigen (Rohformat)",
+                rawToggleMethodology: "🔬 Methodik & Wertungsberechnung",
+                sectionCriticalGaps: "Kritische Lücken & Risiken",
+                sectionCriticalGapsDesc: "Probleme, die sofortige Aufmerksamkeit erfordern",
+                sectionClassification: "EU AI Act-Einstufung",
+                sectionRequirements: "Anwendbare Anforderungen",
+                sectionRequirementsDesc: "EU AI Act-Artikel, die zutreffen",
+                sectionStrengths: "Compliance-Stärken",
+                sectionStrengthsDesc: "Positive Faktoren, die Ihre Wertung verbessern",
+                sectionConclusion: "Gesamtfazit",
+                conclusionLow: "Niedriges Risiko — Gute Compliance",
+                conclusionMedium: "Mittleres Risiko — Verbesserungen nötig",
+                conclusionHigh: "Hohes Risiko — Maßnahmen erforderlich",
+                keyRecs: "Wichtigste Empfehlungen",
+                pollAttempt: "↻ Abfrageversuch",
+                errorHeader: "Analyse fehlgeschlagen",
+                errorDesc: "Wir konnten Ihre Compliance-Analyse nicht abschließen. Dies kann an einem vorübergehenden Problem liegen. Bitte versuchen Sie es erneut.",
+                errorBtn: "← Formular",
+                footerAIVerify: "AI Verify",
+                footerPrivacy: "Datenschutz",
+                footerImprint: "Impressum",
+                footerCopyright: "© 2026 AI Verify. Automatisierte EU AI Act-Analyse für kleine und mittlere Unternehmen. Keine Rechtsberatung.",
+                methodologyDesc: "Ihre Compliance-Wertung basiert auf einer gewichteten Bewertung dieser Faktoren:",
+                methodologyDetail: "AI Verify verwendet eine regelbasierte Bewertungsmaschine, die auf die EU AI Act-Artikel 6–20 abgestimmt ist. Jeder Risikofaktor (KI-Systemtyp, Einsatzkontext, menschliche Aufsicht, Datenquellen) wird anhand der regulatorischen Anforderungen bewertet. Die Wertung wird in Echtzeit basierend auf Ihren Eingaben neu berechnet.",
+                methodologyLink: "Mehr über unsere Compliance erfahren →",
+                baseScore: "Basiswertung: 100 Punkte",
+                verdictLow: "Ihre KI-Systeme zeigen GUTE Compliance mit den EU AI Act-Anforderungen. Überwachen und pflegen Sie weiterhin Ihre aktuellen Praktiken.",
+                verdictMedium: "Ihre KI-Systeme zeigen MITTLERE Compliance. Gezielte Verbesserungen werden empfohlen, um das Risiko zu reduzieren und Ihre Compliance-Position zu stärken.",
+                verdictHigh: "Ihre KI-Systeme stellen ein HOHES RISIKO nach dem EU AI Act dar. Sofortige Compliance-Maßnahmen sind erforderlich, um Strafen und regulatorische Sanktionen zu vermeiden.",
+                score: "Wertung",
+                classification: "Einstufung"
+            }
+        };
+
+        let currentLang = localStorage.getItem('aiverify_lang') || 'en';
+        const urlLang = new URLSearchParams(window.location.search).get('lang');
+        if (urlLang) currentLang = urlLang;
+        localStorage.setItem('aiverify_lang', currentLang);
+        document.documentElement.lang = currentLang;
+
+        function applyLanguage() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang] && translations[currentLang][key] !== undefined) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[currentLang] && translations[currentLang][key] !== undefined) {
+                    el.placeholder = translations[currentLang][key];
+                }
+            });
+        }
+        applyLanguage();
+
         let attemptLabel = null;
         const subId = new URLSearchParams(window.location.search).get('id');
         if (!subId) {
-            document.getElementById('loading').innerHTML = '<h2>No report ID provided</h2><p>Please submit the form first.</p><a href="/submit-page" class="btn-new">← Start Here</a>';
+            document.getElementById('loading').innerHTML = '<h2 data-i18n="noReportId">' + (translations[currentLang]?.noReportId || 'No report ID provided') + '</h2><p data-i18n="noReportDesc">' + (translations[currentLang]?.noReportDesc || 'Please submit the form first.') + '</p><a href="/submit-page" class="btn-new" data-i18n="noReportBtn">' + (translations[currentLang]?.noReportBtn || '← Start Here') + '</a>';
         } else {
             attemptLabel = document.createElement('div');
             attemptLabel.className = 'attempt-counter';
@@ -639,7 +763,7 @@
                         return;
                     } else {
                         attempt++;
-                        if (attemptLabel) attemptLabel.textContent = '↻ Polling attempt ' + attempt + '/' + maxAttempts;
+                        if (attemptLabel) attemptLabel.textContent = '↻ ' + (translations[currentLang]?.pollAttempt || 'Polling attempt') + ' ' + attempt + '/' + maxAttempts;
                     }
                 } catch (err) {
                     console.error('Poll error:', err);

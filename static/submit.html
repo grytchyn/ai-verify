@@ -229,13 +229,13 @@
                 <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5e6ad2"/><stop offset="100%" stop-color="#7170ff"/></linearGradient></defs><path d="M16 2L5 7v7c0 7.5 4.25 14.5 11 17 6.75-2.5 11-9.5 11-17V7L16 2z" fill="url(#g)"/><path d="M11 16l4 4 7-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="8" r="2.5" fill="#10b981" stroke="#08090a" stroke-width="1.5"/></svg></div>
                 AI Verify
             </a>
-            <a href="/" class="nav-back">← Back</a>
+            <a href="/" class="nav-back" data-i18n="navBack">← Back</a>
         </div>
     </nav>
 
     <div class="page-title">
-        <h1>Check Your AI Compliance</h1>
-        <p>Fill in the details about your company and AI systems for a comprehensive EU AI Act analysis.</p>
+        <h1 data-i18n="pageTitle">Check Your AI Compliance</h1>
+        <p data-i18n="pageDesc">Fill in the details about your company and AI systems for a comprehensive EU AI Act analysis.</p>
     </div>
 
     <div class="form-container">
@@ -245,61 +245,61 @@
                         
             <!-- Section 1: Company Information -->
             <div class="form-section">
-                <h2>📋 Company Information</h2>
-                <p class="section-desc">Basic information about your organization. <span style="color: var(--brand); font-size: 12px;">Company name, sector, and HQ will be auto-detected from your website URL.</span></p>
+                <h2 data-i18n="sec1Title">📋 Company Information</h2>
+                <p class="section-desc" data-i18n="sec1Desc">Basic information about your organization. <span style="color: var(--brand); font-size: 12px;" data-i18n="sec1Hint">Company name, sector, and HQ will be auto-detected from your website URL.</span></p>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Company Size</label>
+                        <label data-i18n="labelCompanySize">Company Size</label>
                         <select name="company_size">
-                            <option value="">Select size...</option>
-                            <option value="startup">Startup (1-10)</option>
-                            <option value="sme">SME (11-250)</option>
-                            <option value="mid">Mid-sized (251-1000)</option>
-                            <option value="enterprise">Enterprise (1000+)</option>
+                            <option value="" data-i18n="optSelectSize">Select size...</option>
+                            <option value="startup" data-i18n="optStartup">Startup (1-10)</option>
+                            <option value="sme" data-i18n="optSme">SME (11-250)</option>
+                            <option value="mid" data-i18n="optMid">Mid-sized (251-1000)</option>
+                            <option value="enterprise" data-i18n="optEnterprise">Enterprise (1000+)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Sector / Industry</label>
+                        <label data-i18n="labelSector">Sector / Industry</label>
                         <select name="sector">
-                            <option value="">Select sector...</option>
-                            <option value="aerospace">Aerospace & Defense</option>
-                            <option value="agriculture">Agriculture</option>
-                            <option value="automotive">Automotive</option>
-                            <option value="banking">Banking & Finance</option>
-                            <option value="education">Education</option>
-                            <option value="energy">Energy & Utilities</option>
-                            <option value="healthcare">Healthcare & Pharma</option>
-                            <option value="insurance">Insurance</option>
-                            <option value="legal">Legal & Compliance</option>
-                            <option value="manufacturing">Manufacturing</option>
-                            <option value="media">Media & Entertainment</option>
-                            <option value="public_sector">Public Sector / Government</option>
-                            <option value="retail">Retail & E-commerce</option>
-                            <option value="technology">Technology & SaaS</option>
-                            <option value="telecom">Telecom & Transport</option>
-                            <option value="other">Other</option>
+                            <option value="" data-i18n="optSelectSector">Select sector...</option>
+                            <option value="aerospace" data-i18n="optAerospace">Aerospace & Defense</option>
+                            <option value="agriculture" data-i18n="optAgriculture">Agriculture</option>
+                            <option value="automotive" data-i18n="optAutomotive">Automotive</option>
+                            <option value="banking" data-i18n="optBanking">Banking & Finance</option>
+                            <option value="education" data-i18n="optEducation">Education</option>
+                            <option value="energy" data-i18n="optEnergy">Energy & Utilities</option>
+                            <option value="healthcare" data-i18n="optHealthcare">Healthcare & Pharma</option>
+                            <option value="insurance" data-i18n="optInsurance">Insurance</option>
+                            <option value="legal" data-i18n="optLegal">Legal & Compliance</option>
+                            <option value="manufacturing" data-i18n="optManufacturing">Manufacturing</option>
+                            <option value="media" data-i18n="optMedia">Media & Entertainment</option>
+                            <option value="public_sector" data-i18n="optPublicSector">Public Sector / Government</option>
+                            <option value="retail" data-i18n="optRetail">Retail & E-commerce</option>
+                            <option value="technology" data-i18n="optTechnology">Technology & SaaS</option>
+                            <option value="telecom" data-i18n="optTelecom">Telecom & Transport</option>
+                            <option value="other" data-i18n="optOther">Other</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Annual Revenue</label>
+                        <label data-i18n="labelRevenue">Annual Revenue</label>
                         <select name="annual_revenue">
-                            <option value="">Select revenue band...</option>
-                            <option value="under_1m">&lt; €1M</option>
-                            <option value="1m_10m">€1M – €10M</option>
-                            <option value="10m_50m">€10M – €50M</option>
-                            <option value="50m_250m">€50M – €250M</option>
-                            <option value="250m_1b">€250M – €1B</option>
-                            <option value="over_1b">&gt; €1B</option>
-                            <option value="undisclosed">Prefer not to say</option>
+                            <option value="" data-i18n="optSelectRevenue">Select revenue band...</option>
+                            <option value="under_1m" data-i18n="optUnder1m">&lt; €1M</option>
+                            <option value="1m_10m" data-i18n="opt1m10m">€1M – €10M</option>
+                            <option value="10m_50m" data-i18n="opt10m50m">€10M – €50M</option>
+                            <option value="50m_250m" data-i18n="opt50m250m">€50M – €250M</option>
+                            <option value="250m_1b" data-i18n="opt250m1b">€250M – €1B</option>
+                            <option value="over_1b" data-i18n="optOver1b">&gt; €1B</option>
+                            <option value="undisclosed" data-i18n="optUndisclosed">Prefer not to say</option>
                         </select>
                     </div>
                     <div class="form-group">
-        <label>Country</label>
-                        <input type="text" name="hq_location" id="countryInput" placeholder="Start typing a country..." autocomplete="off" list="countriesList">
+        <label data-i18n="labelCountry">Country</label>
+                        <input type="text" name="hq_location" id="countryInput" data-i18n-placeholder="placeholderCountry" placeholder="Start typing a country..." autocomplete="off" list="countriesList">
                         <datalist id="countriesList">
                             <option value="Austria">
                             <option value="Belgium">
@@ -334,176 +334,176 @@
                             <option value="Switzerland">
                             <option value="United Kingdom">
                         </datalist>
-                        <div class="hint">EU AI Act applies to all EU member states + EEA (Iceland, Norway, Liechtenstein), UK, and Switzerland. Select where your company is based.</div>
+                        <div class="hint" data-i18n="hintCountry">EU AI Act applies to all EU member states + EEA (Iceland, Norway, Liechtenstein), UK, and Switzerland. Select where your company is based.</div>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Website URL</label>
-                        <input type="url" name="url" placeholder="https://example.com" required>
+                        <label data-i18n="labelWebsite">Website URL</label>
+                        <input type="url" name="url" data-i18n-placeholder="placeholderWebsite" placeholder="https://example.com" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>AI Use Cases <span style="color: var(--text-muted); font-size: 12px;">(select all that apply)</span></label>
+                    <label data-i18n="labelAiUseCases">AI Use Cases <span style="color: var(--text-muted); font-size: 12px;" data-i18n="aiUseCasesHint">(select all that apply)</span></label>
                     <select multiple name="ai_purpose" size="6">
-                        <option value="chatbot">Customer support chatbot</option>
-                        <option value="content_gen">Content generation</option>
-                        <option value="fraud_detection">Fraud detection / Risk analysis</option>
-                        <option value="recommendation">Recommendation engine</option>
-                        <option value="image_video">Image / Video analysis</option>
-                        <option value="document_processing">Document processing / OCR</option>
-                        <option value="predictive">Predictive analytics</option>
-                        <option value="speech">Speech / Voice recognition</option>
-                        <option value="code_gen">Code generation</option>
-                        <option value="autonomous">Autonomous systems</option>
-                        <option value="cv_screening">Resume / CV screening</option>
-                        <option value="other">Other (specify in report)</option>
+                        <option value="chatbot" data-i18n="optChatbot">Customer support chatbot</option>
+                        <option value="content_gen" data-i18n="optContentGen">Content generation</option>
+                        <option value="fraud_detection" data-i18n="optFraudDetection">Fraud detection / Risk analysis</option>
+                        <option value="recommendation" data-i18n="optRecommendation">Recommendation engine</option>
+                        <option value="image_video" data-i18n="optImageVideo">Image / Video analysis</option>
+                        <option value="document_processing" data-i18n="optDocProcessing">Document processing / OCR</option>
+                        <option value="predictive" data-i18n="optPredictive">Predictive analytics</option>
+                        <option value="speech" data-i18n="optSpeech">Speech / Voice recognition</option>
+                        <option value="code_gen" data-i18n="optCodeGen">Code generation</option>
+                        <option value="autonomous" data-i18n="optAutonomous">Autonomous systems</option>
+                        <option value="cv_screening" data-i18n="optCvScreening">Resume / CV screening</option>
+                        <option value="other" data-i18n="optOtherAi">Other (specify in report)</option>
                     </select>
                 </div>
             </div>
 
             <!-- Section 2: AI System Details -->
             <div class="form-section" id="ai-details-section">
-                <h2>🤖 AI System Details</h2>
-                <p class="section-desc">Tell us about the AI systems you deploy.</p>
+                <h2 data-i18n="sec2Title">🤖 AI System Details</h2>
+                <p class="section-desc" data-i18n="sec2Desc">Tell us about the AI systems you deploy.</p>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Number of AI Systems in Production</label>
+                        <label data-i18n="labelAiSystemsCount">Number of AI Systems in Production</label>
                         <select name="ai_systems_count" id="ai_systems_count">
-                            <option value="">Select...</option>
-                            <option value="0">None yet</option>
-                            <option value="1-3">1-3 systems</option>
-                            <option value="4-10">4-10 systems</option>
-                            <option value="10+">More than 10</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="0" data-i18n="optNoneYet">None yet</option>
+                            <option value="1-3" data-i18n="opt1to3">1-3 systems</option>
+                            <option value="4-10" data-i18n="opt4to10">4-10 systems</option>
+                            <option value="10+" data-i18n="opt10plus">More than 10</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Deployment Type</label>
+                        <label data-i18n="labelDeploymentType">Deployment Type</label>
                         <select name="deployment_type">
-                            <option value="">Select...</option>
-                            <option value="internal">Internal use only</option>
-                            <option value="customer-facing">Customer-facing</option>
-                            <option value="both">Both internal and external</option>
-                            <option value="third-party">Third-party AI integrated</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="internal" data-i18n="optInternal">Internal use only</option>
+                            <option value="customer-facing" data-i18n="optCustomerFacing">Customer-facing</option>
+                            <option value="both" data-i18n="optBoth">Both internal and external</option>
+                            <option value="third-party" data-i18n="optThirdPartyAi">Third-party AI integrated</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Decision Type</label>
+                        <label data-i18n="labelDecisionType">Decision Type</label>
                         <select name="decision_type">
-                            <option value="">Select...</option>
-                            <option value="fully-automated">Fully automated decisions</option>
-                            <option value="human-in-loop">Human-in-the-loop</option>
-                            <option value="decision-support">Decision support only</option>
-                            <option value="recommendation">Recommendation only</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="fully-automated" data-i18n="optFullyAutomated">Fully automated decisions</option>
+                            <option value="human-in-loop" data-i18n="optHumanInLoop">Human-in-the-loop</option>
+                            <option value="decision-support" data-i18n="optDecisionSupport">Decision support only</option>
+                            <option value="recommendation" data-i18n="optRecommendationOnly">Recommendation only</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Risk Self-Assessment</label>
+                        <label data-i18n="labelRiskSelfAssessment">Risk Self-Assessment</label>
                         <select name="risk_self_assessment">
-                            <option value="">Select...</option>
-                            <option value="minimal">Minimal risk</option>
-                            <option value="limited">Limited risk</option>
-                            <option value="high">High risk</option>
-                            <option value="unacceptable">Unacceptable risk</option>
-                            <option value="uncertain">Not sure</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="minimal" data-i18n="optMinimalRisk">Minimal risk</option>
+                            <option value="limited" data-i18n="optLimitedRisk">Limited risk</option>
+                            <option value="high" data-i18n="optHighRisk">High risk</option>
+                            <option value="unacceptable" data-i18n="optUnacceptableRisk">Unacceptable risk</option>
+                            <option value="uncertain" data-i18n="optNotSure">Not sure</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label>Data Sources <span style="color: var(--text-muted); font-size: 12px;">(select all that apply)</span></label>
+                    <label data-i18n="labelDataSources">Data Sources <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <select multiple name="data_sources" size="5">
-                        <option value="public_datasets">Public datasets</option>
-                        <option value="customer_data">Customer data</option>
-                        <option value="third_party_apis">Third-party APIs</option>
-                        <option value="user_generated">User-generated content</option>
-                        <option value="web_scraping">Web scraping</option>
-                        <option value="proprietary">Proprietary datasets</option>
-                        <option value="synthetic">Synthetic data</option>
-                        <option value="open_gov">Open government data</option>
-                        <option value="purchased">Purchased data</option>
+                        <option value="public_datasets" data-i18n="optPublicDatasets">Public datasets</option>
+                        <option value="customer_data" data-i18n="optCustomerData">Customer data</option>
+                        <option value="third_party_apis" data-i18n="optThirdPartyApis">Third-party APIs</option>
+                        <option value="user_generated" data-i18n="optUserGenerated">User-generated content</option>
+                        <option value="web_scraping" data-i18n="optWebScraping">Web scraping</option>
+                        <option value="proprietary" data-i18n="optProprietaryDatasets">Proprietary datasets</option>
+                        <option value="synthetic" data-i18n="optSyntheticData">Synthetic data</option>
+                        <option value="open_gov" data-i18n="optOpenGov">Open government data</option>
+                        <option value="purchased" data-i18n="optPurchasedData">Purchased data</option>
                     </select>
                 </div>
             </div>
 
             <!-- Section 3: Technical Details -->
             <div class="form-section">
-                <h2>🔧 Technical Details</h2>
-                <p class="section-desc">Technical characteristics of your AI systems.</p>
+                <h2 data-i18n="sec3Title">🔧 Technical Details</h2>
+                <p class="section-desc" data-i18n="sec3Desc">Technical characteristics of your AI systems.</p>
                 
                 <div class="form-group">
-                    <label>AI Model Types Used <span style="color: var(--text-muted); font-size: 12px;">(select all that apply)</span></label>
+                    <label data-i18n="labelModelTypes">AI Model Types Used <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <select multiple name="model_types" size="5">
-                        <option value="llm">Large Language Models (LLM)</option>
-                        <option value="cnn">Convolutional Neural Networks (CNN)</option>
-                        <option value="transformer">Transformer models</option>
-                        <option value="diffusion">Diffusion models</option>
-                        <option value="regression">Regression / Statistical models</option>
-                        <option value="decision_tree">Decision Trees / Random Forest</option>
-                        <option value="reinforcement">Reinforcement Learning</option>
-                        <option value="gan">GANs / Generative models</option>
-                        <option value="recommender">Recommendation systems</option>
-                        <option value="other">Other / Not sure</option>
+                        <option value="llm" data-i18n="optLLM">Large Language Models (LLM)</option>
+                        <option value="cnn" data-i18n="optCNN">Convolutional Neural Networks (CNN)</option>
+                        <option value="transformer" data-i18n="optTransformer">Transformer models</option>
+                        <option value="diffusion" data-i18n="optDiffusion">Diffusion models</option>
+                        <option value="regression" data-i18n="optRegression">Regression / Statistical models</option>
+                        <option value="decision_tree" data-i18n="optDecisionTree">Decision Trees / Random Forest</option>
+                        <option value="reinforcement" data-i18n="optReinforcement">Reinforcement Learning</option>
+                        <option value="gan" data-i18n="optGan">GANs / Generative models</option>
+                        <option value="recommender" data-i18n="optRecommender">Recommendation systems</option>
+                        <option value="other" data-i18n="optOtherNotSure">Other / Not sure</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label>Human Oversight Mechanisms <span style="color: var(--text-muted); font-size: 12px;">(select all that apply)</span></label>
+                    <label data-i18n="labelHumanOversight">Human Oversight Mechanisms <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <select multiple name="human_oversight" size="5">
-                        <option value="manual_review">Manual review queue</option>
-                        <option value="approval_workflow">Approval workflow</option>
-                        <option value="exception_handling">Exception / escalation handling</option>
-                        <option value="human_in_loop">Human-in-the-loop for decisions</option>
-                        <option value="audit_logs">Audit logs / monitoring</option>
-                        <option value="override">Human override capability</option>
-                        <option value="none">No human oversight</option>
+                        <option value="manual_review" data-i18n="optManualReview">Manual review queue</option>
+                        <option value="approval_workflow" data-i18n="optApprovalWorkflow">Approval workflow</option>
+                        <option value="exception_handling" data-i18n="optExceptionHandling">Exception / escalation handling</option>
+                        <option value="human_in_loop" data-i18n="optHumanInLoopOversight">Human-in-the-loop for decisions</option>
+                        <option value="audit_logs" data-i18n="optAuditLogs">Audit logs / monitoring</option>
+                        <option value="override" data-i18n="optOverride">Human override capability</option>
+                        <option value="none" data-i18n="optNoOversight">No human oversight</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label>Explainability Methods <span style="color: var(--text-muted); font-size: 12px;">(select all that apply)</span></label>
+                    <label data-i18n="labelExplainability">Explainability Methods <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <select multiple name="explainability" size="5">
-                        <option value="shap">SHAP</option>
-                        <option value="lime">LIME</option>
-                        <option value="attention">Attention visualization</option>
-                        <option value="feature_importance">Feature importance</option>
-                        <option value="decision_tree_explain">Decision tree explanations</option>
-                        <option value="counterfactual">Counterfactual explanations</option>
-                        <option value="not_applicable">Not applicable / None</option>
+                        <option value="shap" data-i18n="optShap">SHAP</option>
+                        <option value="lime" data-i18n="optLime">LIME</option>
+                        <option value="attention" data-i18n="optAttention">Attention visualization</option>
+                        <option value="feature_importance" data-i18n="optFeatureImportance">Feature importance</option>
+                        <option value="decision_tree_explain" data-i18n="optDecisionTreeExplain">Decision tree explanations</option>
+                        <option value="counterfactual" data-i18n="optCounterfactual">Counterfactual explanations</option>
+                        <option value="not_applicable" data-i18n="optNotApplicableNone">Not applicable / None</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Training Data Origin</label>
+                        <label data-i18n="labelTrainingDataOrigin">Training Data Origin</label>
                         <select name="training_data_origin">
-                            <option value="">Select...</option>
-                            <option value="public_web">Public web data</option>
-                            <option value="proprietary">Proprietary / company data</option>
-                            <option value="customer">Customer-provided data</option>
-                            <option value="third_party">Third-party licensed data</option>
-                            <option value="synthetic">Synthetic generated data</option>
-                            <option value="open_source">Open-source datasets</option>
-                            <option value="mixed">Mixed / Multiple sources</option>
-                            <option value="not_sure">Not sure</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="public_web" data-i18n="optPublicWeb">Public web data</option>
+                            <option value="proprietary" data-i18n="optProprietaryCompany">Proprietary / company data</option>
+                            <option value="customer" data-i18n="optCustomerProvided">Customer-provided data</option>
+                            <option value="third_party" data-i18n="optThirdPartyLicensed">Third-party licensed data</option>
+                            <option value="synthetic" data-i18n="optSyntheticGenerated">Synthetic generated data</option>
+                            <option value="open_source" data-i18n="optOpenSourceDatasets">Open-source datasets</option>
+                            <option value="mixed" data-i18n="optMixedSources">Mixed / Multiple sources</option>
+                            <option value="not_sure" data-i18n="optNotSureTraining">Not sure</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Data Retention Policy</label>
+                        <label data-i18n="labelDataRetention">Data Retention Policy</label>
                         <select name="data_retention">
-                            <option value="">Select...</option>
-                            <option value="not_retained">Not retained</option>
-                            <option value="30_days">30 days</option>
-                            <option value="90_days">90 days</option>
-                            <option value="1_year">1 year</option>
-                            <option value="indefinite">Indefinite / No policy</option>
-                            <option value="not_sure">Not sure</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="not_retained" data-i18n="optNotRetained">Not retained</option>
+                            <option value="30_days" data-i18n="opt30Days">30 days</option>
+                            <option value="90_days" data-i18n="opt90Days">90 days</option>
+                            <option value="1_year" data-i18n="opt1Year">1 year</option>
+                            <option value="indefinite" data-i18n="optIndefinite">Indefinite / No policy</option>
+                            <option value="not_sure" data-i18n="optNotSureRetention">Not sure</option>
                         </select>
                     </div>
                 </div>
@@ -511,116 +511,116 @@
 
             <!-- Section 4: High-Risk Categories -->
             <div class="form-section">
-                <h2>⚠️ High-Risk Categories</h2>
-                <p class="section-desc">Select which EU AI Act high-risk categories apply to your AI systems. <a href="https://artificialintelligenceact.eu/high-risk/" target="_blank" style="color: var(--accent);">Learn more</a></p>
+                <h2 data-i18n="sec4Title">⚠️ High-Risk Categories</h2>
+                <p class="section-desc" data-i18n="sec4Desc">Select which EU AI Act high-risk categories apply to your AI systems. <a href="https://artificialintelligenceact.eu/high-risk/" target="_blank" style="color: var(--accent);" data-i18n="learnMore">Learn more</a></p>
                 
                 <select multiple name="high_risk_categories" size="5">
-                    <option value="risk_biometrics">Biometric identification / Remote biometric ID</option>
-                    <option value="risk_critical_infra">Critical infrastructure management</option>
-                    <option value="risk_education">Education & vocational training</option>
-                    <option value="risk_employment">Employment & worker management</option>
-                    <option value="risk_credit">Credit assessment & essential services</option>
-                    <option value="risk_law_enforcement">Law enforcement</option>
-                    <option value="risk_migration">Migration, asylum & border control</option>
-                    <option value="risk_justice">Administration of justice</option>
-                    <option value="risk_democratic">Democratic processes (elections/voting)</option>
+                    <option value="risk_biometrics" data-i18n="optBiometrics">Biometric identification / Remote biometric ID</option>
+                    <option value="risk_critical_infra" data-i18n="optCriticalInfra">Critical infrastructure management</option>
+                    <option value="risk_education" data-i18n="optEducationTraining">Education & vocational training</option>
+                    <option value="risk_employment" data-i18n="optEmployment">Employment & worker management</option>
+                    <option value="risk_credit" data-i18n="optCredit">Credit assessment & essential services</option>
+                    <option value="risk_law_enforcement" data-i18n="optLawEnforcement">Law enforcement</option>
+                    <option value="risk_migration" data-i18n="optMigration">Migration, asylum & border control</option>
+                    <option value="risk_justice" data-i18n="optJustice">Administration of justice</option>
+                    <option value="risk_democratic" data-i18n="optDemocratic">Democratic processes (elections/voting)</option>
                 </select>
             </div>
 
             <!-- Section 5: Compliance Status -->
             <div class="form-section">
-                <h2>📄 Current Compliance Status</h2>
-                <p class="section-desc">Where are you on your compliance journey?</p>
+                <h2 data-i18n="sec5Title">📄 Current Compliance Status</h2>
+                <p class="section-desc" data-i18n="sec5Desc">Where are you on your compliance journey?</p>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Existing Compliance Documentation</label>
+                        <label data-i18n="labelComplianceDoc">Existing Compliance Documentation</label>
                         <select name="has_documentation">
-                            <option value="">Select...</option>
-                            <option value="yes">Yes, comprehensive</option>
-                            <option value="partial">Partially</option>
-                            <option value="no">Not yet</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="yes" data-i18n="optYesComprehensive">Yes, comprehensive</option>
+                            <option value="partial" data-i18n="optPartially">Partially</option>
+                            <option value="no" data-i18n="optNotYet">Not yet</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>DPO Appointed?</label>
+                        <label data-i18n="labelDpo">DPO Appointed?</label>
                         <select name="dpo_appointed">
-                            <option value="">Select...</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                            <option value="planned">Planned</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="yes" data-i18n="optYes">Yes</option>
+                            <option value="no" data-i18n="optNo">No</option>
+                            <option value="planned" data-i18n="optPlanned">Planned</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>GDPR Compliance Status</label>
+                        <label data-i18n="labelGdpr">GDPR Compliance Status</label>
                         <select name="gdpr_compliant">
-                            <option value="">Select...</option>
-                            <option value="yes">Fully compliant</option>
-                            <option value="in_progress">In progress</option>
-                            <option value="no">Not yet started</option>
-                            <option value="not_applicable">Not applicable</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="yes" data-i18n="optFullyCompliant">Fully compliant</option>
+                            <option value="in_progress" data-i18n="optInProgress">In progress</option>
+                            <option value="no" data-i18n="optNotYetStarted">Not yet started</option>
+                            <option value="not_applicable" data-i18n="optNotApplicable">Not applicable</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>CE Marking (for AI)</label>
+                        <label data-i18n="labelCeMarking">CE Marking (for AI)</label>
                         <select name="ce_marking">
-                            <option value="">Select...</option>
-                            <option value="yes">Yes, obtained</option>
-                            <option value="planned">Planned</option>
-                            <option value="no">Not yet</option>
+                            <option value="" data-i18n="optSelect">Select...</option>
+                            <option value="yes" data-i18n="optYesObtained">Yes, obtained</option>
+                            <option value="planned" data-i18n="optPlanned">Planned</option>
+                            <option value="no" data-i18n="optNotYet">Not yet</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label>Existing Certifications <span style="color: var(--text-muted); font-size: 12px;">(select all that apply)</span></label>
+                    <label data-i18n="labelCertifications">Existing Certifications <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <select multiple name="existing_certifications" size="5">
-                        <option value="iso_27001">ISO 27001</option>
-                        <option value="iso_42001">ISO 42001 (AI Management)</option>
-                        <option value="soc2">SOC 2</option>
-                        <option value="iso_27701">ISO 27701 (Privacy)</option>
-                        <option value="pcidss">PCI DSS</option>
-                        <option value="hipaa">HIPAA</option>
-                        <option value="none">None yet</option>
+                        <option value="iso_27001" data-i18n="optIso27001">ISO 27001</option>
+                        <option value="iso_42001" data-i18n="optIso42001">ISO 42001 (AI Management)</option>
+                        <option value="soc2" data-i18n="optSoc2">SOC 2</option>
+                        <option value="iso_27701" data-i18n="optIso27701">ISO 27701 (Privacy)</option>
+                        <option value="pcidss" data-i18n="optPcidss">PCI DSS</option>
+                        <option value="hipaa" data-i18n="optHipaa">HIPAA</option>
+                        <option value="none" data-i18n="optNoneYetCert">None yet</option>
                     </select>
                     <div style="margin-top: 8px;">
-                        <input type="text" name="other_certifications" placeholder="Other certifications (comma-separated)" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text-primary);font-size:14px;">
+                        <input type="text" name="other_certifications" data-i18n-placeholder="placeholderOtherCerts" placeholder="Other certifications (comma-separated)" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text-primary);font-size:14px;">
                     </div>
                 </div>
                 
                 <div class="form-group" id="previous-audits-group">
-                    <label>Have you had any compliance audits before?</label>
+                    <label data-i18n="labelPreviousAudits">Have you had any compliance audits before?</label>
                     <div style="display:flex;gap:12px;margin-top:8px;">
                         <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;">
                             <input type="radio" name="previous_audits" value="yes" style="accent-color:var(--brand);">
-                            <span style="color:var(--text-secondary);font-size:14px;">Yes</span>
+                            <span style="color:var(--text-secondary);font-size:14px;" data-i18n="labelYes">Yes</span>
                         </label>
                         <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;">
                             <input type="radio" name="previous_audits" value="no" style="accent-color:var(--brand);">
-                            <span style="color:var(--text-secondary);font-size:14px;">No</span>
+                            <span style="color:var(--text-secondary);font-size:14px;" data-i18n="labelNo">No</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="form-group" id="audit-details" style="display:none;">
-                    <label>Audit Types <span style="color: var(--text-muted); font-size: 12px;">(select all that apply)</span></label>
+                    <label data-i18n="labelAuditTypes">Audit Types <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <select multiple name="audit_types" size="5">
-                        <option value="gdpr">GDPR audit</option>
-                        <option value="iso">ISO certification audit</option>
-                        <option value="internal_ai">Internal AI audit</option>
-                        <option value="third_party_ai">Third-party AI audit</option>
-                        <option value="security">Security / penetration test</option>
-                        <option value="other">Other</option>
+                        <option value="gdpr" data-i18n="optGdprAudit">GDPR audit</option>
+                        <option value="iso" data-i18n="optIsoAudit">ISO certification audit</option>
+                        <option value="internal_ai" data-i18n="optInternalAiAudit">Internal AI audit</option>
+                        <option value="third_party_ai" data-i18n="optThirdPartyAiAudit">Third-party AI audit</option>
+                        <option value="security" data-i18n="optSecurityTest">Security / penetration test</option>
+                        <option value="other" data-i18n="optOtherAudit">Other</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-actions">
-                <a href="/" class="btn-secondary">← Cancel</a>
-                <button type="submit" class="btn-primary" id="submitBtn">
+                <a href="/" class="btn-secondary" data-i18n="btnCancel">← Cancel</a>
+                <button type="submit" class="btn-primary" id="submitBtn" data-i18n="btnGenerate">
                     → Generate Compliance Report
                 </button>
             </div>
@@ -630,10 +630,462 @@
     <script>
         const FORM_CACHE_KEY = 'aiverify_form_data';
 
-        // ── Language from URL ──
-        const urlParams = new URLSearchParams(window.location.search);
-        const lang = urlParams.get('lang') || 'en';
-        document.querySelector('html').lang = lang;
+        // ── Translation system ──
+        const translations = {
+            en: {
+                navBack: "← Back",
+                pageTitle: "Check Your AI Compliance",
+                pageDesc: "Fill in the details about your company and AI systems for a comprehensive EU AI Act analysis.",
+                sec1Title: "📋 Company Information",
+                sec1Desc: "Basic information about your organization.",
+                sec1Hint: "Company name, sector, and HQ will be auto-detected from your website URL.",
+                labelCompanySize: "Company Size",
+                labelSector: "Sector / Industry",
+                labelRevenue: "Annual Revenue",
+                labelCountry: "Country",
+                labelWebsite: "Website URL",
+                labelAiUseCases: "AI Use Cases",
+                aiUseCasesHint: "(select all that apply)",
+                sec2Title: "🤖 AI System Details",
+                sec2Desc: "Tell us about the AI systems you deploy.",
+                sec3Title: "🔧 Technical Details",
+                sec3Desc: "Technical characteristics of your AI systems.",
+                sec4Title: "⚠️ High-Risk Categories",
+                sec4Desc: "Select which EU AI Act high-risk categories apply to your AI systems.",
+                sec5Title: "📄 Current Compliance Status",
+                sec5Desc: "Where are you on your compliance journey?",
+                labelAiSystemsCount: "Number of AI Systems in Production",
+                labelDeploymentType: "Deployment Type",
+                labelDecisionType: "Decision Type",
+                labelRiskSelfAssessment: "Risk Self-Assessment",
+                labelDataSources: "Data Sources",
+                dataSourcesHint: "(select all that apply)",
+                labelModelTypes: "AI Model Types Used",
+                modelTypesHint: "(select all that apply)",
+                labelHumanOversight: "Human Oversight Mechanisms",
+                humanOversightHint: "(select all that apply)",
+                labelExplainability: "Explainability Methods",
+                explainabilityHint: "(select all that apply)",
+                labelTrainingData: "Training Data Origin",
+                labelDataRetention: "Data Retention Policy",
+                labelDocumentation: "Existing Compliance Documentation",
+                labelDpo: "DPO Appointed?",
+                labelGdpr: "GDPR Compliance Status",
+                labelCeMarking: "CE Marking (for AI)",
+                labelCertifications: "Existing Certifications",
+                certHint: "(select all that apply)",
+                labelPreviousAudits: "Have you had any compliance audits before?",
+                labelAuditTypes: "Audit Types",
+                auditHint: "(select all that apply)",
+                labelOtherCerts: "Other certifications (comma-separated)",
+                optSelectSize: "Select size...",
+                optStartup: "Startup (1-10)",
+                optSme: "SME (11-250)",
+                optMid: "Mid-sized (251-1000)",
+                optEnterprise: "Enterprise (1000+)",
+                optSelectSector: "Select sector...",
+                optAerospace: "Aerospace & Defense",
+                optAgriculture: "Agriculture",
+                optAutomotive: "Automotive",
+                optBanking: "Banking & Finance",
+                optEducation: "Education",
+                optEnergy: "Energy & Utilities",
+                optHealthcare: "Healthcare & Pharma",
+                optInsurance: "Insurance",
+                optLegal: "Legal & Compliance",
+                optManufacturing: "Manufacturing",
+                optMedia: "Media & Entertainment",
+                optPublicSector: "Public Sector / Government",
+                optRetail: "Retail & E-commerce",
+                optTechnology: "Technology & SaaS",
+                optTelecom: "Telecom & Transport",
+                optOther: "Other",
+                optSelectRevenue: "Select revenue band...",
+                optUnder1m: "< €1M",
+                opt1m10m: "€1M – €10M",
+                opt10m50m: "€10M – €50M",
+                opt50m250m: "€50M – €250M",
+                opt250m1b: "€250M – €1B",
+                optOver1b: "> €1B",
+                optUndisclosed: "Prefer not to say",
+                placeholderCountry: "Start typing a country...",
+                hintCountry: "EU AI Act applies to all EU member states + EEA (Iceland, Norway, Liechtenstein), UK, and Switzerland. Select where your company is based.",
+                placeholderWebsite: "https://example.com",
+                optChatbot: "Customer support chatbot",
+                optContentGen: "Content generation",
+                optFraudDetection: "Fraud detection / Risk analysis",
+                optRecommendation: "Recommendation engine",
+                optImageVideo: "Image / Video analysis",
+                optDocProcessing: "Document processing / OCR",
+                optPredictive: "Predictive analytics",
+                optSpeech: "Speech / Voice recognition",
+                optCodeGen: "Code generation",
+                optAutonomous: "Autonomous systems",
+                optCvScreening: "Resume / CV screening",
+                optOtherAi: "Other (specify in report)",
+                optSelect: "Select...",
+                optNoneYet: "None yet",
+                opt1to3: "1-3 systems",
+                opt4to10: "4-10 systems",
+                opt10plus: "More than 10",
+                optInternal: "Internal use only",
+                optCustomerFacing: "Customer-facing",
+                optBoth: "Both internal and external",
+                optThirdParty: "Third-party AI integrated",
+                optFullyAutomated: "Fully automated decisions",
+                optHumanInLoop: "Human-in-the-loop",
+                optDecisionSupport: "Decision support only",
+                optRecommendationOnly: "Recommendation only",
+                optMinimalRisk: "Minimal risk",
+                optLimitedRisk: "Limited risk",
+                optHighRisk: "High risk",
+                optUnacceptable: "Unacceptable risk",
+                optNotSure: "Not sure",
+                // Data sources
+                optPublicDatasets: "Public datasets",
+                optCustomerData: "Customer data",
+                optThirdPartyApis: "Third-party APIs",
+                optUserGenerated: "User-generated content",
+                optWebScraping: "Web scraping",
+                optProprietary: "Proprietary datasets",
+                optSynthetic: "Synthetic data",
+                optOpenGov: "Open government data",
+                optPurchased: "Purchased data",
+                // Model types
+                optLlm: "Large Language Models (LLM)",
+                optCnn: "Convolutional Neural Networks (CNN)",
+                optTransformer: "Transformer models",
+                optDiffusion: "Diffusion models",
+                optRegression: "Regression / Statistical models",
+                optDecisionTree: "Decision Trees / Random Forest",
+                optReinforcement: "Reinforcement Learning",
+                optGan: "GANs / Generative models",
+                optRecommender: "Recommendation systems",
+                optOtherModel: "Other / Not sure",
+                // Oversight
+                optManualReview: "Manual review queue",
+                optApprovalWorkflow: "Approval workflow",
+                optExceptionHandling: "Exception / escalation handling",
+                optHumanInLoopOversight: "Human-in-the-loop for decisions",
+                optAuditLogs: "Audit logs / monitoring",
+                optOverride: "Human override capability",
+                optNoOversight: "No human oversight",
+                // Explainability
+                optShap: "SHAP",
+                optLime: "LIME",
+                optAttention: "Attention visualization",
+                optFeatureImportance: "Feature importance",
+                optDecisionTreeExplain: "Decision tree explanations",
+                optCounterfactual: "Counterfactual explanations",
+                optNotApplicable: "Not applicable / None",
+                // Training data
+                optPublicWeb: "Public web data",
+                optProprietaryData: "Proprietary / company data",
+                optCustomerProvided: "Customer-provided data",
+                optThirdPartyLicensed: "Third-party licensed data",
+                optSyntheticData: "Synthetic generated data",
+                optOpenSource: "Open-source datasets",
+                optMixed: "Mixed / Multiple sources",
+                optNotSureData: "Not sure",
+                // Data retention
+                optNotRetained: "Not retained",
+                opt30Days: "30 days",
+                opt90Days: "90 days",
+                opt1Year: "1 year",
+                optIndefinite: "Indefinite / No policy",
+                optNotSureRetention: "Not sure",
+                // Compliance
+                optYesComprehensive: "Yes, comprehensive",
+                optPartial: "Partially",
+                optNo: "No",
+                optYes: "Yes",
+                optPlanned: "Planned",
+                optFullyCompliant: "Fully compliant",
+                optInProgress: "In progress",
+                optNotStarted: "Not yet started",
+                optNotApplicable: "Not applicable",
+                optYesObtained: "Yes, obtained",
+                // Risk categories
+                optBiometrics: "Biometric identification / Remote biometric ID",
+                optCriticalInfra: "Critical infrastructure management",
+                optEducationRisk: "Education & vocational training",
+                optEmploymentRisk: "Employment & worker management",
+                optCreditRisk: "Credit assessment & essential services",
+                optLawEnforcement: "Law enforcement",
+                optMigrationRisk: "Migration, asylum & border control",
+                optJusticeRisk: "Administration of justice",
+                optDemocraticRisk: "Democratic processes (elections/voting)",
+                // Certifications
+                optIso27001: "ISO 27001",
+                optIso42001: "ISO 42001 (AI Management)",
+                optSoc2: "SOC 2",
+                optIso27701: "ISO 27701 (Privacy)",
+                optPciDss: "PCI DSS",
+                optHipaa: "HIPAA",
+                optNoneCert: "None yet",
+                // Audit types
+                optGdprAudit: "GDPR audit",
+                optIsoAudit: "ISO certification audit",
+                optInternalAi: "Internal AI audit",
+                optThirdPartyAi: "Third-party AI audit",
+                optSecurityTest: "Security / penetration test",
+                optOtherAudit: "Other",
+                // Buttons
+                btnCancel: "← Cancel",
+                btnSubmit: "→ Generate Compliance Report",
+                btnProcessing: "⏳ Processing...",
+                // Previous audits radio
+                radioYes: "Yes",
+                radioNo: "No",
+                errorTitle: "Analysis Failed",
+                errorBackBtn: "← Back to Form",
+                errorSavedMsg: "Your form data is saved. Simply scroll down and try again.",
+                footerAIVerify: "AI Verify",
+                footerPrivacy: "Privacy",
+                footerImprint: "Imprint",
+                footerCopyright: "© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice."
+            },
+            de: {
+                navBack: "← Zurück",
+                pageTitle: "KI-Compliance prüfen",
+                pageDesc: "Geben Sie Details zu Ihrem Unternehmen und Ihren KI-Systemen für eine umfassende EU AI Act-Analyse an.",
+                sec1Title: "📋 Unternehmensinformationen",
+                sec1Desc: "Grundlegende Informationen zu Ihrem Unternehmen.",
+                sec1Hint: "Unternehmensname, Branche und Standort werden automatisch aus Ihrer Website-URL erkannt.",
+                labelCompanySize: "Unternehmensgröße",
+                labelSector: "Branche",
+                labelRevenue: "Jahresumsatz",
+                labelCountry: "Land",
+                labelWebsite: "Website-URL",
+                labelAiUseCases: "KI-Anwendungsfälle",
+                aiUseCasesHint: "(alle zutreffenden auswählen)",
+                sec2Title: "🤖 KI-Systemdetails",
+                sec2Desc: "Informationen zu Ihren eingesetzten KI-Systemen.",
+                sec3Title: "🔧 Technische Details",
+                sec3Desc: "Technische Merkmale Ihrer KI-Systeme.",
+                sec4Title: "⚠️ Hochrisiko-Kategorien",
+                sec4Desc: "Wählen Sie aus, welche EU AI Act Hochrisiko-Kategorien auf Ihre KI-Systeme zutreffen.",
+                sec5Title: "📄 Aktueller Compliance-Status",
+                sec5Desc: "Wo stehen Sie auf Ihrem Compliance-Weg?",
+                labelAiSystemsCount: "Anzahl KI-Systeme in Produktion",
+                labelDeploymentType: "Einsatzart",
+                labelDecisionType: "Entscheidungstyp",
+                labelRiskSelfAssessment: "Risiko-Selbsteinschätzung",
+                labelDataSources: "Datenquellen",
+                dataSourcesHint: "(alle zutreffenden auswählen)",
+                labelModelTypes: "Verwendete KI-Modelltypen",
+                modelTypesHint: "(alle zutreffenden auswählen)",
+                labelHumanOversight: "Menschliche Aufsichtsmechanismen",
+                humanOversightHint: "(alle zutreffenden auswählen)",
+                labelExplainability: "Erklärbarkeitsmethoden",
+                explainabilityHint: "(alle zutreffenden auswählen)",
+                labelTrainingData: "Herkunft der Trainingsdaten",
+                labelDataRetention: "Datenaufbewahrungsrichtlinie",
+                labelDocumentation: "Vorhandene Compliance-Dokumentation",
+                labelDpo: "DSB benannt?",
+                labelGdpr: "DSGVO-Compliance-Status",
+                labelCeMarking: "CE-Kennzeichnung (für KI)",
+                labelCertifications: "Vorhandene Zertifizierungen",
+                certHint: "(alle zutreffenden auswählen)",
+                labelPreviousAudits: "Hatten Sie bereits Compliance-Audits?",
+                labelAuditTypes: "Audit-Typen",
+                auditHint: "(alle zutreffenden auswählen)",
+                labelOtherCerts: "Andere Zertifizierungen (kommagetrennt)",
+                optSelectSize: "Größe wählen...",
+                optStartup: "Startup (1-10)",
+                optSme: "KMU (11-250)",
+                optMid: "Mittelstand (251-1000)",
+                optEnterprise: "Großunternehmen (1000+)",
+                optSelectSector: "Branche wählen...",
+                optAerospace: "Luft- & Raumfahrt / Verteidigung",
+                optAgriculture: "Landwirtschaft",
+                optAutomotive: "Automobilindustrie",
+                optBanking: "Banken & Finanzen",
+                optEducation: "Bildung",
+                optEnergy: "Energie & Versorgung",
+                optHealthcare: "Gesundheitswesen & Pharma",
+                optInsurance: "Versicherungen",
+                optLegal: "Recht & Compliance",
+                optManufacturing: "Produktion",
+                optMedia: "Medien & Unterhaltung",
+                optPublicSector: "Öffentlicher Sektor / Regierung",
+                optRetail: "Einzelhandel & E-Commerce",
+                optTechnology: "Technologie & SaaS",
+                optTelecom: "Telekommunikation & Transport",
+                optOther: "Sonstige",
+                optSelectRevenue: "Umsatzband wählen...",
+                optUnder1m: "< 1 Mio. €",
+                opt1m10m: "1 Mio. – 10 Mio. €",
+                opt10m50m: "10 Mio. – 50 Mio. €",
+                opt50m250m: "50 Mio. – 250 Mio. €",
+                opt250m1b: "250 Mio. – 1 Mrd. €",
+                optOver1b: "> 1 Mrd. €",
+                optUndisclosed: "Keine Angabe",
+                placeholderCountry: "Land eingeben...",
+                hintCountry: "Der EU AI Act gilt für alle EU-Mitgliedstaaten + EWR (Island, Norwegen, Liechtenstein), die Schweiz und das Vereinigte Königreich. Wählen Sie den Sitz Ihres Unternehmens.",
+                placeholderWebsite: "https://beispiel.de",
+                optChatbot: "Kundensupport-Chatbot",
+                optContentGen: "Inhaltsgenerierung",
+                optFraudDetection: "Betrugserkennung / Risikoanalyse",
+                optRecommendation: "Empfehlungssystem",
+                optImageVideo: "Bild-/Videoanalyse",
+                optDocProcessing: "Dokumentenverarbeitung / OCR",
+                optPredictive: "Prädiktive Analytik",
+                optSpeech: "Sprach-/Spracherkennung",
+                optCodeGen: "Code-Generierung",
+                optAutonomous: "Autonome Systeme",
+                optCvScreening: "Lebenslauf-/Bewerbungsprüfung",
+                optOtherAi: "Sonstiges (im Bericht angeben)",
+                optSelect: "Auswählen...",
+                optNoneYet: "Noch keine",
+                opt1to3: "1-3 Systeme",
+                opt4to10: "4-10 Systeme",
+                opt10plus: "Mehr als 10",
+                optInternal: "Nur interne Nutzung",
+                optCustomerFacing: "Kundenorientiert",
+                optBoth: "Sowohl intern als auch extern",
+                optThirdParty: "Externe KI integriert",
+                optFullyAutomated: "Vollautomatisierte Entscheidungen",
+                optHumanInLoop: "Human-in-the-Loop",
+                optDecisionSupport: "Nur Entscheidungsunterstützung",
+                optRecommendationOnly: "Nur Empfehlungen",
+                optMinimalRisk: "Minimales Risiko",
+                optLimitedRisk: "Begrenztes Risiko",
+                optHighRisk: "Hohes Risiko",
+                optUnacceptable: "Inakzeptables Risiko",
+                optNotSure: "Unsicher",
+                optPublicDatasets: "Öffentliche Datensätze",
+                optCustomerData: "Kundendaten",
+                optThirdPartyApis: "Drittanbieter-APIs",
+                optUserGenerated: "Nutzer-generierte Inhalte",
+                optWebScraping: "Web Scraping",
+                optProprietary: "Eigene Datensätze",
+                optSynthetic: "Synthetische Daten",
+                optOpenGov: "Offene Regierungsdaten",
+                optPurchased: "Gekaufte Daten",
+                optLlm: "Große Sprachmodelle (LLM)",
+                optCnn: "Convolutional Neural Networks (CNN)",
+                optTransformer: "Transformer-Modelle",
+                optDiffusion: "Diffusionsmodelle",
+                optRegression: "Regressions-/Statistikmodelle",
+                optDecisionTree: "Entscheidungsbäume / Random Forest",
+                optReinforcement: "Bestärkendes Lernen",
+                optGan: "GANs / Generative Modelle",
+                optRecommender: "Empfehlungssysteme",
+                optOtherModel: "Sonstige / Nicht sicher",
+                optManualReview: "Manuelle Prüfwarteschlange",
+                optApprovalWorkflow: "Genehmigungsworkflow",
+                optExceptionHandling: "Ausnahme-/Eskalationsbehandlung",
+                optHumanInLoopOversight: "Human-in-the-Loop für Entscheidungen",
+                optAuditLogs: "Prüfprotokolle / Überwachung",
+                optOverride: "Menschliche Überschreibungsmöglichkeit",
+                optNoOversight: "Keine menschliche Aufsicht",
+                optShap: "SHAP",
+                optLime: "LIME",
+                optAttention: "Aufmerksamkeitsvisualisierung",
+                optFeatureImportance: "Merkmalsbedeutung",
+                optDecisionTreeExplain: "Entscheidungsbaumerklärungen",
+                optCounterfactual: "Kontrafaktische Erklärungen",
+                optNotApplicable: "Nicht zutreffend / Keine",
+                optPublicWeb: "Öffentliche Webdaten",
+                optProprietaryData: "Eigene Unternehmensdaten",
+                optCustomerProvided: "Kundenbereitgestellte Daten",
+                optThirdPartyLicensed: "Lizenzierte Drittanbieterdaten",
+                optSyntheticData: "Synthetisch generierte Daten",
+                optOpenSource: "Open-Source-Datensätze",
+                optMixed: "Gemischt / Mehrere Quellen",
+                optNotSureData: "Nicht sicher",
+                optNotRetained: "Nicht aufbewahrt",
+                opt30Days: "30 Tage",
+                opt90Days: "90 Tage",
+                opt1Year: "1 Jahr",
+                optIndefinite: "Unbegrenzt / Keine Richtlinie",
+                optNotSureRetention: "Nicht sicher",
+                optYesComprehensive: "Ja, umfassend",
+                optPartial: "Teilweise",
+                optNo: "Nein",
+                optYes: "Ja",
+                optPlanned: "Geplant",
+                optFullyCompliant: "Vollständig konform",
+                optInProgress: "In Bearbeitung",
+                optNotStarted: "Noch nicht begonnen",
+                optNotApplicable: "Nicht zutreffend",
+                optYesObtained: "Ja, erhalten",
+                optBiometrics: "Biometrische Identifikation / Fernbiometrie",
+                optCriticalInfra: "Kritische Infrastrukturverwaltung",
+                optEducationRisk: "Bildung & Berufsausbildung",
+                optEmploymentRisk: "Beschäftigung & Arbeitnehmerverwaltung",
+                optCreditRisk: "Kreditbewertung & wesentliche Dienste",
+                optLawEnforcement: "Strafverfolgung",
+                optMigrationRisk: "Migration, Asyl & Grenzkontrolle",
+                optJusticeRisk: "Rechtspflege",
+                optDemocraticRisk: "Demokratische Prozesse (Wahlen/Abstimmungen)",
+                optIso27001: "ISO 27001",
+                optIso42001: "ISO 42001 (KI-Management)",
+                optSoc2: "SOC 2",
+                optIso27701: "ISO 27701 (Datenschutz)",
+                optPciDss: "PCI DSS",
+                optHipaa: "HIPAA",
+                optNoneCert: "Noch keine",
+                optGdprAudit: "DSGVO-Audit",
+                optIsoAudit: "ISO-Zertifizierungsaudit",
+                optInternalAi: "Internes KI-Audit",
+                optThirdPartyAi: "KI-Audit durch Dritte",
+                optSecurityTest: "Sicherheits-/Penetrationstest",
+                optOtherAudit: "Sonstige",
+                btnCancel: "← Abbrechen",
+                btnSubmit: "→ Compliance-Bericht erstellen",
+                btnProcessing: "⏳ Wird verarbeitet...",
+                radioYes: "Ja",
+                radioNo: "Nein",
+                errorTitle: "Analyse fehlgeschlagen",
+                errorBackBtn: "← Zurück zum Formular",
+                errorSavedMsg: "Ihre Formulardaten sind gespeichert. Scrollen Sie einfach nach unten und versuchen Sie es erneut.",
+                footerAIVerify: "AI Verify",
+                footerPrivacy: "Datenschutz",
+                footerImprint: "Impressum",
+                footerCopyright: "© 2026 AI Verify. Automatisierte EU AI Act-Analyse für kleine und mittlere Unternehmen. Keine Rechtsberatung."
+            }
+        };
+
+        // ── Language ──
+        let currentLang = localStorage.getItem('aiverify_lang') || 'en';
+        const urlLang = new URLSearchParams(window.location.search).get('lang');
+        if (urlLang) currentLang = urlLang;
+        localStorage.setItem('aiverify_lang', currentLang);
+        document.querySelector('html').lang = currentLang;
+
+        // Translation function
+        function applyLanguage() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang] && translations[currentLang][key] !== undefined) {
+                    // For <option> elements, preserve the value attribute
+                    if (el.tagName === 'OPTION') {
+                        const val = el.getAttribute('value');
+                        el.textContent = translations[currentLang][key];
+                        if (val !== null) el.setAttribute('value', val);
+                    } else {
+                        el.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[currentLang] && translations[currentLang][key] !== undefined) {
+                    el.placeholder = translations[currentLang][key];
+                }
+            });
+            // Update submit button if language changes
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn && !submitBtn.disabled) {
+                submitBtn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Compliance Report';
+            }
+            const cancelBtn = document.querySelector('a.btn-secondary');
+            if (cancelBtn) cancelBtn.textContent = translations[currentLang]?.btnCancel || '← Cancel';
+        }
+        applyLanguage();
+
         // Add hidden input for language
         const form = document.getElementById('complianceForm');
         let langInput = form.querySelector('input[name="lang"]');
@@ -643,7 +1095,7 @@
             langInput.name = 'lang';
             form.appendChild(langInput);
         }
-        langInput.value = lang;
+        langInput.value = currentLang;
 
         // ── URL passthrough from index page ──
         function loadUrlFromQuery() {
@@ -847,21 +1299,21 @@
     <div id="errorBox" style="display:none; max-width:800px; margin: -56px auto 40px; padding:0 24px;">
         <div style="background:var(--surface); border:1px solid rgba(244,67,54,0.3); border-radius:var(--radius-lg); padding:24px; text-align:center;">
             <div style="font-size:32px; margin-bottom:8px;">❌</div>
-            <h3 style="margin-bottom:8px;">Analysis Failed</h3>
+            <h3 data-i18n="errorTitle" style="margin-bottom:8px;">Analysis Failed</h3>
             <p id="errorMsg" style="color:var(--text-tertiary); margin-bottom:16px; font-size:14px;"></p>
-            <button onclick="document.getElementById('errorBox').style.display='none';window.scrollTo({top:0,behavior:'smooth'});" class="btn-primary" style="padding:12px 32px; font-size:14px;">← Back to Form</button>
-            <p style="color:var(--text-muted); font-size:12px; margin-top:12px;">Your form data is saved. Simply scroll down and try again.</p>
+            <button onclick="document.getElementById('errorBox').style.display='none';window.scrollTo({top:0,behavior:'smooth'});" class="btn-primary" style="padding:12px 32px; font-size:14px;" data-i18n="errorBackBtn">← Back to Form</button>
+            <p style="color:var(--text-muted); font-size:12px; margin-top:12px;" data-i18n="errorSavedMsg">Your form data is saved. Simply scroll down and try again.</p>
         </div>
     </div>
 </body>
 <footer style="text-align:center;padding:32px 24px;border-top:1px solid var(--border-subtle);margin-top:60px;">
     <p style="color:var(--text-muted);font-size:13px;">
-        <a href="/" style="color:var(--text-tertiary);text-decoration:none;">AI Verify</a>
+        <a href="/" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerAIVerify">AI Verify</a>
         <span style="margin:0 8px;color:var(--text-muted);">·</span>
-        <a href="/privacy" style="color:var(--text-tertiary);text-decoration:none;">Privacy</a>
+        <a href="/privacy" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerPrivacy">Privacy</a>
         <span style="margin:0 8px;color:var(--text-muted);">·</span>
-        <a href="/imprint" style="color:var(--text-tertiary);text-decoration:none;">Imprint</a>
+        <a href="/imprint" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerImprint">Imprint</a>
     </p>
-    <p style="color:var(--text-muted);font-size:11px;margin-top:4px;">© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.</p>
+    <p style="color:var(--text-muted);font-size:11px;margin-top:4px;" data-i18n="footerCopyright">© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.</p>
 </footer>
 </html>
