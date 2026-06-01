@@ -130,7 +130,7 @@
             <span data-i18n="sec4Title">⚠️ High-Risk</span>
         </div>
 
-        <form id="complianceForm" onsubmit="return false;">
+        <form id="complianceForm">
                         
             <!-- Section 1: Company Information -->
             <div class="form-section">
@@ -2239,9 +2239,12 @@
             clearErrors();
             const form = document.getElementById('complianceForm');
             const firstInvalid = [];
+            const optionalFields = ['other_certifications'];
+            const optionalMS = ['existing_certifications'];
 
             // Check required single selects and text inputs
             form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea').forEach(el => {
+                if (optionalFields.includes(el.name)) return; // skip optional fields
                 const val = el.value ? el.value.trim() : '';
                 const isSelect = el.tagName === 'SELECT';
                 if (!val || (isSelect && val === '')) {
@@ -2250,9 +2253,10 @@
                 }
             });
 
-            // Check at least one option in each multiselect
+            // Check at least one option in each required multiselect
             document.querySelectorAll('.custom-multiselect').forEach(ms => {
                 const name = ms.dataset.name;
+                if (optionalMS.includes(name)) return; // skip optional multiselects
                 const vals = getMSValues(name);
                 if (vals.length === 0) {
                     const trigger = ms.querySelector('.ms-trigger');
