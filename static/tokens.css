@@ -222,7 +222,7 @@
   --av-comp-btn-secondary-padding: var(--av-ref-space-3) var(--av-ref-space-10);
 
   /* ─── Input ─── */
-  --av-comp-input-bg:     var(--av-sys-surface-page);
+  --av-comp-input-bg:     var(--av-sys-surface-card);
   --av-comp-input-border: var(--av-sys-border-default);
   --av-comp-input-radius: var(--av-sys-radius-input);
   --av-comp-input-padding: var(--av-sys-padding-input);
