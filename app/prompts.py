@@ -73,6 +73,54 @@ def build_company_profile(submission, lang: str = "en") -> str:
                "high_risk": "Hochrisiko-Kategorien (ausgewählt)", "none_selected": "Keine ausgewählt",
                "additional_info": "Zusätzliche Informationen", "ai_activity": "KI-Aktivitätsbeschreibung",
                "yes": "Ja", "no": "Nein"},
+        "fr": {"company": "Entreprise", "website": "Site web", "size": "Taille de l'entreprise",
+               "sector": "Secteur", "employees": "Employés", "revenue": "Chiffre d'affaires annuel",
+               "hq": "Siège social", "not_specified": "Non spécifié", "ai_details": "Détails du système d'IA",
+               "ai_count": "Systèmes d'IA en production", "ai_names": "Noms des systèmes",
+               "ai_purpose": "Objectif de l'IA", "deployment": "Type de déploiement",
+               "data_sources": "Sources de données", "decision_type": "Type de décision",
+               "risk_self": "Auto-évaluation des risques", "tech_details": "Détails techniques",
+               "model_types": "Types de modèles", "training_data": "Origine des données d'entraînement",
+               "human_oversight": "Supervision humaine", "explainability": "Explicabilité / Interprétabilité",
+               "data_retention": "Politique de conservation des données", "compliance_status": "Statut de conformité",
+               "documentation": "Documentation", "dpo": "DPO désigné",
+               "gdpr": "Conforme RGPD", "certifications": "Certifications",
+               "audits": "Audits précédents", "ce_marking": "Marquage CE",
+               "high_risk": "Catégories à haut risque (sélectionnées)", "none_selected": "Aucune sélectionnée",
+               "additional_info": "Informations supplémentaires", "ai_activity": "Description de l'activité IA",
+               "yes": "Oui", "no": "Non"},
+        "it": {"company": "Azienda", "website": "Sito web", "size": "Dimensioni azienda",
+               "sector": "Settore", "employees": "Dipendenti", "revenue": "Fatturato annuo",
+               "hq": "Sede principale", "not_specified": "Non specificato", "ai_details": "Dettagli sistema IA",
+               "ai_count": "Sistemi IA in produzione", "ai_names": "Nomi dei sistemi",
+               "ai_purpose": "Scopo dell'IA", "deployment": "Tipo di implementazione",
+               "data_sources": "Fonti di dati", "decision_type": "Tipo di decisione",
+               "risk_self": "Autovalutazione del rischio", "tech_details": "Dettagli tecnici",
+               "model_types": "Tipi di modello", "training_data": "Origine dati di addestramento",
+               "human_oversight": "Supervisione umana", "explainability": "Spiegabilità / Interpretabilità",
+               "data_retention": "Politica di conservazione dati", "compliance_status": "Stato di conformità",
+               "documentation": "Documentazione", "dpo": "DPO nominato",
+               "gdpr": "Conforme GDPR", "certifications": "Certificazioni",
+               "audits": "Audit precedenti", "ce_marking": "Marcatura CE",
+               "high_risk": "Categorie ad alto rischio (selezionate)", "none_selected": "Nessuna selezionata",
+               "additional_info": "Informazioni aggiuntive", "ai_activity": "Descrizione attività IA",
+               "yes": "Sì", "no": "No"},
+        "es": {"company": "Empresa", "website": "Sitio web", "size": "Tamaño de la empresa",
+               "sector": "Sector", "employees": "Empleados", "revenue": "Ingresos anuales",
+               "hq": "Sede central", "not_specified": "No especificado", "ai_details": "Detalles del sistema de IA",
+               "ai_count": "Sistemas de IA en producción", "ai_names": "Nombres de sistemas",
+               "ai_purpose": "Propósito de la IA", "deployment": "Tipo de implementación",
+               "data_sources": "Fuentes de datos", "decision_type": "Tipo de decisión",
+               "risk_self": "Autoevaluación de riesgos", "tech_details": "Detalles técnicos",
+               "model_types": "Tipos de modelo", "training_data": "Origen de los datos de entrenamiento",
+               "human_oversight": "Supervisión humana", "explainability": "Explicabilidad / Interpretabilidad",
+               "data_retention": "Política de retención de datos", "compliance_status": "Estado de cumplimiento",
+               "documentation": "Documentación", "dpo": "DPO designado",
+               "gdpr": "Conforme al RGPD", "certifications": "Certificaciones",
+               "audits": "Auditorías previas", "ce_marking": "Marcado CE",
+               "high_risk": "Categorías de alto riesgo (seleccionadas)", "none_selected": "Ninguna seleccionada",
+               "additional_info": "Información adicional", "ai_activity": "Descripción de la actividad de IA",
+               "yes": "Sí", "no": "No"},
     }
     L = labels.get(lang, labels["en"])
     ns = L["not_specified"]
@@ -141,7 +189,7 @@ def build_company_profile(submission, lang: str = "en") -> str:
 def build_user_prompt(company: str, url: str, description: str, search_text: str, lang: str = "en") -> str:
     """Compatibility: build user prompt from simple fields."""
     if not search_text:
-        search_text = "No open-source data found." if lang == "en" else "Keine öffentlichen Daten gefunden."
+        search_text = "No open-source data found." if lang == "en" else "Aucune donnée open-source trouvée." if lang == "fr" else "Nessun dato open-source trovato." if lang == "it" else "No se encontraron datos de código abierto." if lang == "es" else "Keine öffentlichen Daten gefunden."
     sections_en = "\n".join([
         "Based on this data, determine:",
         "1) Does the product fall under a high-risk category? (Yes/No/Insufficient data).",
@@ -160,7 +208,34 @@ def build_user_prompt(company: str, url: str, description: str, search_text: str
         "Formatiere die Antwort in Markdown mit Abschnitten: **Fazit**, **Risikokategorie**, **Anwendbare Anforderungen**, **Lücken**, **Empfehlungen**, **Quellen**.",
         "Bei unzureichenden Daten: gib an, welche Informationen benötigt werden."
     ])
-    sections = sections_en if lang == "en" else sections_de
+    sections_fr = "\n".join([
+        "Sur la base de ces données, déterminez:",
+        "1) Le produit relève-t-il d'une catégorie à haut risque ? (Oui/Non/Données insuffisantes).",
+        "2) Quelles exigences de l'AI Act sont probablement applicables (liste).",
+        "3) Lacunes identifiées (ce qui manque pour la conformité).",
+        "4) Recommandations spécifiques (documents, processus, points de contrôle).",
+        "Formatez la réponse en markdown avec les sections : **Conclusion**, **Catégorie de risque**, **Exigences applicables**, **Lacunes**, **Recommandations**, **Sources**.",
+        "Si les données sont insuffisantes, indiquez quelles informations sont nécessaires."
+    ])
+    sections_it = "\n".join([
+        "Sulla base di questi dati, determina:",
+        "1) Il prodotto rientra in una categoria ad alto rischio? (Sì/No/Dati insufficienti).",
+        "2) Quali requisiti dell'AI Act sono probabilmente applicabili (elenco).",
+        "3) Lacune identificate (cosa manca per la conformità).",
+        "4) Raccomandazioni specifiche (documenti, processi, punti di controllo).",
+        "Formatta la risposta in markdown con le sezioni: **Conclusione**, **Categoria di rischio**, **Requisiti applicabili**, **Lacune**, **Raccomandazioni**, **Fonti**.",
+        "Se i dati sono insufficienti, indica quali informazioni sono necessarie."
+    ])
+    sections_es = "\n".join([
+        "Basándose en estos datos, determine:",
+        "1) ¿El producto cae en una categoría de alto riesgo? (Sí/No/Datos insuficientes).",
+        "2) Qué requisitos de la AI Act son probablemente aplicables (lista).",
+        "3) Brechas identificadas (qué falta para el cumplimiento).",
+        "4) Recomendaciones específicas (documentos, procesos, puntos de control).",
+        "Formatee la respuesta en markdown con las secciones: **Conclusión**, **Categoría de riesgo**, **Requisitos aplicables**, **Brechas**, **Recomendaciones**, **Fuentes**.",
+        "Si los datos son insuficientes, indique qué información se necesita."
+    ])
+    sections = sections_fr if lang == "fr" else sections_it if lang == "it" else sections_es if lang == "es" else sections_de if lang == "de" else sections_en
     prompt = f"""Analyze the following company and its product for EU AI Act compliance.
 Company: {company}
 Website: {url}
@@ -257,7 +332,7 @@ def build_enhanced_prompt(submission, search_text: str = "", lang: str = "en", w
         search_text = "No open-source data found."
 
     # Build bilingual prompt sections
-    lang_upper = "GERMAN" if lang == "de" else "ENGLISH"
+    lang_upper = "FRENCH" if lang == "fr" else "ITALIAN" if lang == "it" else "SPANISH" if lang == "es" else "GERMAN" if lang == "de" else "ENGLISH"
     
     sections_en = """## 1. OVERALL CONCLUSION (1-2 sentences only)
 Is the company's activity regulated by the EU AI Act? What is the overall risk level?
@@ -311,6 +386,84 @@ Diese Analyse wurde durchgeführt mittels: automatisiertem Website-Scan (HTTP GE
 - EU AI Act Hochrisiko-Liste: https://artificialintelligenceact.eu/high-risk/
 - Europäische Kommission KI-Seite: https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence"""
 
+    sections_fr = """## 1. CONCLUSION GÉNÉRALE (1-2 phrases seulement)
+L'activité de l'entreprise est-elle réglementée par l'AI Act de l'UE ? Quel est le niveau de risque global ?
+
+## 2. PRINCIPAUX CONSTATS (max. 3-5 points)
+Problèmes de conformité les plus critiques trouvés.
+
+## 3. NIVEAU DE RISQUE (une ligne)
+Inacceptable / Élevé / Limité / Minimal — avec une phrase de justification.
+
+## 4. LACUNES CRITIQUES (max. 3-5 points)
+Seules les lacunes de conformité les plus urgentes.
+
+## 5. PRINCIPALES RECOMMANDATIONS (max. 3-5 points)
+Mesures prioritaires à prendre — classées par urgence (immédiate / court terme / long terme).
+
+## 6. RISQUE D'AMENDE (1-2 phrases)
+Amendes et conséquences potentielles en l'absence de mesures.
+
+## 7. MÉTHODOLOGIE
+Comment cette analyse a été réalisée : scan automatisé du site web (HTTP GET, analyse HTML, détection de mots-clés pour les cas d'usage IA, signaux RGPD, politiques de confidentialité/cookies) + recherche de données open-source (DuckDuckGo) + analyse structurée des données du formulaire par rapport aux catégories de risque et aux exigences de l'AI Act de l'UE. Le score de conformité (0-100) est calculé à partir des facteurs de risque et des mesures de conformité selon la formule multivariée définie dans le moteur AI Verify. Toujours fournir cette section.
+
+## 8. SOURCES
+- Texte officiel de l'AI Act de l'UE : https://eur-lex.europa.eu/eli/reg/2024/1689
+- Liste des systèmes à haut risque de l'AI Act : https://artificialintelligenceact.eu/high-risk/
+- Page de la Commission européenne sur l'IA : https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence"""
+
+    sections_it = """## 1. CONCLUSIONE GENERALE (1-2 frasi soltanto)
+L'attività dell'azienda è regolamentata dall'AI Act dell'UE? Qual è il livello di rischio complessivo?
+
+## 2. RISULTATI PRINCIPALI (max. 3-5 punti)
+I problemi di conformità più critici trovati.
+
+## 3. LIVELLO DI RISCHIO (una riga)
+Inaccettabile / Alto / Limitato / Minimo — con una frase di giustificazione.
+
+## 4. LACUNE CRITICHE (max. 3-5 punti)
+Solo le lacune di conformità più urgenti.
+
+## 5. PRINCIPALI RACCOMANDAZIONI (max. 3-5 punti)
+Azioni prioritarie da intraprendere — ordinate per urgenza (immediata / breve termine / lungo termine).
+
+## 6. RISCHIO SANZIONI (1-2 frasi)
+Multe e conseguenze potenziali se non affrontate.
+
+## 7. METODOLOGIA
+Come è stata eseguita questa analisi: scansione automatizzata del sito web (HTTP GET, parsing HTML, rilevamento di parole chiave per casi d'uso IA, segnali GDPR, policy sulla privacy/cookie) + ricerca dati open-source (DuckDuckGo) + analisi strutturata dei dati del modulo rispetto alle categorie di rischio e ai requisiti dell'AI Act dell'UE. Il punteggio di conformità (0-100) viene calcolato da fattori di rischio e misure di conformità secondo la formula multivariata definita nel motore AI Verify. Fornire sempre questa sezione.
+
+## 8. FONTI
+- Testo ufficiale dell'AI Act dell'UE: https://eur-lex.europa.eu/eli/reg/2024/1689
+- Elenco ad alto rischio dell'AI Act: https://artificialintelligenceact.eu/high-risk/
+- Pagina della Commissione europea sull'IA: https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence"""
+
+    sections_es = """## 1. CONCLUSIÓN GENERAL (1-2 frases solamente)
+¿La actividad de la empresa está regulada por la AI Act de la UE? ¿Cuál es el nivel de riesgo general?
+
+## 2. HALLAZGOS PRINCIPALES (max. 3-5 puntos)
+Los problemas de cumplimiento más críticos encontrados.
+
+## 3. NIVEL DE RIESGO (una línea)
+Inaceptable / Alto / Limitado / Mínimo — con una frase de justificación.
+
+## 4. BRECHAS CRÍTICAS (max. 3-5 puntos)
+Solo las brechas de cumplimiento más urgentes.
+
+## 5. PRINCIPALES RECOMENDACIONES (max. 3-5 puntos)
+Acciones prioritarias a tomar — ordenadas por urgencia (inmediata / corto plazo / largo plazo).
+
+## 6. RIESGO DE MULTA (1-2 frases)
+Multas y consecuencias potenciales si no se abordan.
+
+## 7. METODOLOGÍA
+Cómo se realizó este análisis: escaneo automatizado del sitio web (HTTP GET, análisis HTML, detección de palabras clave para casos de uso de IA, señales GDPR, políticas de privacidad/cookies) + búsqueda de datos de código abierto (DuckDuckGo) + análisis estructurado de datos de formularios contra categorías de riesgo y requisitos de la AI Act de la UE. La puntuación de cumplimiento (0-100) se calcula a partir de factores de riesgo y medidas de cumplimiento según la fórmula multivariante definida en el motor AI Verify. Proporcione siempre esta sección.
+
+## 8. FUENTES
+- Texto oficial de la AI Act de la UE: https://eur-lex.europa.eu/eli/reg/2024/1689
+- Lista de alto riesgo de la AI Act: https://artificialintelligenceact.eu/high-risk/
+- Página de la Comisión Europea sobre IA: https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence"""
+
     format_rules_en = """- MAXIMUM 3-4 sentences per section. No long paragraphs.
 - Use short bullet points (max 5 per section), not long lists.
 - NO tables unless absolutely necessary.
@@ -323,10 +476,28 @@ Diese Analyse wurde durchgeführt mittels: automatisiertem Website-Scan (HTTP GE
 - Konzentrieren Sie sich NUR auf die KRITISCHSTEN Erkenntnisse — nicht alles auflisten.
 - Der Bericht sollte in 30 Sekunden EINFACH ÜBERBLICKBAR sein."""
 
-    sections = sections_de if lang == "de" else sections_en
-    format_rules = format_rules_de if lang == "de" else format_rules_en
+    format_rules_fr = """- MAXIMUM 3-4 phrases par section. Pas de longs paragraphes.
+- Utilisez des points courts (max 5 par section), pas de longues listes.
+- PAS de tableaux sauf si absolument nécessaire.
+- Concentrez-vous UNIQUEMENT sur les résultats les PLUS CRITIQUES — ne listez pas tout.
+- Le rapport doit être FACILE À PARCOURIR en 30 secondes."""
+
+    format_rules_it = """- MASSIMO 3-4 frasi per sezione. Niente paragrafi lunghi.
+- Usa punti elenco brevi (max 5 per sezione), non elenchi lunghi.
+- NIENTE tabelle se non assolutamente necessario.
+- Concentrati SOLO sui risultati PIÙ CRITICI — non elencare tutto.
+- Il rapporto deve essere FACILE DA SCORRERE in 30 secondi."""
+
+    format_rules_es = """- MÁXIMO 3-4 frases por sección. Sin párrafos largos.
+- Use puntos breves (máx. 5 por sección), no listas largas.
+- SIN tablas a menos que sea absolutamente necesario.
+- Concéntrese SOLO en los hallazgos MÁS CRÍTICOS — no enumere todo.
+- El informe debe ser FÁCIL DE ESCANEAR en 30 segundos."""
+
+    sections = sections_fr if lang == "fr" else sections_it if lang == "it" else sections_es if lang == "es" else sections_de if lang == "de" else sections_en
+    format_rules = format_rules_fr if lang == "fr" else format_rules_it if lang == "it" else format_rules_es if lang == "es" else format_rules_de if lang == "de" else format_rules_en
     
-    profile_banner = "## Company Profile (Unternehmensprofil)" if lang == "de" else "## Company Profile"
+    profile_banner = "## Company Profile (Profil de l'entreprise)" if lang == "fr" else "## Company Profile (Profilo aziendale)" if lang == "it" else "## Company Profile (Perfil de la empresa)" if lang == "es" else "## Company Profile (Unternehmensprofil)" if lang == "de" else "## Company Profile"
 
     prompt = f"""Analyze the following company and its AI systems for EU AI Act compliance.
 
