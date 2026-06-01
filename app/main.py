@@ -378,7 +378,7 @@ async def get_report(sub_id: str, db: Session = Depends(get_db)):
 def calculate_compliance_score(sub: Submission, lang: str = "en") -> dict:
     """Calculate compliance score 0-100 with level and recommendations.
     Multi-variate formula weighting ALL form fields per EU AI Act logic."""
-    L = lambda en, de: de if lang == "de" else en
+    L = lambda en, de, fr=None, it=None, es=None: de if lang == "de" else (fr if lang == "fr" and fr else (it if lang == "it" and it else (es if lang == "es" and es else en)))
     score = 100
     details = {}
     

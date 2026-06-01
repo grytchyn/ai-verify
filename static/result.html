@@ -581,6 +581,32 @@
         }
         .auth-save-btn:hover { background: var(--brand-hover); transform: translateY(-1px); }
         .auth-save-btn.saved { background: var(--success); cursor: default; }
+        .lang-selector { position: relative; display: inline-block; }
+        .lang-dropdown-btn {
+            display: flex; align-items: center; gap: 6px;
+            background: var(--surface2); border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm); padding: 6px 12px;
+            color: var(--text-secondary); font-size: 13px; font-weight: 500;
+            cursor: pointer; font-family: inherit; transition: border-color 0.2s;
+        }
+        .lang-dropdown-btn:hover { border-color: var(--border); color: var(--text-primary); }
+        .lang-arrow { font-size: 10px; transition: transform 0.2s; }
+        .lang-arrow.open { transform: rotate(180deg); }
+        .lang-dropdown-menu {
+            display: none; position: absolute; top: calc(100% + 4px); right: 0;
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: var(--radius); min-width: 100px; z-index: 200;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3); overflow: hidden;
+        }
+        .lang-dropdown-menu.open { display: block; }
+        .lang-option {
+            display: flex; align-items: center; gap: 8px;
+            width: 100%; padding: 8px 14px; border: none; background: none;
+            color: var(--text-secondary); font-size: 13px; cursor: pointer;
+            font-family: inherit; text-align: left; transition: background 0.1s;
+        }
+        .lang-option:hover { background: var(--surface3); color: var(--text-primary); }
+        .lang-option.active { background: var(--brand-bg); color: var(--brand); }
     </style>
 </head>
 <body>
@@ -590,9 +616,24 @@
                 <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5e6ad2"/><stop offset="100%" stop-color="#7170ff"/></linearGradient></defs><path d="M16 2L5 7v7c0 7.5 4.25 14.5 11 17 6.75-2.5 11-9.5 11-17V7L16 2z" fill="url(#g)"/><path d="M11 16l4 4 7-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="8" r="2.5" fill="#10b981" stroke="#08090a" stroke-width="1.5"/></svg></div>
                 AI Verify
             </a>
-            <div class="auth-section">
-                <button class="auth-login-btn" id="googleSignInBtnResult"></button>
-                <div class="auth-user-menu" id="authUserMenu" onclick="toggleDropdown()">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div class="lang-selector">
+                    <button class="lang-dropdown-btn" onclick="toggleLangDropdown()" type="button">
+                        <span id="currentLangFlag">🇬🇧</span>
+                        <span id="currentLangLabel">EN</span>
+                        <span class="lang-arrow">▾</span>
+                    </button>
+                    <div class="lang-dropdown-menu" id="langDropdown">
+                        <button class="lang-option" onclick="switchLanguage('en')" data-lang="en">🇬🇧 EN</button>
+                        <button class="lang-option" onclick="switchLanguage('de')" data-lang="de">🇩🇪 DE</button>
+                        <button class="lang-option" onclick="switchLanguage('fr')" data-lang="fr">🇫🇷 FR</button>
+                        <button class="lang-option" onclick="switchLanguage('it')" data-lang="it">🇮🇹 IT</button>
+                        <button class="lang-option" onclick="switchLanguage('es')" data-lang="es">🇪🇸 ES</button>
+                    </div>
+                </div>
+                <div class="auth-section">
+                    <button class="auth-login-btn" id="googleSignInBtnResult"></button>
+                    <div class="auth-user-menu" id="authUserMenu" onclick="toggleDropdown()">
                     <div class="auth-avatar" id="authAvatar"></div>
                     <span class="auth-name" id="authName"></span>
                     <div class="auth-dropdown" id="authDropdown">
@@ -782,22 +823,172 @@
                 pollAttempt: "↻ Abfrageversuch",
                 errorHeader: "Analyse fehlgeschlagen",
                 errorDesc: "Wir konnten Ihre Compliance-Analyse nicht abschließen. Dies kann an einem vorübergehenden Problem liegen. Bitte versuchen Sie es erneut.",
-                errorBtn: "← Formular",
-                footerAIVerify: "AI Verify",
-                footerPrivacy: "Datenschutz",
-                footerImprint: "Impressum",
-                footerCopyright: "© 2026 AI Verify. Automatisierte EU AI Act-Analyse für kleine und mittlere Unternehmen. Keine Rechtsberatung.",
-                methodologyDesc: "Ihre Compliance-Wertung basiert auf einer gewichteten Bewertung dieser Faktoren:",
-                methodologyDetail: "AI Verify verwendet eine regelbasierte Bewertungsmaschine, die auf die EU AI Act-Artikel 6–20 abgestimmt ist. Jeder Risikofaktor (KI-Systemtyp, Einsatzkontext, menschliche Aufsicht, Datenquellen) wird anhand der regulatorischen Anforderungen bewertet. Die Wertung wird in Echtzeit basierend auf Ihren Eingaben neu berechnet.",
-                methodologyLink: "Mehr über unsere Compliance erfahren →",
-                baseScore: "Basiswertung: 100 Punkte",
-                verdictLow: "Ihre KI-Systeme zeigen GUTE Compliance mit den EU AI Act-Anforderungen. Überwachen und pflegen Sie weiterhin Ihre aktuellen Praktiken.",
-                verdictMedium: "Ihre KI-Systeme zeigen MITTLERE Compliance. Gezielte Verbesserungen werden empfohlen, um das Risiko zu reduzieren und Ihre Compliance-Position zu stärken.",
-                verdictHigh: "Ihre KI-Systeme stellen ein HOHES RISIKO nach dem EU AI Act dar. Sofortige Compliance-Maßnahmen sind erforderlich, um Strafen und regulatorische Sanktionen zu vermeiden.",
-                score: "Wertung",
-                classification: "Einstufung",
-                generatedLabel: "Erstellt: "
-            }
+                navSignOut: '🚪 Sign Out',
+                                footerAIVerify: 'AI Verify',
+                                footerPrivacy: 'Datenschutz',
+                                footerImprint: 'Impressum',
+                                footerCopyright: '© 2026 AI Verify. Automatisierte EU AI Act-Analyse für kleine und mittlere Unternehmen. Keine Rechtsberatung.',
+                                methodologyDesc: 'Ihre Compliance-Wertung basiert auf einer gewichteten Bewertung dieser Faktoren:',
+                                methodologyDetail: 'AI Verify verwendet eine regelbasierte Bewertungsmaschine, die auf die EU AI Act-Artikel 6–20 abgestimmt ist. Jeder Risikofaktor (KI-Systemtyp, Einsatzkontext, menschliche Aufsicht, Datenquellen) wird anhand der regulatorischen Anforderungen bewertet. Die Wertung wird in Echtzeit basierend auf Ihren Eingaben neu berechnet.',
+                                methodologyLink: 'Mehr über unsere Compliance erfahren →',
+                                baseScore: 'Basiswertung: 100 Punkte',
+                                verdictLow: 'Ihre KI-Systeme zeigen GUTE Compliance mit den EU AI Act-Anforderungen. Überwachen und pflegen Sie weiterhin Ihre aktuellen Praktiken.',
+                                verdictMedium: 'Ihre KI-Systeme zeigen MITTLERE Compliance. Gezielte Verbesserungen werden empfohlen, um das Risiko zu reduzieren und Ihre Compliance-Position zu stärken.',
+                                verdictHigh: 'Ihre KI-Systeme stellen ein HOHES RISIKO nach dem EU AI Act dar. Sofortige Compliance-Maßnahmen sind erforderlich, um Strafen und regulatorische Sanktionen zu vermeiden.',
+                                score: 'Wertung',
+                                classification: 'Einstufung',
+                                generatedLabel: 'Erstellt: '
+                            },
+                            fr: {
+                                navTitle: 'AI Verify',
+                                navNewReport: '→ Nouveau rapport',
+                                navMyResults: '📊 Mes résultats',
+                                navSignOut: '🚪 Se déconnecter',
+                                loadingTitle: 'Analyse de vos données de conformité',
+                                loadingDesc: 'Analyse selon les exigences de l\'AI Act européen',
+                                reportTitle: 'Rapport de conformité IA',
+                                noReportId: 'Aucun ID de rapport fourni',
+                                noReportDesc: 'Veuillez d\'abord soumettre le formulaire.',
+                                noReportBtn: '← Commencer ici',
+                                scoreLabel: 'CONFORMITÉ',
+                                scoreTitle: 'Score de conformité',
+                                scoreDesc: 'Votre score de conformité IA est calculé en fonction des facteurs de risque et des mesures de conformité actuelles.',
+                                scoreLow: 'Risque faible (71-100)',
+                                scoreMedium: 'Risque moyen (40-70)',
+                                scoreHigh: 'Risque élevé (0-39)',
+                                rawToggle: '📄 Voir le rapport complet (markdown brut)',
+                                rawToggleMethodology: '🔬 Méthodologie et calcul du score',
+                                sectionCriticalGaps: 'Lacunes et risques critiques',
+                                sectionCriticalGapsDesc: 'Problèmes nécessitant une attention immédiate',
+                                sectionClassification: 'Classification AI Act UE',
+                                sectionRequirements: 'Exigences applicables',
+                                sectionRequirementsDesc: 'Articles de l\'AI Act UE qui s\'appliquent',
+                                sectionStrengths: 'Points forts de conformité',
+                                sectionStrengthsDesc: 'Facteurs positifs améliorant votre score',
+                                sectionConclusion: 'Conclusion générale',
+                                conclusionLow: 'Risque faible — Bonne conformité',
+                                conclusionMedium: 'Risque moyen — Améliorations nécessaires',
+                                conclusionHigh: 'Risque élevé — Action requise',
+                                keyRecs: 'Recommandations clés',
+                                pollAttempt: '↻ Tentative d\'interrogation',
+                                errorHeader: 'Analyse échouée',
+                                errorDesc: 'Nous n\'avons pas pu terminer votre analyse de conformité. Cela peut être dû à un problème temporaire. Veuillez réessayer.',
+                                errorBtn: '← Formulaire',
+                                footerAIVerify: 'AI Verify',
+                                footerPrivacy: 'Confidentialité',
+                                footerImprint: 'Impressum',
+                                footerCopyright: '© 2026 AI Verify. Analyse automatisée de l\'AI Act UE pour les PME. Pas un conseil juridique.',
+                                methodologyDesc: 'Votre score de conformité est basé sur une évaluation pondérée de ces facteurs :',
+                                methodologyDetail: 'AI Verify utilise un moteur de notation basé sur des règles aligné sur les articles 6 à 20 de l\'AI Act UE. Chaque facteur de risque (type de système IA, contexte de déploiement, supervision humaine, sources de données) est évalué par rapport aux exigences réglementaires. Le score est recalculé en temps réel en fonction de vos entrées.',
+                                methodologyLink: 'En savoir plus sur notre conformité →',
+                                baseScore: 'Score de base : 100 points',
+                                verdictLow: 'Vos systèmes IA montrent une BONNE conformité aux exigences de l\'AI Act UE. Continuez à surveiller et à maintenir vos pratiques actuelles.',
+                                verdictMedium: 'Vos systèmes IA montrent une conformité MODÉRÉE. Des améliorations ciblées sont recommandées pour réduire l\'exposition aux risques et renforcer votre position de conformité.',
+                                verdictHigh: 'Vos systèmes IA présentent un RISQUE ÉLEVÉ selon l\'AI Act UE. Des mesures de conformité immédiates sont nécessaires pour éviter les pénalités et les sanctions réglementaires.',
+                                score: 'Score',
+                                classification: 'Classification',
+                                generatedLabel: 'Généré : '
+                            },
+                            it: {
+                                navTitle: 'AI Verify',
+                                navNewReport: '→ Nuovo rapporto',
+                                navMyResults: '📊 I miei risultati',
+                                navSignOut: '🚪 Esci',
+                                loadingTitle: 'Scansione dei dati di conformità',
+                                loadingDesc: 'Analisi secondo i requisiti dell\'AI Act UE',
+                                reportTitle: 'Rapporto di conformità IA',
+                                noReportId: 'Nessun ID rapporto fornito',
+                                noReportDesc: 'Invia prima il modulo.',
+                                noReportBtn: '← Inizia qui',
+                                scoreLabel: 'CONFORMITÀ',
+                                scoreTitle: 'Punteggio di conformità',
+                                scoreDesc: 'Il tuo punteggio di conformità IA è calcolato in base ai fattori di rischio e alle misure di conformità attuali.',
+                                scoreLow: 'Rischio basso (71-100)',
+                                scoreMedium: 'Rischio medio (40-70)',
+                                scoreHigh: 'Rischio alto (0-39)',
+                                rawToggle: '📄 Visualizza rapporto completo (markdown grezzo)',
+                                rawToggleMethodology: '🔬 Metodologia e calcolo del punteggio',
+                                sectionCriticalGaps: 'Divari e rischi critici',
+                                sectionCriticalGapsDesc: 'Problemi che richiedono attenzione immediata',
+                                sectionClassification: 'Classificazione AI Act UE',
+                                sectionRequirements: 'Requisiti applicabili',
+                                sectionRequirementsDesc: 'Articoli dell\'AI Act UE applicabili',
+                                sectionStrengths: 'Punti di forza della conformità',
+                                sectionStrengthsDesc: 'Fattori positivi che migliorano il punteggio',
+                                sectionConclusion: 'Conclusione generale',
+                                conclusionLow: 'Rischio basso — Buona conformità',
+                                conclusionMedium: 'Rischio medio — Miglioramenti necessari',
+                                conclusionHigh: 'Rischio alto — Azione richiesta',
+                                keyRecs: 'Raccomandazioni chiave',
+                                pollAttempt: '↻ Tentativo di polling',
+                                errorHeader: 'Analisi fallita',
+                                errorDesc: 'Impossibile completare l\'analisi di conformità. Potrebbe essere dovuto a un problema temporaneo. Riprova.',
+                                errorBtn: '← Modulo',
+                                footerAIVerify: 'AI Verify',
+                                footerPrivacy: 'Privacy',
+                                footerImprint: 'Impressum',
+                                footerCopyright: '© 2026 AI Verify. Analisi automatizzata dell\'AI Act UE per PMI. Non un parere legale.',
+                                methodologyDesc: 'Il tuo punteggio di conformità si basa su una valutazione ponderata di questi fattori:',
+                                methodologyDetail: 'AI Verify utilizza un motore di valutazione basato su regole allineato agli articoli 6–20 dell\'AI Act UE. Ogni fattore di rischio (tipo di sistema IA, contesto di implementazione, supervisione umana, fonti di dati) viene valutato rispetto ai requisiti normativi. Il punteggio viene ricalcolato in tempo reale in base ai tuoi input.',
+                                methodologyLink: 'Scopri di più sulla nostra conformità →',
+                                baseScore: 'Punteggio base: 100 punti',
+                                verdictLow: 'I tuoi sistemi IA mostrano una BUONA conformità ai requisiti dell\'AI Act UE. Continua a monitorare e mantenere le tue pratiche attuali.',
+                                verdictMedium: 'I tuoi sistemi IA mostrano una conformità MODERATA. Miglioramenti mirati sono raccomandati per ridurre l\'esposizione al rischio e rafforzare la tua posizione di conformità.',
+                                verdictHigh: 'I tuoi sistemi IA presentano un ALTO RISCHIO secondo l\'AI Act UE. Sono necessarie azioni di conformità immediate per evitare sanzioni e penalità regolamentari.',
+                                score: 'Punteggio',
+                                classification: 'Classificazione',
+                                generatedLabel: 'Generato: '
+                            },
+                            es: {
+                                navTitle: 'AI Verify',
+                                navNewReport: '→ Nuevo informe',
+                                navMyResults: '📊 Mis resultados',
+                                navSignOut: '🚪 Cerrar sesión',
+                                loadingTitle: 'Escaneando tus datos de cumplimiento',
+                                loadingDesc: 'Analizando según los requisitos de la AI Act UE',
+                                reportTitle: 'Informe de cumplimiento de IA',
+                                noReportId: 'No se proporcionó ID de informe',
+                                noReportDesc: 'Por favor, envía primero el formulario.',
+                                noReportBtn: '← Empezar aquí',
+                                scoreLabel: 'CUMPLIMIENTO',
+                                scoreTitle: 'Puntuación de cumplimiento',
+                                scoreDesc: 'Tu puntuación de cumplimiento de IA se calcula en función de factores de riesgo y medidas de cumplimiento actuales.',
+                                scoreLow: 'Riesgo bajo (71-100)',
+                                scoreMedium: 'Riesgo medio (40-70)',
+                                scoreHigh: 'Riesgo alto (0-39)',
+                                rawToggle: '📄 Ver informe completo (markdown sin procesar)',
+                                rawToggleMethodology: '🔬 Metodología y cálculo de puntuación',
+                                sectionCriticalGaps: 'Brechas y riesgos críticos',
+                                sectionCriticalGapsDesc: 'Problemas que requieren atención inmediata',
+                                sectionClassification: 'Clasificación AI Act UE',
+                                sectionRequirements: 'Requisitos aplicables',
+                                sectionRequirementsDesc: 'Artículos de la AI Act UE que aplican',
+                                sectionStrengths: 'Fortalezas de cumplimiento',
+                                sectionStrengthsDesc: 'Factores positivos que mejoran tu puntuación',
+                                sectionConclusion: 'Conclusión general',
+                                conclusionLow: 'Riesgo bajo — Buen cumplimiento',
+                                conclusionMedium: 'Riesgo medio — Se necesitan mejoras',
+                                conclusionHigh: 'Riesgo alto — Se requiere acción',
+                                keyRecs: 'Recomendaciones clave',
+                                pollAttempt: '↻ Intento de sondeo',
+                                errorHeader: 'Análisis fallido',
+                                errorDesc: 'No pudimos completar tu análisis de cumplimiento. Esto puede deberse a un problema temporal. Por favor, inténtalo de nuevo.',
+                                errorBtn: '← Formulario',
+                                footerAIVerify: 'AI Verify',
+                                footerPrivacy: 'Privacidad',
+                                footerImprint: 'Imprint',
+                                footerCopyright: '© 2026 AI Verify. Análisis automatizado de la AI Act UE para PYME. No es asesoría legal.',
+                                methodologyDesc: 'Tu puntuación de cumplimiento se basa en una evaluación ponderada de estos factores:',
+                                methodologyDetail: 'AI Verify utiliza un motor de puntuación basado en reglas alineado con los Artículos 6–20 de la AI Act UE. Cada factor de riesgo (tipo de sistema IA, contexto de implementación, supervisión humana, fuentes de datos) se evalúa según los requisitos regulatorios. La puntuación se recalcula en tiempo real según tus datos.',
+                                methodologyLink: 'Más información sobre nuestro cumplimiento →',
+                                baseScore: 'Puntuación base: 100 puntos',
+                                verdictLow: 'Tus sistemas de IA muestran BUEN cumplimiento con los requisitos de la AI Act UE. Continúa monitoreando y manteniendo tus prácticas actuales.',
+                                verdictMedium: 'Tus sistemas de IA muestran cumplimiento MODERADO. Se recomiendan mejoras específicas para reducir la exposición al riesgo y fortalecer tu posición de cumplimiento.',
+                                verdictHigh: 'Tus sistemas de IA presentan ALTO RIESGO según la AI Act UE. Se requieren acciones de cumplimiento inmediatas para evitar penalizaciones y sanciones regulatorias.',
+                                score: 'Puntuación',
+                                classification: 'Clasificación',
+                                generatedLabel: 'Generado: '
+                            }
         };
 
         let currentLang = localStorage.getItem('aiverify_lang') || 'en';
@@ -805,6 +996,39 @@
         if (urlLang) currentLang = urlLang;
         localStorage.setItem('aiverify_lang', currentLang);
         document.documentElement.lang = currentLang;
+
+        // Init dropdown flag/label
+        const flagMap = {en:'🇬🇧', de:'🇩🇪', fr:'🇫🇷', it:'🇮🇹', es:'🇪🇸'};
+        function setFlagAndLabel(lang) {
+            const fe = document.getElementById('currentLangFlag');
+            const le = document.getElementById('currentLangLabel');
+            if (fe) fe.textContent = flagMap[lang] || '🇬🇧';
+            if (le) le.textContent = lang.toUpperCase();
+            document.querySelectorAll('.lang-option').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+        }
+        setFlagAndLabel(currentLang);
+
+        function toggleLangDropdown() {
+            document.getElementById('langDropdown').classList.toggle('open');
+            document.querySelector('.lang-arrow')?.classList.toggle('open');
+        }
+        function switchLanguage(lang) {
+            localStorage.setItem('aiverify_lang', lang);
+            document.documentElement.lang = lang;
+            currentLang = lang;
+            document.getElementById('langDropdown').classList.remove('open');
+            document.querySelector('.lang-arrow')?.classList.remove('open');
+            setFlagAndLabel(lang);
+            applyLanguage();
+            // Close dropdown on click outside
+            document.addEventListener('click', function closeDropdown(e) {
+                if (!e.target.closest('.lang-selector')) {
+                    document.getElementById('langDropdown').classList.remove('open');
+                    document.querySelector('.lang-arrow')?.classList.remove('open');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            });
+        }
 
         function applyLanguage() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -873,7 +1097,8 @@
 
             document.getElementById('reportTitle').textContent = translations[currentLang]?.reportTitle || 'AI Compliance Report';
             document.getElementById('companyName').textContent = data.company || '';
-            document.getElementById('reportTime').textContent = (translations[currentLang]?.generatedLabel || 'Generated: ') + new Date().toLocaleString(currentLang === 'de' ? 'de-DE' : 'en-US');
+            const localeMap = {en:'en-US', de:'de-DE', fr:'fr-FR', it:'it-IT', es:'es-ES'};
+            document.getElementById('reportTime').textContent = (translations[currentLang]?.generatedLabel || 'Generated: ') + new Date().toLocaleString(localeMap[currentLang] || 'en-US');
 
             renderScoreGauge(data);
             renderInfographic(data);

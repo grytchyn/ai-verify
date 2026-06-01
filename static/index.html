@@ -348,6 +348,32 @@ footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
 .lang-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.5px; }
 .lang-btn:hover { border-color: var(--brand); color: var(--text-secondary); }
 .lang-btn.active { background: var(--brand); border-color: var(--brand); color: white; }
+.lang-selector { position: relative; display: inline-block; }
+.lang-dropdown-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface2); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm); padding: 6px 12px;
+    color: var(--text-secondary); font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: inherit; transition: border-color 0.2s;
+}
+.lang-dropdown-btn:hover { border-color: var(--border); color: var(--text-primary); }
+.lang-arrow { font-size: 10px; transition: transform 0.2s; }
+.lang-arrow.open { transform: rotate(180deg); }
+.lang-dropdown-menu {
+    display: none; position: absolute; top: calc(100% + 4px); right: 0;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius); min-width: 100px; z-index: 200;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3); overflow: hidden;
+}
+.lang-dropdown-menu.open { display: block; }
+.lang-option {
+    display: flex; align-items: center; gap: 8px;
+    width: 100%; padding: 8px 14px; border: none; background: none;
+    color: var(--text-secondary); font-size: 13px; cursor: pointer;
+    font-family: inherit; text-align: left; transition: background 0.1s;
+}
+.lang-option:hover { background: var(--surface3); color: var(--text-primary); }
+.lang-option.active { background: var(--brand-bg); color: var(--brand); }
 </style>
 </head>
 <body>
@@ -367,9 +393,19 @@ footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
       <a href="#how" data-i18n="navHow">How It Works</a>
       <a href="#features" data-i18n="navFeatures">Features</a>
       <a href="#faq" data-i18n="navFaq">FAQ</a>
-      <div class="lang-switch">
-        <button class="lang-btn lang-btn-en" data-lang="en" onclick="setLanguage('en')" title="English" data-i18n="langEN">EN</button>
-        <button class="lang-btn lang-btn-de" data-lang="de" onclick="setLanguage('de')" title="Deutsch" data-i18n="langDE">DE</button>
+      <div class="lang-selector">
+        <button class="lang-dropdown-btn" onclick="toggleLangDropdown()" type="button">
+          <span id="currentLangFlag">🇬🇧</span>
+          <span id="currentLangLabel">EN</span>
+          <span class="lang-arrow">▾</span>
+        </button>
+        <div class="lang-dropdown-menu" id="langDropdown">
+          <button class="lang-option" onclick="switchLanguage('en')" data-lang="en">🇬🇧 EN</button>
+          <button class="lang-option" onclick="switchLanguage('de')" data-lang="de">🇩🇪 DE</button>
+          <button class="lang-option" onclick="switchLanguage('fr')" data-lang="fr">🇫🇷 FR</button>
+          <button class="lang-option" onclick="switchLanguage('it')" data-lang="it">🇮🇹 IT</button>
+          <button class="lang-option" onclick="switchLanguage('es')" data-lang="es">🇪🇸 ES</button>
+        </div>
       </div>
       <div class="auth-section">
         <button class="auth-login-btn auth-login-btn-nav" id="googleSignInBtn"></button>
@@ -875,70 +911,358 @@ const translations = {
         footerCopyright: '© 2026 AI Verify. Alle Rechte vorbehalten.',
         langEN: 'EN',
         langDE: 'DE',
+        langFR: 'FR',
+        langIT: 'IT',
+        langES: 'ES'
+    },
+    fr: {
+        navCTA: 'Vérifier gratuitement →',
+        navProblem: 'Problème',
+        navHow: 'Comment ça marche',
+        navFeatures: 'Fonctionnalités',
+        navFaq: 'FAQ',
+        hamburgerLabel: 'Menu',
+        heroBadge: '⚡ Application de l\'AI Act européen dès août 2026',
+        heroTitle: 'Conformité à l\'AI Act simplifiée<br>pour votre entreprise',
+        heroDesc: 'Vérifiez la conformité de votre site web à l\'AI Act européen en seulement 30 secondes. Gratuit. Aucune connaissance technique requise.',
+        heroPlaceholder: 'https://votre-entreprise.com',
+        heroBtn: 'Vérifier gratuitement maintenant',
+        heroNote: '🔒 Contenu public uniquement. Aucune connexion au serveur requise.',
+        statRegulations: 'Réglementations IA',
+        statFine: 'Amende maximale',
+        statResult: 'Résultat',
+        problemLabel: 'Le Problème',
+        problemTitle: 'La réglementation de l\'IA est déjà <span class="gradient">là — et vous devez agir</span>',
+        problemDesc: 'L\'AI Act européen classe les systèmes d\'IA par niveau de risque. La plupart des applications IA des entreprises sont considérées comme « à haut risque » — avec des exigences strictes.',
+        problemCard1Title: '⚠️ 90 % des PME ne sont pas préparées',
+        problemCard1Desc: 'La plupart des entreprises ne réalisent pas que leurs systèmes d\'IA relèvent déjà de l\'AI Act européen. La période de transition se termine en 2026.',
+        problemCard2Title: '📋 Documentation complexe',
+        problemCard2Desc: 'Gestion des risques, gouvernance des données, documentation technique — les exigences sont vastes et peu évidentes.',
+        problemCard3Title: '💰 Amendes jusqu\'à 35 millions d\'euros',
+        problemCard3Desc: 'La non-conformité a des conséquences graves. Connaissez vos obligations avant que les régulateurs ne frappent à votre porte.',
+        problemCard4Title: '🔍 Classification étonnamment large',
+        problemCard4Desc: 'Des outils RH basés sur l\'IA aux chatbots — de nombreuses applications IA courantes sont classées de manière inattendue comme à haut risque.',
+        problemCard5Title: '🔄 Conformité continue',
+        problemCard5Desc: 'Pas un simple contrôle unique. L\'AI Act exige une surveillance continue, des rapports et des réévaluations régulières.',
+        problemCard6Title: '🌍 Applicable mondialement',
+        problemCard6Desc: 'Si vos systèmes d\'IA affectent des citoyens de l\'UE, vous êtes soumis à l\'AI Act européen — quel que soit l\'emplacement de votre entreprise.',
+        howLabel: 'Comment ça marche',
+        howTitle: 'Votre rapport de conformité en <span class="gradient">3 étapes simples</span>',
+        howStep1Title: '📝 Remplir le formulaire rapide',
+        howStep1Desc: 'Parlez-nous de votre entreprise en 2 minutes — aucun email requis, aucune inscription.',
+        howStep2Title: '⚡ Analyse IA en 30 secondes',
+        howStep2Desc: 'Notre scanner IA analyse automatiquement les chatbots, formulaires, systèmes de suivi, et plus encore.',
+        howStep3Title: '📋 Obtenez votre rapport',
+        howStep3Desc: 'Évaluation claire des risques avec des recommandations actionnables — facile à comprendre et à mettre en œuvre immédiatement.',
+        featuresLabel: 'Fonctionnalités',
+        featuresTitle: 'Ce que <span class="gradient">AI Verify</span> propose',
+        feat1Title: '🔍 Analyse automatisée',
+        feat1Desc: 'Des résultats en moins d\'une minute au lieu de semaines avec des consultants externes.',
+        feat2Title: '📊 Rapport facile à comprendre',
+        feat2Desc: 'Notation claire des risques de A à F, expliquée en langage simple.',
+        feat3Title: '💰 Totalement gratuit',
+        feat3Desc: 'Rapport de conformité complet sans frais. Analyses illimitées. Aucun frais caché.',
+        feat4Title: '🏢 Conçu pour les PME',
+        feat4Desc: 'Spécialement conçu pour les petites entreprises sans service informatique.',
+        testimonialsLabel: 'Témoignages',
+        testimonialsTitle: 'Ce que nos utilisateurs <span class="gradient">disent</span>',
+        testimonial1Text: 'En tant que propriétaire de boulangerie, j\'étais très inquiet à propos de l\'AI Act. Cet outil m\'a montré exactement ce que je dois corriger — et c\'est gratuit !',
+        testimonial1Author: '— Anna M., Boulangerie Müller, Berlin',
+        testimonial2Text: 'M\'a fait économiser des heures de frais de consultation juridique. Je peux dormir tranquille à nouveau.',
+        testimonial2Author: '— Thomas S., Propriétaire, Commerce de détail',
+        faqLabel: 'FAQ',
+        faqTitle: 'Questions fréquemment <span class="gradient">posées</span>',
+        faq1q: 'Ai-je besoin de connaissances techniques ?',
+        faq1a: 'Non. AI Verify est spécialement conçu pour les entreprises sans service informatique. Il vous suffit d\'entrer l\'URL de votre site web et de recevoir un rapport facile à comprendre en langage simple.',
+        faq2q: 'Qu\'est-ce qui est analysé ?',
+        faq2a: 'Notre scanner analyse les chatbots, les systèmes de personnalisation, les services de suivi, les formulaires et autres éléments basés sur l\'IA de votre site web qui peuvent relever de l\'AI Act européen.',
+        faq3q: 'Mes données sont-elles sécurisées ?',
+        faq3a: 'Oui, nous analysons uniquement le contenu accessible publiquement. Aucune connexion au serveur n\'est requise, et vos données ne sont ni stockées ni partagées avec des tiers.',
+        faq4q: 'Que se passe-t-il si des problèmes sont trouvés ?',
+        faq4a: 'Vous recevrez des recommandations concrètes et priorisées. Chaque problème est expliqué avec une solution claire — aucun jargon juridique.',
+        faq5q: 'À quelle fréquence dois-je effectuer une analyse ?',
+        faq5a: 'Nous recommandons des analyses trimestrielles, car votre site web et les exigences réglementaires peuvent évoluer avec le temps.',
+        ctaTitle: 'Vérifier gratuitement maintenant',
+        ctaDesc: 'Découvrez si votre site web est conforme à l\'AI Act européen en moins d\'une minute. Sans engagement, sans frais.',
+        ctaBtn: '→ Vérifier gratuitement maintenant',
+        footerDesc: 'Analyse automatisée de l\'AI Act européen pour les petites et moyennes entreprises. Pas un conseil juridique.',
+        footerLinks: 'Liens',
+        footerLegal: 'Mentions légales',
+        footerProblem: 'Problème',
+        footerHow: 'Comment ça marche',
+        footerFeatures: 'Fonctionnalités',
+        footerFaq: 'FAQ',
+        footerBlog: 'Blog',
+        footerImprint: 'Impressum',
+        footerPrivacy: 'Confidentialité',
+        footerTerms: 'Conditions',
+        footerCopyright: '© 2026 AI Verify. Tous droits réservés.',
+        langEN: 'EN',
+        langDE: 'DE',
+        langFR: 'FR',
+        langIT: 'IT',
+        langES: 'ES'
+    },
+    it: {
+        navCTA: 'Verifica gratuitamente →',
+        navProblem: 'Problema',
+        navHow: 'Come funziona',
+        navFeatures: 'Caratteristiche',
+        navFaq: 'FAQ',
+        hamburgerLabel: 'Menu',
+        heroBadge: '⚡ Applicazione dell\'AI Act europeo da agosto 2026',
+        heroTitle: 'Conformità all\'AI Act semplificata<br>per la tua azienda',
+        heroDesc: 'Verifica la conformità del tuo sito web all\'AI Act europeo in soli 30 secondi. Gratuito. Nessuna conoscenza tecnica richiesta.',
+        heroPlaceholder: 'https://tuo-sito.com',
+        heroBtn: 'Verifica gratuitamente ora',
+        heroNote: '🔒 Solo contenuti pubblici. Nessun accesso al server richiesto.',
+        statRegulations: 'Normative IA',
+        statFine: 'Multa massima',
+        statResult: 'Risultato',
+        problemLabel: 'Il Problema',
+        problemTitle: 'La regolamentazione dell\'IA è già <span class="gradient">qui — e devi agire</span>',
+        problemDesc: 'L\'AI Act europeo classifica i sistemi di IA per livello di rischio. La maggior parte delle applicazioni IA aziendali sono considerate « ad alto rischio » — con requisiti stringenti.',
+        problemCard1Title: '⚠️ Il 90% delle PMI non è preparato',
+        problemCard1Desc: 'La maggior parte delle aziende non si rende conto che i propri sistemi di IA rientrano già nell\'AI Act europeo. Il periodo di transizione termina nel 2026.',
+        problemCard2Title: '📋 Documentazione complessa',
+        problemCard2Desc: 'Gestione del rischio, governance dei dati, documentazione tecnica — i requisiti sono estesi e poco evidenti.',
+        problemCard3Title: '💰 Multe fino a 35 milioni di euro',
+        problemCard3Desc: 'La non conformità ha conseguenze gravi. Conosci i tuoi obblighi prima che i regolatori bussino alla tua porta.',
+        problemCard4Title: '🔍 Classificazione sorprendentemente ampia',
+        problemCard4Desc: 'Dagli strumenti HR basati sull\'IA ai chatbot — molte applicazioni IA quotidiane sono inaspettatamente classificate ad alto rischio.',
+        problemCard5Title: '🔄 Conformità continua',
+        problemCard5Desc: 'Non un semplice controllo una tantum. L\'AI Act richiede monitoraggio continuo, reportistica e rivalutazioni periodiche.',
+        problemCard6Title: '🌍 Applicabile globalmente',
+        problemCard6Desc: 'Se i tuoi sistemi di IA coinvolgono cittadini dell\'UE, sei soggetto all\'AI Act europeo — indipendentemente dalla sede della tua azienda.',
+        howLabel: 'Come funziona',
+        howTitle: 'Il tuo rapporto di conformità in <span class="gradient">3 semplici passi</span>',
+        howStep1Title: '📝 Compila il modulo rapido',
+        howStep1Desc: 'Parlaci della tua azienda in 2 minuti — nessuna email richiesta, nessuna registrazione.',
+        howStep2Title: '⚡ Scansione IA in 30 secondi',
+        howStep2Desc: 'Il nostro scanner IA analizza automaticamente chatbot, moduli, sistemi di tracciamento e altro ancora.',
+        howStep3Title: '📋 Ottieni il tuo rapporto',
+        howStep3Desc: 'Valutazione chiara del rischio con raccomandazioni attuabili — facile da capire e da implementare immediatamente.',
+        featuresLabel: 'Caratteristiche',
+        featuresTitle: 'Cosa <span class="gradient">AI Verify</span> offre',
+        feat1Title: '🔍 Scansione automatizzata',
+        feat1Desc: 'Risultati in meno di un minuto invece di settimane con consulenti esterni.',
+        feat2Title: '📊 Rapporto facile da capire',
+        feat2Desc: 'Valutazione chiara del rischio da A a F, spiegata in linguaggio semplice.',
+        feat3Title: '💰 Completamente gratuito',
+        feat3Desc: 'Rapporto di conformità completo senza costi. Scansioni illimitate. Nessun costo nascosto.',
+        feat4Title: '🏢 Progettato per le PMI',
+        feat4Desc: 'Specificamente progettato per piccole imprese senza reparto IT.',
+        testimonialsLabel: 'Testimonianze',
+        testimonialsTitle: 'Cosa dicono i nostri <span class="gradient">utenti</span>',
+        testimonial1Text: 'Come proprietaria di un panificio, ero molto preoccupata per l\'AI Act. Questo strumento mi ha mostrato esattamente cosa devo correggere — ed è gratuito!',
+        testimonial1Author: '— Anna M., Panificio Müller, Berlino',
+        testimonial2Text: 'Mi ha fatto risparmiare ore di consulenza legale. Posso dormire sonni tranquilli.',
+        testimonial2Author: '— Thomas S., Proprietario, Attività commerciale',
+        faqLabel: 'FAQ',
+        faqTitle: 'Domande <span class="gradient">frequenti</span>',
+        faq1q: 'Ho bisogno di conoscenze tecniche?',
+        faq1a: 'No. AI Verify è specificamente progettato per aziende senza reparto IT. Basta inserire l\'URL del tuo sito web e ricevere un rapporto facile da capire in linguaggio semplice.',
+        faq2q: 'Cosa viene analizzato?',
+        faq2a: 'Il nostro scanner analizza chatbot, sistemi di personalizzazione, servizi di tracciamento, moduli e altri elementi basati sull\'IA del tuo sito web che potrebbero rientrare nell\'AI Act europeo.',
+        faq3q: 'I miei dati sono al sicuro?',
+        faq3a: 'Sì, analizziamo solo contenuti accessibili pubblicamente. Non è richiesto alcun accesso al server e i tuoi dati non vengono memorizzati o condivisi con terze parti.',
+        faq4q: 'Cosa succede se vengono trovati problemi?',
+        faq4a: 'Riceverai raccomandazioni concrete e prioritarie. Ogni problema viene spiegato con una soluzione chiara — nessun gergo legale.',
+        faq5q: 'Con quale frequenza devo effettuare una scansione?',
+        faq5a: 'Consigliamo scansioni trimestrali, poiché sia il tuo sito web che i requisiti normativi possono cambiare nel tempo.',
+        ctaTitle: 'Verifica gratuitamente ora',
+        ctaDesc: 'Scopri se il tuo sito web è conforme all\'AI Act europeo in meno di un minuto. Senza impegno, senza costi.',
+        ctaBtn: '→ Verifica gratuitamente ora',
+        footerDesc: 'Analisi automatizzata dell\'AI Act europeo per piccole e medie imprese. Non un parere legale.',
+        footerLinks: 'Link',
+        footerLegal: 'Note legali',
+        footerProblem: 'Problema',
+        footerHow: 'Come funziona',
+        footerFeatures: 'Caratteristiche',
+        footerFaq: 'FAQ',
+        footerBlog: 'Blog',
+        footerImprint: 'Impressum',
+        footerPrivacy: 'Privacy',
+        footerTerms: 'Condizioni',
+        footerCopyright: '© 2026 AI Verify. Tutti i diritti riservati.',
+        langEN: 'EN',
+        langDE: 'DE',
+        langFR: 'FR',
+        langIT: 'IT',
+        langES: 'ES'
+    },
+    es: {
+        navCTA: 'Verificar gratis →',
+        navProblem: 'Problema',
+        navHow: 'Cómo funciona',
+        navFeatures: 'Características',
+        navFaq: 'FAQ',
+        hamburgerLabel: 'Menú',
+        heroBadge: '⚡ Aplicación de la AI Act europea desde agosto de 2026',
+        heroTitle: 'Cumplimiento de la AI Act simplificado<br>para tu empresa',
+        heroDesc: 'Verifica el cumplimiento de tu sitio web con la AI Act europea en solo 30 segundos. Gratis. Sin conocimientos técnicos.',
+        heroPlaceholder: 'https://tu-empresa.com',
+        heroBtn: 'Verificar gratis ahora',
+        heroNote: '🔒 Solo contenido público. No se requiere acceso al servidor.',
+        statRegulations: 'Regulaciones IA',
+        statFine: 'Multa máxima',
+        statResult: 'Resultado',
+        problemLabel: 'El Problema',
+        problemTitle: 'La regulación de IA ya está <span class="gradient">aquí — y debes actuar</span>',
+        problemDesc: 'La AI Act europea clasifica los sistemas de IA por nivel de riesgo. La mayoría de las aplicaciones empresariales de IA se consideran « de alto riesgo » — con requisitos estrictos.',
+        problemCard1Title: '⚠️ El 90% de las PYME no están preparadas',
+        problemCard1Desc: 'La mayoría de las empresas no se dan cuenta de que sus sistemas de IA ya están sujetos a la AI Act europea. El período de transición termina en 2026.',
+        problemCard2Title: '📋 Documentación compleja',
+        problemCard2Desc: 'Gestión de riesgos, gobernanza de datos, documentación técnica — los requisitos son extensos y poco obvios.',
+        problemCard3Title: '💰 Multas de hasta 35 millones de euros',
+        problemCard3Desc: 'El incumplimiento tiene consecuencias graves. Conoce tus obligaciones antes de que los reguladores llamen a tu puerta.',
+        problemCard4Title: '🔍 Clasificación sorprendentemente amplia',
+        problemCard4Desc: 'Desde herramientas de RRHH basadas en IA hasta chatbots — muchas aplicaciones cotidianas de IA se clasifican inesperadamente como de alto riesgo.',
+        problemCard5Title: '🔄 Cumplimiento continuo',
+        problemCard5Desc: 'No es una verificación única. La AI Act exige supervisión continua, informes y reevaluaciones periódicas.',
+        problemCard6Title: '🌍 Aplicable globalmente',
+        problemCard6Desc: 'Si tus sistemas de IA afectan a ciudadanos de la UE, estás sujeto a la AI Act europea — independientemente de la ubicación de tu empresa.',
+        howLabel: 'Cómo funciona',
+        howTitle: 'Tu informe de cumplimiento en <span class="gradient">3 pasos sencillos</span>',
+        howStep1Title: '📝 Rellena el formulario rápido',
+        howStep1Desc: 'Cuéntanos sobre tu empresa en 2 minutos — sin correo electrónico, sin registro.',
+        howStep2Title: '⚡ Escaneo de IA en 30 segundos',
+        howStep2Desc: 'Nuestro escáner de IA analiza automáticamente chatbots, formularios, sistemas de seguimiento y más.',
+        howStep3Title: '📋 Obtén tu informe',
+        howStep3Desc: 'Evaluación clara de riesgos con recomendaciones procesables — fácil de entender e implementar de inmediato.',
+        featuresLabel: 'Características',
+        featuresTitle: 'Lo que <span class="gradient">AI Verify</span> ofrece',
+        feat1Title: '🔍 Escaneo automatizado',
+        feat1Desc: 'Resultados en menos de un minuto en lugar de semanas con consultores externos.',
+        feat2Title: '📊 Informe fácil de entender',
+        feat2Desc: 'Calificación de riesgo clara de A a F, explicada en lenguaje sencillo.',
+        feat3Title: '💰 Completamente gratis',
+        feat3Desc: 'Informe de cumplimiento completo sin costo. Escaneos ilimitados. Sin cargos ocultos.',
+        feat4Title: '🏢 Diseñado para PYME',
+        feat4Desc: 'Diseñado específicamente para pequeñas empresas sin departamento de TI.',
+        testimonialsLabel: 'Testimonios',
+        testimonialsTitle: 'Lo que nuestros usuarios <span class="gradient">dicen</span>',
+        testimonial1Text: 'Como dueña de una panadería, estaba muy preocupada por la AI Act. ¡Esta herramienta me mostró exactamente lo que necesito corregir — y es gratis!',
+        testimonial1Author: '— Anna M., Panadería Müller, Berlín',
+        testimonial2Text: 'Me ahorró horas de honorarios de consultoría legal. Puedo dormir tranquilo de nuevo.',
+        testimonial2Author: '— Thomas S., Propietario, Negocio minorista',
+        faqLabel: 'FAQ',
+        faqTitle: 'Preguntas <span class="gradient">frecuentes</span>',
+        faq1q: '¿Necesito conocimientos técnicos?',
+        faq1a: 'No. AI Verify está diseñado específicamente para empresas sin departamento de TI. Simplemente ingresa la URL de tu sitio web y recibe un informe fácil de entender en lenguaje sencillo.',
+        faq2q: '¿Qué se analiza?',
+        faq2a: 'Nuestro escáner analiza chatbots, sistemas de personalización, servicios de seguimiento, formularios y otros elementos impulsados por IA en tu sitio web que pueden estar sujetos a la AI Act europea.',
+        faq3q: '¿Mis datos están seguros?',
+        faq3a: 'Sí, solo escaneamos contenido accesible públicamente. No se requiere acceso al servidor y tus datos no se almacenan ni comparten con terceros.',
+        faq4q: '¿Qué pasa si se encuentran problemas?',
+        faq4a: 'Recibirás recomendaciones concretas y priorizadas. Cada problema se explica con una solución clara — sin jerga legal.',
+        faq5q: '¿Con qué frecuencia debo escanear?',
+        faq5a: 'Recomendamos escaneos trimestrales, ya que tanto tu sitio web como los requisitos regulatorios pueden cambiar con el tiempo.',
+        ctaTitle: 'Verificar gratis ahora',
+        ctaDesc: 'Descubre si tu sitio web cumple con la AI Act europea en menos de un minuto. Sin compromiso, sin costo.',
+        ctaBtn: '→ Verificar gratis ahora',
+        footerDesc: 'Análisis automatizado de la AI Act europea para pequeñas y medianas empresas. No es asesoría legal.',
+        footerLinks: 'Enlaces',
+        footerLegal: 'Aviso legal',
+        footerProblem: 'Problema',
+        footerHow: 'Cómo funciona',
+        footerFeatures: 'Características',
+        footerFaq: 'FAQ',
+        footerBlog: 'Blog',
+        footerImprint: 'Imprint',
+        footerPrivacy: 'Privacidad',
+        footerTerms: 'Términos',
+        footerCopyright: '© 2026 AI Verify. Todos los derechos reservados.',
+        langEN: 'EN',
+        langDE: 'DE',
+        langFR: 'FR',
+        langIT: 'IT',
+        langES: 'ES'
     }
 };
 
 // ── Language ──
-function setLanguage(lang) {
-  localStorage.setItem('aiverify_lang', lang);
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-  document.querySelector('html').lang = lang === 'de' ? 'de' : 'en';
-  // Apply translations to every element with [data-i18n] attribute
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (translations[lang] && translations[lang][key]) {
-      el.innerHTML = translations[lang][key];
-    }
-  });
-  // Apply translations to elements with [data-i18n-placeholder] attribute
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.dataset.i18nPlaceholder;
-    if (translations[lang] && translations[lang][key]) {
-      el.placeholder = translations[lang][key];
-    }
-  });
-  // Apply translations to elements with [data-i18n-aria] attribute
-  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
-    const key = el.dataset.i18nAria;
-    if (translations[lang] && translations[lang][key]) {
-      el.setAttribute('aria-label', translations[lang][key]);
-    }
-  });
-  // Update Google button locale
-  if (typeof google !== 'undefined' && google.accounts) {
-    google.accounts.id.cancel();
-    google.accounts.id.initialize({
-      client_id: '945886082965-qoe3vq3tgk6f9o0tu4versmrdmh7posn.apps.googleusercontent.com',
-      callback: handleGoogleCredential,
-      cancel_on_tap_outside: false,
-      locale: lang === 'de' ? 'de' : 'en',
+function toggleLangDropdown() {
+    document.getElementById('langDropdown').classList.toggle('open');
+    document.querySelector('.lang-arrow').classList.toggle('open');
+}
+function switchLanguage(lang) {
+    localStorage.setItem('aiverify_lang', lang);
+    document.documentElement.lang = lang;
+    document.getElementById('langDropdown').classList.remove('open');
+    document.querySelector('.lang-arrow').classList.remove('open');
+    // Update flag and label
+    const flagMap = {en:'🇬🇧', de:'🇩🇪', fr:'🇫🇷', it:'🇮🇹', es:'🇪🇸'};
+    document.getElementById('currentLangFlag').textContent = flagMap[lang] || '🇬🇧';
+    document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+    document.querySelectorAll('.lang-option').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    // Apply translations to every element with [data-i18n] attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (translations[lang] && translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+        }
     });
-    var btn = document.getElementById('googleSignInBtn');
-    if (btn) {
-      google.accounts.id.renderButton(btn, {
-        type: 'standard', shape: 'pill', theme: 'outline',
-        text: 'signin_with', size: 'medium', logo_alignment: 'left',
-        locale: lang === 'de' ? 'de' : 'en',
-      });
+    // Apply translations to elements with [data-i18n-placeholder] attribute
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.dataset.i18nPlaceholder;
+        if (translations[lang] && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+    });
+    // Apply translations to elements with [data-i18n-aria] attribute
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.dataset.i18nAria;
+        if (translations[lang] && translations[lang][key]) {
+            el.setAttribute('aria-label', translations[lang][key]);
+        }
+    });
+    // Update Google button locale
+    if (typeof google !== 'undefined' && google.accounts) {
+        google.accounts.id.cancel();
+        google.accounts.id.initialize({
+          client_id: '945886082965-qoe3vq3tgk6f9o0tu4versmrdmh7posn.apps.googleusercontent.com',
+          callback: handleGoogleCredential,
+          cancel_on_tap_outside: false,
+          locale: lang,
+        });
+        var btn = document.getElementById('googleSignInBtn');
+        if (btn) {
+          google.accounts.id.renderButton(btn, {
+            type: 'standard', shape: 'pill', theme: 'outline',
+            text: 'signin_with', size: 'medium', logo_alignment: 'left',
+            locale: lang,
+          });
+        }
     }
-  }
-  // Update nav CTA link to preserve language
-  var cta = document.querySelector('.nav-cta');
-  if (cta) cta.href = '/submit-page?lang=' + lang;
-  // Update the hero form action
-  var heroForm = document.querySelector('.hero-form');
-  if (heroForm) heroForm.action = '/submit-page?lang=' + lang;
+    // Update nav CTA link to preserve language
+    var cta = document.querySelector('.nav-cta');
+    if (cta) cta.href = '/submit-page?lang=' + lang;
+    // Update the hero form action
+    var heroForm = document.querySelector('.hero-form');
+    if (heroForm) heroForm.action = '/submit-page?lang=' + lang;
+    // Close dropdown on click outside
+    document.addEventListener('click', function closeDropdown(e) {
+        if (!e.target.closest('.lang-selector')) {
+            document.getElementById('langDropdown').classList.remove('open');
+            document.querySelector('.lang-arrow')?.classList.remove('open');
+            document.removeEventListener('click', closeDropdown);
+        }
+    });
 }
 
 // Restore language on load
 function restoreLanguage() {
   var lang = localStorage.getItem('aiverify_lang') || 'en';
-  document.querySelector('html').lang = lang === 'de' ? 'de' : 'en';
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  const flagMap = {en:'🇬🇧', de:'🇩🇪', fr:'🇫🇷', it:'🇮🇹', es:'🇪🇸'};
+  document.documentElement.lang = lang;
+  document.getElementById('currentLangFlag').textContent = flagMap[lang] || '🇬🇧';
+  document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+  document.querySelectorAll('.lang-option').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   // Apply translations on restore too
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
-    if (translations[lang] && translations[lang][key]) {
+    if (translations[lang] && translations[lang][key] !== undefined) {
       el.innerHTML = translations[lang][key];
     }
   });
@@ -971,7 +1295,7 @@ window.onload = function() {
       client_id: '945886082965-qoe3vq3tgk6f9o0tu4versmrdmh7posn.apps.googleusercontent.com',
       callback: handleGoogleCredential,
       cancel_on_tap_outside: false,
-      locale: lang === 'de' ? 'de' : 'en',
+      locale: lang,
     });
     google.accounts.id.renderButton(btn, {
       type: 'standard',
@@ -980,7 +1304,7 @@ window.onload = function() {
       text: 'signin_with',
       size: 'medium',
       logo_alignment: 'left',
-      locale: lang === 'de' ? 'de' : 'en',
+      locale: lang,
     });
   }
 };

@@ -10,9 +10,31 @@ Antworten Sie streng mit Fakten aus dem bereitgestellten Kontext, im Markdown-Fo
 
 Ihre Antwort MUSS auf DEUTSCH sein. Verwenden Sie Fachbegriffe in der deutschen Übersetzung."""
 
+SYSTEM_PROMPT_FR = """Vous êtes un expert de l'AI Act européen (Règlement UE 2024/1689 sur l'intelligence artificielle). Les systèmes d'IA à haut risque comprennent : l'identification biométrique, les infrastructures critiques, l'emploi, la notation de crédit, l'éducation. Exigences clés : gestion des risques, gouvernance des données, transparence, supervision humaine, journalisation, évaluation de la conformité.
+Répondez strictement avec des faits provenant du contexte fourni uniquement, en utilisant le format markdown.
+
+Votre réponse DOIT être en FRANÇAIS. Utilisez les termes techniques en français."""
+
+SYSTEM_PROMPT_IT = """Sei un esperto dell'AI Act europeo (Regolamento UE 2024/1689 sull'intelligenza artificiale). I sistemi di IA ad alto rischio includono: identificazione biometrica, infrastrutture critiche, occupazione, valutazione del credito, istruzione. Requisiti chiave: gestione del rischio, governance dei dati, trasparenza, supervisione umana, registrazione, valutazione della conformità.
+Rispondi rigorosamente con fatti tratti esclusivamente dal contesto fornito, utilizzando il formato markdown.
+
+La tua risposta DEVE essere in ITALIANO. Utilizza i termini tecnici in italiano."""
+
+SYSTEM_PROMPT_ES = """Eres un experto en la Ley de IA de la UE (Reglamento UE 2024/1689 sobre inteligencia artificial). Los sistemas de IA de alto riesgo incluyen: identificación biométrica, infraestructuras críticas, empleo, calificación crediticia, educación. Requisitos clave: gestión de riesgos, gobernanza de datos, transparencia, supervisión humana, registro, evaluación de la conformidad.
+Responda estrictamente con hechos del contexto proporcionado solamente, utilizando el formato markdown.
+
+Su respuesta DEBE estar en ESPAÑOL. Utilice los términos técnicos en español."""
+
 def get_system_prompt(lang: str = "en") -> str:
     """Return system prompt in the requested language."""
-    return SYSTEM_PROMPT_DE if lang == "de" else SYSTEM_PROMPT_EN
+    prompts = {
+        "en": SYSTEM_PROMPT_EN,
+        "de": SYSTEM_PROMPT_DE,
+        "fr": SYSTEM_PROMPT_FR,
+        "it": SYSTEM_PROMPT_IT,
+        "es": SYSTEM_PROMPT_ES,
+    }
+    return prompts.get(lang, SYSTEM_PROMPT_EN)
 
 def build_company_profile(submission, lang: str = "en") -> str:
     """Build structured company profile from submission data."""
