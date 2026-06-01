@@ -1,137 +1,133 @@
 # AI Verify — EU AI Act Compliance Checker
 
-A SaaS MVP that automatically checks whether a website or AI system complies with the EU AI Act, providing instant analysis and recommendations.
+A SaaS MVP that automatically checks whether a website or AI system complies with the **EU AI Act**, providing instant analysis and recommendations in **5 languages** (EN/DE/FR/IT/ES).
 
-Website: https://ai-verify.onrender.com/
-GitHub Pages: https://grytchyn.github.io/ai-verify/
+**Live:** https://ai-act-verify.onrender.com  
+**Repository:** https://github.com/grytchyn/ai-verify  
+**Design Bible:** `/root/mega/Hermes/projects/ai-verify/DESIGN-BIBLE.md`  
+**Dev Bible:** `/root/mega/Hermes/projects/ai-verify/DEV-BIBLE.md`
+
+---
 
 ## Features
 
-- Simple web form to submit company/product details.
-- Background web search to gather public information about the company.
-- AI-powered analysis using a local LLM (Ollama `deepseek-v4-flash`) against the EU AI Act.
-- Instant markdown report with:
-  - Risk category classification
-  - Applicable requirements
-  - Identified gaps
-  - Concrete recommendations
-- Downloadable report (Markdown) on the same page.
+- **Multi-language** — Full UI and reports in English, German, French, Italian, Spanish
+- **EU AI Act compliance check** — Classifies AI systems by risk level per Articles 5–20
+- **Automated scoring** — Weighted compliance score (0–100) based on regulatory factors
+- **LLM-powered analysis** — Uses **Mistral AI's Ministral 3:8b** 🇫🇷 (European model) for report generation
+- **Google Sign-In** — Save and view your compliance report history
+- **Instant results** — Report generated in seconds
+- **Dark theme** — Modern, accessible dark UI with design tokens throughout
 
 ## Tech Stack
 
-- **Backend**: FastAPI (Python)
-- **Database**: SQLite (SQLAlchemy)
-- **Frontend**: Static HTML + Vanilla JS
-- **LLM**: Ollama API with model `deepseek-v4-flash`
-- **Web Search**: DuckDuckGo Instant Answer API
-- **Deployable**: Docker
+| Layer | Technology |
+|-------|-----------|
+| **Backend** | Python 3.11+ / Flask |
+| **Database** | PostgreSQL (Render managed) |
+| **Auth** | Google OAuth 2.0 (GSI) |
+| **LLM** | **Ministral 3:8b** via Ollama Cloud (Mistral AI, Paris 🇫🇷) |
+| **Web Search** | Tavily API |
+| **Frontend** | Vanilla HTML + CSS + JS (no framework) |
+| **Hosting** | Render (auto-deploy from `main`) |
+
+### European AI Model 🇪🇺
+
+We use **Ministral 3:8b** by **Mistral AI** (headquartered in Paris, France) for all AI-powered compliance analysis. This means:
+
+- ✅ Fully compliant with EU data protection standards
+- ✅ No data transfer outside the European Union
+- ✅ Excellent multilingual support (all 5 target languages)
+- ✅ Transparent and auditable AI processing
+
+## Architecture
+
+### Shared CSS (Single Source of Truth)
+
+All 3 pages pull shared component styles from **`/static/components.css`**:
+
+```
+/static/components.css   → Shared: design tokens, nav, buttons, auth, forms, footer
+/static/index.html       → Landing page (page-specific: hero, features, FAQ)
+/static/submit.html      → Compliance form (page-specific: multiselect, progress bar)
+/static/result.html      → Report page (page-specific: score ring, infographic, neural loading)
+```
+
+Every color, spacing, and component is defined once in `components.css` — change it there, it updates everywhere.
+
+### Languages
+
+- **5 supported:** English, Deutsch, Français, Italiano, Español
+- **Persisted via:** `localStorage` + URL parameter `?lang=`
+- **UI translated via:** `data-i18n` attributes + JS translation objects
+- **LLM instructed via:** Language-specific system prompts sent as `role: "system"`
 
 ## Getting Started
 
 ### Prerequisites
 
-- [Python 3.12+](https://www.python.org/downloads/)
-- [Ollama](https://ollama.com/) installed and running with model `deepseek-v4-flash`:
+- Python 3.11+
+- Ollama with Ministral 3:8b:
   ```bash
-  ollama run deepseek-v4-flash
+  ollama pull ministral-3:8b
   ```
-- (Optional) [Docker](https://www.docker.com/products/docker-desktop) for containerized deployment.
 
 ### Local Development
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/ai-compliance-consultant.git
-   cd ai-compliance-consultant
-   ```
+```bash
+git clone https://github.com/grytchyn/ai-verify.git
+cd ai-verify
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # configure your env vars
+python -m app.main
+```
 
-2. Create a virtual environment (optional but recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # on Windows: venv\\Scripts\\activate
-   ```
+### Environment Variables
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Make sure Ollama is running with the required model:
-   ```bash
-   ollama run deepseek-v4-flash
-   ```
-   Keep this running in a separate terminal.
-
-5. Start the FastAPI server:
-   ```bash
-   python -m app.main
-   ```
-   The server will be available at <http://127.0.0.1:8000>.
-
-6. Open your browser, fill out the form, and receive your compliance report.
-
-### Docker Deployment
-
-1. Build the Docker image:
-   ```bash
-   docker build -t ai-compliance-consultant .
-   ```
-
-2. Run the container:
-   ```bash
-   docker run -p 8000:8000 ai-compliance-consultant
-   ```
-   Ensure that Ollama is accessible from within the container (if Ollama runs on the host, you may need to adjust network settings or run Ollama inside the container as well).
+```
+OLLAMA_API_BASE=https://ollama.com/v1/chat/completions
+OLLAMA_MODEL=ministral-3:8b
+OLLAMA_API_KEY=your_key
+DATABASE_URL=postgresql://...
+GOOGLE_CLIENT_ID=your_client_id
+```
 
 ## Project Structure
 
 ```
-ai-compliance-saas/
-├─ app/
-│   ├─ __init__.py
-│   ├─ main.py          # FastAPI entrypoint
-│   ├─ database.py      # SQLAlchemy setup
-│   ├─ models.py        # DB models
-│   ├─ llm.py           # Ollama wrapper
-│   ├─ search.py        # Web search helper
-│   ├─ prompts.py       # Prompt templates
-│   ├─ utils.py         # Report generation
-│   └─ templates/
-│       └─ report_template.md
-├─ static/
-│   └─ index.html       # Frontend form
-├─ data/                # SQLite DB file
-├─ reports/             # Generated markdown reports
-├─ requirements.txt
-├─ Dockerfile
-└─ README.md
+/root/ai-verify/
+├── app/
+│   ├── main.py          # Flask routes
+│   ├── llm.py           # Ministral 3:8b via Ollama API
+│   ├── prompts.py       # Prompt templates (5 languages)
+│   ├── scoring.py       # Compliance scoring engine
+│   ├── auth.py          # Google OAuth
+│   ├── database.py      # SQLAlchemy + PostgreSQL
+│   └── models.py        # DB models
+├── static/
+│   ├── components.css   # Shared styles (single source of truth)
+│   ├── index.html       # Landing page
+│   ├── submit.html      # Compliance form
+│   ├── result.html      # Report page
+│   ├── auth.js          # Google OAuth client
+│   ├── favicon.svg      # Shield logo
+│   └── og-image.png     # Social preview
+├── Dockerfile
+├── requirements.txt
+└── README.md
 ```
 
 ## How It Works
 
-1. User submits the form (`/submit` endpoint).
-2. A `Submission` record is created in the SQLite database with status `pending`.
-3. A background task processes the submission:
-   - Performs up to three web searches (DuckDuckGo) for the company.
-   - Builds a prompt combining the system prompt (EU AI Act expertise) and user data.
-   - Calls the local Ollama model (`deepseek-v4-flash`) to generate analysis.
-   - Generates a markdown report using a Jinja2 template.
-   - Updates the submission status to `done` and stores the report path.
-4. User can poll `/report/{id}` to check when the report is ready and download it.
-
-## Future Improvements
-
-- User authentication and history of reports.
-- PDF report generation.
-- Email delivery of reports.
-- More sophisticated web search (SerpAPI, Google Programmable Search).
-- UI improvements (progress indicator, better styling).
-- Multi-language support (German, French, etc.).
-- Deployment to cloud platforms (Render, Railway, Fly.io).
+1. User selects their language and fills out the compliance form
+2. Form data is validated and cached in `localStorage`
+3. Backend calculates a compliance score using the scoring engine
+4. LLM (Ministral 3:8b) generates a detailed analysis in the selected language
+5. Report is rendered with score ring, infographic sections, and recommendations
+6. Signed-in users can save reports to their profile
 
 ## License
 
 MIT
-
-# ai-compliance-consultantRedeploy trigger: 2026-05-25T18:26:28Z
-# Deploy trigger 2026-05-26T20:56:53Z
