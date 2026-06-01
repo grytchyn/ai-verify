@@ -1,0 +1,255 @@
+/* ─────────────────────────────────────────────────────
+   AI-Act-Verify — Design Token Foundation v2.0
+   
+   Professional three-tier token architecture:
+   --av-ref-*    = Reference tokens (raw values, palette)
+   --av-sys-*    = System tokens (semantic, theme-aware)
+   --av-comp-*   = Component tokens (component-specific)
+   
+   Naming convention: --av-[tier]-[category]-[descriptor]-[property]
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* ====================================================
+     TIER 1 — REFERENCE TOKENS (raw palette values)
+     Never use these directly in components.
+     Always reference via --av-sys-* or --av-comp-*.
+     ==================================================== */
+
+  /* ─── Palette: Backgrounds ─── */
+  --av-ref-bg-deepest:   #08090a;
+  --av-ref-bg-surface:   #0f1011;
+  --av-ref-bg-raised:    #191a1b;
+  --av-ref-bg-hover:     #23252a;
+
+  /* ─── Palette: Brand ─── */
+  --av-ref-brand-base:   #5e6ad2;
+  --av-ref-brand-light:  #828fff;
+  --av-ref-accent:       #7170ff;
+  --av-ref-brand-alpha:  rgba(94,106,210,0.08);
+
+  /* ─── Palette: Text ─── */
+  --av-ref-text-primary:   #f7f8f8;
+  --av-ref-text-secondary: #d0d6e0;
+  --av-ref-text-tertiary:  #8a8f98;
+  --av-ref-text-muted:     #62666d;
+
+  /* ─── Palette: Borders ─── */
+  --av-ref-border:        rgba(255,255,255,0.08);
+  --av-ref-border-subtle: rgba(255,255,255,0.05);
+
+  /* ─── Palette: Status ─── */
+  --av-ref-success:       #10b981;
+  --av-ref-warning:       #f59e0b;
+  --av-ref-danger:        #f44336;
+  --av-ref-success-bg:    rgba(16,185,129,0.08);
+  --av-ref-warning-bg:    rgba(245,158,11,0.08);
+  --av-ref-danger-bg:     rgba(244,67,54,0.08);
+
+  /* ─── Palette: Score ─── */
+  --av-ref-score-green:  #10b981;
+  --av-ref-score-yellow: #f59e0b;
+  --av-ref-score-red:    #f44336;
+
+  /* ─── Spacing scale (4px base) ─── */
+  --av-ref-space-0:  0px;
+  --av-ref-space-1:  4px;
+  --av-ref-space-2:  8px;
+  --av-ref-space-3:  12px;
+  --av-ref-space-4:  16px;
+  --av-ref-space-5:  20px;
+  --av-ref-space-6:  24px;
+  --av-ref-space-7:  28px;
+  --av-ref-space-8:  32px;
+  --av-ref-space-9:  36px;
+  --av-ref-space-10: 40px;
+  --av-ref-space-11: 44px;
+  --av-ref-space-12: 48px;
+  --av-ref-space-13: 52px;
+  --av-ref-space-14: 56px;
+  --av-ref-space-16: 64px;
+  --av-ref-space-20: 80px;
+  --av-ref-space-24: 96px;
+
+  /* ─── Border Radius ─── */
+  --av-ref-radius-sm: 6px;
+  --av-ref-radius-md: 8px;
+  --av-ref-radius-lg: 12px;
+  --av-ref-radius-xl: 16px;
+  --av-ref-radius-full: 9999px;
+
+  /* ─── Typography: Font sizes ─── */
+  --av-ref-font-xs:   0.6875rem;   /* 11px */
+  --av-ref-font-sm:   0.75rem;     /* 12px */
+  --av-ref-font-base: 0.875rem;    /* 14px */
+  --av-ref-font-md:   0.9375rem;   /* 15px */
+  --av-ref-font-lg:   1.125rem;    /* 18px */
+  --av-ref-font-xl:   1.375rem;    /* 22px */
+  --av-ref-font-2xl:  1.75rem;     /* 28px */
+  --av-ref-font-3xl:  2.25rem;     /* 36px */
+  --av-ref-font-4xl:  3.75rem;     /* 60px */
+
+  /* ─── Typography: Families ─── */
+  --av-ref-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --av-ref-font-mono: 'JetBrains Mono', monospace;
+
+  /* ─── Typography: Weights ─── */
+  --av-ref-weight-normal: 400;
+  --av-ref-weight-medium: 500;
+  --av-ref-weight-semibold: 600;
+  --av-ref-weight-bold: 700;
+
+  /* ─── Typography: Line heights ─── */
+  --av-ref-leading-tight:   1.08;
+  --av-ref-leading-heading: 1.2;
+  --av-ref-leading-body:    1.6;
+  --av-ref-leading-loose:   1.8;
+
+  /* ─── Duration ─── */
+  --av-ref-duration-fast:   0.08s;
+  --av-ref-duration-normal: 0.2s;
+  --av-ref-duration-slow:   0.3s;
+  --av-ref-duration-loader: 1.5s;
+
+  /* ─── Easing ─── */
+  --av-ref-ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --av-ref-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ─── Shadows ─── */
+  --av-ref-shadow-dropdown: 0 8px 24px rgba(0,0,0,0.3);
+  --av-ref-shadow-card:     0 4px 20px rgba(0,0,0,0.2);
+  --av-ref-shadow-modal:    0 8px 24px rgba(0,0,0,0.4);
+  --av-ref-shadow-brand:    0 8px 24px rgba(94,106,210,0.3);
+
+  /* ─── Z-Index ─── */
+  --av-ref-z-overlay:   49;
+  --av-ref-z-dropdown:  50;
+  --av-ref-z-progress:  99;
+  --av-ref-z-nav:       100;
+  --av-ref-z-modal:     200;
+
+  /* ─── Container widths ─── */
+  --av-ref-container-narrow: 720px;
+  --av-ref-container-base:   900px;
+  --av-ref-container-wide:   1200px;
+  --av-ref-container-full:   1320px;
+
+  /* ====================================================
+     TIER 2 — SYSTEM TOKENS (semantic, theme-aware)
+     These are the PUBLIC API for the design system.
+     All components reference these, never --av-ref-*.
+     ==================================================== */
+
+  /* ─── Surfaces ─── */
+  --av-sys-surface-page:     var(--av-ref-bg-deepest);
+  --av-sys-surface-card:     var(--av-ref-bg-surface);
+  --av-sys-surface-raised:   var(--av-ref-bg-raised);
+  --av-sys-surface-hover:    var(--av-ref-bg-hover);
+
+  /* ─── Brand ─── */
+  --av-sys-brand:            var(--av-ref-brand-base);
+  --av-sys-brand-hover:      var(--av-ref-brand-light);
+  --av-sys-brand-bg:         var(--av-ref-brand-alpha);
+
+  /* ─── Text ─── */
+  --av-sys-text-heading:     var(--av-ref-text-primary);
+  --av-sys-text-body:        var(--av-ref-text-secondary);
+  --av-sys-text-meta:        var(--av-ref-text-tertiary);
+  --av-sys-text-muted:       var(--av-ref-text-muted);
+
+  /* ─── Borders ─── */
+  --av-sys-border-default:   var(--av-ref-border);
+  --av-sys-border-subtle:    var(--av-ref-border-subtle);
+
+  /* ─── Status ─── */
+  --av-sys-status-success:   var(--av-ref-success);
+  --av-sys-status-warning:   var(--av-ref-warning);
+  --av-sys-status-danger:    var(--av-ref-danger);
+  --av-sys-status-success-bg: var(--av-ref-success-bg);
+  --av-sys-status-warning-bg: var(--av-ref-warning-bg);
+  --av-sys-status-danger-bg:  var(--av-ref-danger-bg);
+
+  /* ─── Score ─── */
+  --av-sys-score-green:     var(--av-ref-score-green);
+  --av-sys-score-yellow:    var(--av-ref-score-yellow);
+  --av-sys-score-red:       var(--av-ref-score-red);
+
+  /* ─── Spacing (semantic) ─── */
+  --av-sys-gap-inline:      var(--av-ref-space-2);
+  --av-sys-gap-stack:       var(--av-ref-space-4);
+  --av-sys-padding-card:    var(--av-ref-space-9) var(--av-ref-space-11);
+  --av-sys-padding-section: var(--av-ref-space-12);
+  --av-sys-padding-input:   var(--av-ref-space-3) var(--av-ref-space-4);
+
+  /* ─── Radius ─── */
+  --av-sys-radius-input:    var(--av-ref-radius-sm);
+  --av-sys-radius-card:     var(--av-ref-radius-lg);
+
+  /* ─── Motion ─── */
+  --av-sys-motion-hover:    var(--av-ref-duration-normal) var(--av-ref-ease-out);
+  --av-sys-motion-enter:    var(--av-ref-duration-slow) var(--av-ref-ease-out);
+  --av-sys-motion-color:    var(--av-ref-duration-fast) ease;
+
+  /* ─── Shadows ─── */
+  --av-sys-shadow-dropdown: var(--av-ref-shadow-dropdown);
+  --av-sys-shadow-card:     var(--av-ref-shadow-card);
+  --av-sys-shadow-modal:    var(--av-ref-shadow-modal);
+  --av-sys-shadow-brand:    var(--av-ref-shadow-brand);
+
+  /* ─── Typography fluid ─── */
+  --av-sys-font-h1:         clamp(1.75rem, 1.5rem + 2vw, 3.75rem);
+  --av-sys-font-h2:         clamp(1.375rem, 1.125rem + 1vw, 2.25rem);
+  --av-sys-font-h3:         clamp(1rem, 0.875rem + 0.5vw, 1.375rem);
+  --av-sys-font-body:       var(--av-ref-font-base);
+  --av-sys-font-sm:         var(--av-ref-font-sm);
+  --av-sys-font-xs:         var(--av-ref-font-xs);
+
+  /* ====================================================
+     TIER 3 — COMPONENT TOKENS (component-specific)
+     Only referenced by specific components.
+     ==================================================== */
+
+  /* ─── Button ─── */
+  --av-comp-btn-primary-bg:     var(--av-sys-brand);
+  --av-comp-btn-primary-text:   white;
+  --av-comp-btn-primary-radius: var(--av-sys-radius-input);
+  --av-comp-btn-primary-padding: var(--av-ref-space-3) var(--av-ref-space-10);
+
+  --av-comp-btn-secondary-bg:      rgba(255,255,255,0.04);
+  --av-comp-btn-secondary-text:    var(--av-sys-text-body);
+  --av-comp-btn-secondary-border:  var(--av-sys-border-default);
+  --av-comp-btn-secondary-radius:  var(--av-sys-radius-input);
+  --av-comp-btn-secondary-padding: var(--av-ref-space-3) var(--av-ref-space-10);
+
+  /* ─── Input ─── */
+  --av-comp-input-bg:     var(--av-sys-surface-page);
+  --av-comp-input-border: var(--av-sys-border-default);
+  --av-comp-input-radius: var(--av-sys-radius-input);
+  --av-comp-input-padding: var(--av-sys-padding-input);
+
+  /* ─── Section Block ─── */
+  --av-comp-section-padding: var(--av-sys-padding-card);
+  --av-comp-section-radius:  var(--av-sys-radius-card);
+  --av-comp-section-gap:     var(--av-ref-space-8);
+
+  /* ─── Multiselect ─── */
+  --av-comp-ms-max-width:   480px;
+  --av-comp-ms-dropdown-max: 220px;
+  --av-comp-ms-radius:      var(--av-ref-radius-md);
+
+  /* ─── Status accent ─── */
+  --av-comp-accent-width:   4px;  /* box-shadow: inset, not border-left! */
+}
+
+/* ====================================================
+   REDUCED MOTION
+   Override all motion tokens to 0ms.
+   ==================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --av-ref-duration-fast:   0ms;
+    --av-ref-duration-normal: 0ms;
+    --av-ref-duration-slow:   0ms;
+    --av-ref-duration-loader: 0ms;
+  }
+}
