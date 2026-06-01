@@ -68,28 +68,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Nav */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(8,9,10,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-subtle);
-}
-.nav-inner {
-  max-width: 1200px; margin: 0 auto; padding: 14px 24px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.logo {
-  display: flex; align-items: center; gap: 10px;
-  font-weight: 600; font-size: 18px; color: var(--text-primary);
-  text-decoration: none;
-}
-.logo-icon {
-    width: 32px; height: 32px; flex-shrink: 0;
-}
-.logo-icon svg {
-    width: 100%; height: 100%;
-    display: block;
-}
+/* Nav — basic, more in components.css */
 .nav-links { display: flex; align-items: center; gap: 32px; }
 .nav-links a {
   color: var(--text-secondary); text-decoration: none; font-size: 14px;
@@ -318,18 +297,6 @@ nav {
 }
 .btn-primary-lg:hover { background: var(--brand-hover); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(94,106,210,0.3); }
 
-/* Footer */
-footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
-.footer-brand .logo { margin-bottom: 12px; }
-.footer-brand p { font-size: 13px; color: var(--text-muted); max-width: 320px; line-height: 1.7; }
-.footer-links h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
-.footer-links a { display: block; font-size: 13px; color: var(--text-tertiary); text-decoration: none; padding: 4px 0; transition: color 0.2s; }
-.footer-links a:hover { color: var(--text-primary); }
-.footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 24px; text-align: center; }
-.footer-bottom p { font-size: 13px; color: var(--text-muted); }
-
 /* Animations */
 .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
@@ -337,7 +304,6 @@ footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
 /* Responsive */
 @media (max-width: 1024px) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
   .hero h1 { font-size: 36px; letter-spacing: -0.8px; }
@@ -352,7 +318,6 @@ footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
   .steps-grid { grid-template-columns: 1fr; }
   .features-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .cta-section h2 { font-size: 28px; }
   .hero-form { flex-direction: column; }
   .hero-input { min-width: 100%; }
@@ -397,9 +362,9 @@ footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
 <body>
 
 <!-- Navigation -->
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="logo">
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">
       <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5e6ad2"/><stop offset="100%" stop-color="#7170ff"/></linearGradient></defs><path d="M16 2L5 7v7c0 7.5 4.25 14.5 11 17 6.75-2.5 11-9.5 11-17V7L16 2z" fill="url(#g)"/><path d="M11 16l4 4 7-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="8" r="2.5" fill="#10b981" stroke="#08090a" stroke-width="1.5"/></svg></div>
       AI Verify
     </a>
@@ -440,7 +405,7 @@ footer { border-top: 1px solid var(--border-subtle); padding: 48px 24px; }
       </div>
     </div>
   </div>
-</nav>
+</header>
 
 <!-- Hero -->
 <section class="hero">

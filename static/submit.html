@@ -139,17 +139,17 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-inner">
-            <a href="/" class="logo">
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="site-logo">
                 <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5e6ad2"/><stop offset="100%" stop-color="#7170ff"/></linearGradient></defs><path d="M16 2L5 7v7c0 7.5 4.25 14.5 11 17 6.75-2.5 11-9.5 11-17V7L16 2z" fill="url(#g)"/><path d="M11 16l4 4 7-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="8" r="2.5" fill="#10b981" stroke="#08090a" stroke-width="1.5"/></svg></div>
                 AI Verify
             </a>
-            <div style="display:flex;align-items:center;gap:12px;">
+            <div class="header-actions">
                 <a href="/" class="nav-back" data-i18n="navBack">← Back</a>
             </div>
         </div>
-    </nav>
+    </header>
 
     <div class="page-title">
         <h1 data-i18n="pageTitle">Check Your AI Compliance</h1>
@@ -2339,15 +2339,16 @@
             <p style="color:var(--text-muted); font-size:12px; margin-top:12px;" data-i18n="errorSavedMsg">Your form data is saved. Simply scroll down and try again.</p>
         </div>
     </div>
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="/" data-i18n="footerAIVerify">AI Verify</a>
+            <span class="footer-sep">·</span>
+            <a href="/privacy" data-i18n="footerPrivacy">Privacy</a>
+            <span class="footer-sep">·</span>
+            <a href="/imprint" data-i18n="footerImprint">Imprint</a>
+        </div>
+        <p class="footer-copy" data-i18n="footerCopyright">© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.</p>
+        <p class="footer-model" data-i18n="footerModel">AI analysis powered by Mistral AI (France 🇪🇺)</p>
+    </footer>
 </body>
-<footer style="text-align:center;padding:32px 24px;border-top:1px solid var(--border-subtle);margin-top:60px;max-width:1200px;margin-left:auto;margin-right:auto;">
-    <p style="color:var(--text-muted);font-size:13px;">
-        <a href="/" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerAIVerify">AI Verify</a>
-        <span style="margin:0 8px;color:var(--text-muted);">·</span>
-        <a href="/privacy" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerPrivacy">Privacy</a>
-        <span style="margin:0 8px;color:var(--text-muted);">·</span>
-        <a href="/imprint" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerImprint">Imprint</a>
-    </p>
-    <p style="color:var(--text-muted);font-size:11px;margin-top:4px;" data-i18n="footerCopyright">© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.</p>
-</footer>
 </html>
