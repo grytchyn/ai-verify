@@ -33,7 +33,7 @@
             .form-container { margin: 0 auto 80px; max-width: 1320px; }
         }
 
-        /* ─── CUSTOM MULTISELECT ─── */
+        /* ─── CUSTOM MULTISELECT (references components.css tokens) ─── */
         .custom-multiselect {
             position: relative;
             width: 100%;
@@ -41,19 +41,19 @@
         }
         .ms-trigger {
             width: 100%;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            color: var(--text-primary);
-            font-size: 15px;
-            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--av-comp-input-bg);
+            border: 1px solid var(--av-comp-input-border);
+            border-radius: var(--av-comp-input-radius);
+            padding: var(--av-comp-input-padding);
+            color: var(--av-sys-text-heading);
+            font-size: var(--av-ref-font-md);
+            font-family: var(--av-ref-font-sans);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            transition: border-color 0.2s;
+            gap: var(--av-ref-space-2);
+            transition: border-color var(--av-sys-motion-hover);
             text-align: left;
         }
         .ms-trigger:hover, .ms-trigger:focus { border-color: var(--brand); outline: none; }
