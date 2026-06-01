@@ -18,44 +18,13 @@
     <meta name="twitter:description" content="Your EU AI Act compliance report.">
     <meta name="twitter:image" content="https://ai-act-verify.onrender.com/static/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/components.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         :root {
-            --bg: #08090a;
-            --surface: #0f1011;
-            --surface2: #191a1b;
-            --surface3: #23252a;
-            --brand: #5e6ad2;
-            --brand-hover: #828fff;
-            --accent: #7170ff;
-            --text-primary: #f7f8f8;
-            --text-secondary: #d0d6e0;
-            --text-tertiary: #8a8f98;
-            --text-muted: #62666d;
-            --border: rgba(255,255,255,0.08);
-            --border-subtle: rgba(255,255,255,0.05);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #f44336;
-            --danger-bg: rgba(244,67,54,0.08);
-            --warning-bg: rgba(245,158,11,0.08);
-            --success-bg: rgba(16,185,129,0.08);
-            --brand-bg: rgba(94,106,210,0.08);
             --score-red: #f44336;
             --score-yellow: #f59e0b;
             --score-green: #10b981;
-            --radius: 8px;
-            --radius-sm: 6px;
-            --radius-lg: 12px;
-            --space-2: 8px;
-            --space-3: 12px;
-            --space-4: 16px;
-            --space-6: 24px;
-            --space-8: 32px;
-            --space-10: 40px;
-            --space-12: 48px;
-            --transition-normal: all 0.2s ease;
-            --transition-slow: all 0.3s ease;
         }
 
         /* ─── MODERN DESIGN ELEMENTS ─── */
@@ -128,42 +97,9 @@
             flex-shrink: 0;
         }
         .icon-ring svg { width: 20px; height: 20px; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         html { min-height: 100vh; }
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
         #app { min-height: calc(100vh - 1px); }
-        .status-bar { flex: 1; }
         
-        /* ─── NAV ─── */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(8,9,10,0.85); backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-subtle);
-        }
-        .nav-inner {
-            max-width: 900px; margin: 0 auto; padding: 14px 24px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .logo {
-            display: flex; align-items: center; gap: 10px;
-            font-weight: 600; font-size: 18px; color: var(--text-primary); text-decoration: none;
-        }
-        .logo-icon {
-            width: 32px; height: 32px; flex-shrink: 0;
-        }
-        .logo-icon svg {
-            width: 100%; height: 100%;
-            display: block;
-        }
-        .nav-back { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; }
-        .nav-back:hover { color: var(--text-primary); }
-
         /* ─── NEURAL LOADING ANIMATION ─── */
         @keyframes neuralPulse {
             0%, 100% { opacity: 0.3; transform: scale(1); }
@@ -545,36 +481,6 @@
             .details-grid { grid-template-columns: 1fr; }
         }
 
-        /* ─── AUTH UI ─── */
-        .auth-section { display: flex; align-items: center; gap: 12px; }
-        .auth-login-btn {
-            background: none; border: none; color: var(--text-secondary);
-            padding: 0; font-size: 13px; font-weight: 500;
-            cursor: pointer; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; gap: 6px;
-        }
-        .auth-login-btn:hover { color: var(--text-primary); }
-        .auth-login-btn .g-icon { width: 18px; height: 18px; }
-        .auth-user-menu { display: none; align-items: center; gap: 8px; cursor: pointer; position: relative; }
-        .auth-avatar {
-            width: 28px; height: 28px; border-radius: 50%; background: var(--brand);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 600; color: white; overflow: hidden;
-        }
-        .auth-name { font-size: 13px; color: var(--text-secondary); }
-        .auth-dropdown {
-            display: none; position: absolute; top: 36px; right: 0;
-            background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
-            min-width: 180px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-        }
-        .auth-dropdown.open { display: block; }
-        .auth-dropdown a, .auth-dropdown button {
-            display: block; width: 100%; text-align: left; padding: 10px 16px;
-            font-size: 13px; color: var(--text-secondary); background: none; border: none;
-            cursor: pointer; font-family: inherit; text-decoration: none;
-        }
-        .auth-dropdown a:hover, .auth-dropdown button:hover { background: var(--surface3); color: var(--text-primary); }
-        .auth-dropdown .divider { border-top: 1px solid var(--border-subtle); margin: 4px 0; }
-
         /* ─── SAVE PROMPT ─── */
         .auth-save-prompt {
             text-align: center; padding: 44px 28px; margin-top: 24px;
@@ -590,33 +496,6 @@
         }
         .auth-save-btn:hover { background: var(--brand-hover); transform: translateY(-1px); }
         .auth-save-btn.saved { background: var(--success); cursor: default; }
-        /* Language selector (index only) */
-.lang-selector { position: relative; display: inline-block; }
-        .lang-dropdown-btn {
-            display: flex; align-items: center; gap: 6px;
-            background: var(--surface2); border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm); padding: 6px 12px;
-            color: var(--text-secondary); font-size: 13px; font-weight: 500;
-            cursor: pointer; font-family: inherit; transition: border-color 0.2s;
-        }
-        .lang-dropdown-btn:hover { border-color: var(--border); color: var(--text-primary); }
-        .lang-arrow { font-size: 10px; transition: transform 0.2s; }
-        .lang-arrow.open { transform: rotate(180deg); }
-        .lang-dropdown-menu {
-            display: none; position: absolute; top: calc(100% + 4px); right: 0;
-            background: var(--surface2); border: 1px solid var(--border);
-            border-radius: var(--radius); min-width: 100px; z-index: 200;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3); overflow: hidden;
-        }
-        .lang-dropdown-menu.open { display: block; }
-        .lang-option {
-            display: flex; align-items: center; gap: 8px;
-            width: 100%; padding: 8px 14px; border: none; background: none;
-            color: var(--text-secondary); font-size: 13px; cursor: pointer;
-            font-family: inherit; text-align: left; transition: background 0.1s;
-        }
-        .lang-option:hover { background: var(--surface3); color: var(--text-primary); }
-        .lang-option.active { background: var(--brand-bg); color: var(--brand); }
     </style>
 </head>
 <body>
@@ -735,15 +614,9 @@
             <!-- RAW FULL REPORT (collapsible) hidden — use /report/<id> endpoint for raw markdown -->
             </div>
 
-            <footer style="text-align:center;padding:32px 24px;border-top:1px solid var(--border-subtle);margin-top:auto;max-width:900px;margin-left:auto;margin-right:auto;">
-        <p style="color:var(--text-muted);font-size:13px;">
-            <a href="/" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerAIVerify">AI Verify</a>
-            <span style="margin:0 8px;color:var(--text-muted);">·</span>
-            <a href="/privacy" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerPrivacy">Privacy</a>
-            <span style="margin:0 8px;color:var(--text-muted);">·</span>
-            <a href="/imprint" style="color:var(--text-tertiary);text-decoration:none;" data-i18n="footerImprint">Imprint</a>
-        </p>
-        <p style="color:var(--text-muted);font-size:11px;margin-top:4px;" data-i18n="footerCopyright">© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.</p>
+            <footer class="site-footer" style="max-width:900px;margin-left:auto;margin-right:auto;">
+        <p><a href="/" data-i18n="footerAIVerify">AI Verify</a><span class="sep">·</span><a href="/privacy" data-i18n="footerPrivacy">Privacy</a><span class="sep">·</span><a href="/imprint" data-i18n="footerImprint">Imprint</a></p>
+        <p style="font-size:11px;margin-top:4px;" data-i18n="footerCopyright">© 2026 AI Verify. Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.</p>
     </footer>
 
     <script>
