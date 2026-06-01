@@ -1166,15 +1166,15 @@
                 const headingText = h2.textContent.trim().toLowerCase();
                 let key = null;
 
-                if (headingText.includes('overall conclusion') || headingText.includes('conclusion') || headingText.includes('fazit')) {
+                if (headingText.includes('overall conclusion') || headingText.includes('conclusion') || headingText.includes('fazit') || headingText.includes('conclusion générale') || headingText.includes('conclusione generale') || headingText.includes('conclusión general') || headingText.includes('conclusión') || headingText.includes('conclusione')) {
                     key = 'conclusion';
-                } else if (headingText.includes('classification') || headingText.includes('risk categor') || headingText.includes('risk level')) {
+                } else if (headingText.includes('classification') || headingText.includes('risk categor') || headingText.includes('risk level') || headingText.includes('einstufung') || headingText.includes('classif')) {
                     key = 'classification';
-                } else if (headingText.includes('applicable requirement') || headingText.includes('anforderung')) {
+                } else if (headingText.includes('applicable requirement') || headingText.includes('anforderung') || headingText.includes('exigence') || headingText.includes('requisiti') || headingText.includes('requisitos') || headingText.includes('applicable')) {
                     key = 'requirements';
-                } else if (headingText.includes('identified gap') || headingText.includes('lücke')) {
+                } else if (headingText.includes('identified gap') || headingText.includes('lücke') || headingText.includes('lacune') || headingText.includes('critique') || headingText.includes('critic')) {
                     key = 'gaps';
-                } else if (headingText.includes('specific recommendation') || headingText.includes('empfehlung')) {
+                } else if (headingText.includes('recommendation') || headingText.includes('empfehlung') || headingText.includes('recommandat') || headingText.includes('raccomandazi') || headingText.includes('recomendac')) {
                     key = 'recommendations';
                 } else if (headingText.includes('risk') && (headingText.includes('penalt') || headingText.includes('fine'))) {
                     key = 'risks';
@@ -1212,24 +1212,25 @@
 
             // Determine risk level & colors
             let riskLevel, conclusionColor, conclusionBg, conclusionIcon, conclusionTitle;
+            const T = (k) => translations[currentLang]?.[k] || translations['en'][k];
             if (score < 40) {
                 riskLevel = 'high';
                 conclusionColor = 'var(--danger)';
                 conclusionBg = 'var(--danger-bg)';
                 conclusionIcon = '🔴';
-                conclusionTitle = 'High Risk — Action Required';
+                conclusionTitle = T('conclusionHigh');
             } else if (score <= 70) {
                 riskLevel = 'medium';
                 conclusionColor = 'var(--warning)';
                 conclusionBg = 'var(--warning-bg)';
                 conclusionIcon = '🟡';
-                conclusionTitle = 'Medium Risk — Improvements Needed';
+                conclusionTitle = T('conclusionMedium');
             } else {
                 riskLevel = 'low';
                 conclusionColor = 'var(--success)';
                 conclusionBg = 'var(--success-bg)';
                 conclusionIcon = '✅';
-                conclusionTitle = 'Low Risk — Good Compliance';
+                conclusionTitle = T('conclusionLow');
             }
 
             let html = '';
@@ -1294,8 +1295,8 @@
                                 </svg>
                             </div>
                             <div class="section-title-block">
-                                <h3>Critical Gaps & Risks</h3>
-                                <p>Issues requiring immediate attention</p>
+                                <h3>${T('sectionCriticalGaps')}</h3>
+                                <p>${T('sectionCriticalGapsDesc')}</p>
                             </div>
                         </div>
                         ${criticalContent}
@@ -1313,7 +1314,7 @@
                                 </svg>
                             </div>
                             <div class="section-title-block">
-                                <h3>EU AI Act Classification</h3>
+                                <h3>${T('sectionClassification')}</h3>
                                 <p>${sections.classification.title}</p>
                             </div>
                         </div>
@@ -1333,8 +1334,8 @@
                                 </svg>
                             </div>
                             <div class="section-title-block">
-                                <h3>Applicable Requirements</h3>
-                                <p>EU AI Act Articles that apply</p>
+                                <h3>${T('sectionRequirements')}</h3>
+                                <p>${T('sectionRequirementsDesc')}</p>
                             </div>
                         </div>
                         <div class="section-body">${sections.requirements.content}</div>
@@ -1358,8 +1359,8 @@
                                 </svg>
                             </div>
                             <div class="section-title-block">
-                                <h3>Compliance Strengths</h3>
-                                <p>Positive factors boosting your score</p>
+                                <h3>${T('sectionStrengths')}</h3>
+                                <p>${T('sectionStrengthsDesc')}</p>
                             </div>
                         </div>
                         ${detailHtml}
@@ -1370,11 +1371,11 @@
             // ── SECTION: OVERALL CONCLUSION (DYNAMIC COLOR — LAST BLOCK) ──
             let verdictText;
             if (score < 40) {
-                verdictText = 'Your AI systems present HIGH RISK under EU AI Act. Immediate compliance actions are required to avoid penalties and regulatory sanctions.';
+                verdictText = T('verdictHigh');
             } else if (score <= 70) {
-                verdictText = 'Your AI systems show MODERATE compliance. Targeted improvements are recommended to reduce risk exposure and strengthen your compliance posture.';
+                verdictText = T('verdictMedium');
             } else {
-                verdictText = 'Your AI systems show GOOD compliance with EU AI Act requirements. Continue monitoring and maintaining your current practices.';
+                verdictText = T('verdictLow');
             }
 
             let conclusionHtml = '';
@@ -1382,8 +1383,8 @@
             conclusionHtml += `<div style="background:var(--bg);border-radius:var(--radius);padding:16px;margin-bottom:16px;border:1px solid var(--border-subtle);">`;
             conclusionHtml += `<p style="font-size:15px;line-height:1.6;color:var(--text-secondary);">${verdictText}</p>`;
             conclusionHtml += `<div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;">`;
-            conclusionHtml += `<span style="font-size:13px;color:var(--text-tertiary);"><strong>Score:</strong> <span style="color:${conclusionColor};font-weight:600;">${score}/100</span></span>`;
-            conclusionHtml += `<span style="font-size:13px;color:var(--text-tertiary);"><strong>Classification:</strong> <span style="color:${conclusionColor};font-weight:600;">${score >= 70 ? 'Low Risk' : (score >= 40 ? 'Medium Risk' : 'High Risk')}</span></span>`;
+            conclusionHtml += `<span style="font-size:13px;color:var(--text-tertiary);"><strong>${T('score')}:</strong> <span style="color:${conclusionColor};font-weight:600;">${score}/100</span></span>`;
+            conclusionHtml += `<span style="font-size:13px;color:var(--text-tertiary);"><strong>${T('classification')}:</strong> <span style="color:${conclusionColor};font-weight:600;">${T(score >= 70 ? 'conclusionLow' : (score >= 40 ? 'conclusionMedium' : 'conclusionHigh'))}</span></span>`;
             conclusionHtml += `</div></div>`;
 
             // Include conclusion section content from LLM if available
@@ -1393,7 +1394,7 @@
 
             // Include ALL recommendations inside the conclusion
             if (recommendations.length > 0) {
-                conclusionHtml += `<div style="margin-top:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:10px;color:${conclusionColor};">Key Recommendations</h4>`;
+                conclusionHtml += `<div style="margin-top:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:10px;color:${conclusionColor};">${T('keyRecs')}</h4>`;
                 recommendations.forEach(r => {
                     const isPos = r.toLowerCase().includes('continue') || r.toLowerCase().includes('strong') || r.toLowerCase().includes('no high-risk');
                     const icon = isPos ? '✅' : '💡';
@@ -1416,7 +1417,7 @@
                             </svg>
                         </div>
                         <div class="section-title-block">
-                            <h3 style="color:${conclusionColor};">Overall Conclusion</h3>
+                            <h3 style="color:${conclusionColor};">${T('sectionConclusion')}</h3>
                             <p>${conclusionTitle}</p>
                         </div>
                     </div>
