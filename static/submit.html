@@ -93,7 +93,8 @@
         }
         select.field-invalid,
         input.field-invalid,
-        textarea.field-invalid {
+        textarea.field-invalid,
+        .ms-trigger.field-invalid {
             border-color: var(--av-sys-status-danger) !important;
             box-shadow: 0 0 0 1px var(--av-sys-status-danger) !important;
         }
@@ -2352,8 +2353,15 @@
             const btn = document.getElementById('submitBtn');
             const form = document.getElementById('complianceForm');
 
+            // Visual feedback: button shows brief processing state
+            btn.textContent = '⏳ Checking...';
+
             // Run validation
-            if (!validateForm()) return;
+            if (!validateForm()) {
+                btn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Report';
+                console.log('✋ Validation blocked — scroll to first error');
+                return;
+            }
 
             btn.disabled = true;
             btn.textContent = '⏳ Processing...';
