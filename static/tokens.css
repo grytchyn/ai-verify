@@ -111,6 +111,22 @@
   --av-ref-duration-slow:   0.3s;
   --av-ref-duration-loader: 1.5s;
 
+  /* ─── Alpha Blends (white overlays) ─── */
+  --av-ref-alpha-white-04: rgba(255,255,255,0.04);
+  --av-ref-alpha-white-05: rgba(255,255,255,0.05);
+  --av-ref-alpha-white-06: rgba(255,255,255,0.06);
+  --av-ref-alpha-white-08: rgba(255,255,255,0.08);
+  --av-ref-alpha-white-15: rgba(255,255,255,0.15);
+  --av-ref-alpha-white-30: rgba(255,255,255,0.30);
+
+  /* ─── Alpha Blends (brand overlays) ─── */
+  --av-ref-alpha-brand-03: rgba(94,106,210,0.03);
+  --av-ref-alpha-brand-06: rgba(94,106,210,0.06);
+  --av-ref-alpha-brand-08: rgba(94,106,210,0.08);
+  --av-ref-alpha-brand-12: rgba(94,106,210,0.12);
+  --av-ref-alpha-brand-15: rgba(94,106,210,0.15);
+  --av-ref-alpha-brand-30: rgba(94,106,210,0.30);
+
   /* ─── Easing ─── */
   --av-ref-ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
   --av-ref-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -195,6 +211,16 @@
   --av-sys-shadow-card:     var(--av-ref-shadow-card);
   --av-sys-shadow-modal:    var(--av-ref-shadow-modal);
   --av-sys-shadow-brand:    var(--av-ref-shadow-brand);
+
+  /* ─── Alpha blends ─── */
+  --av-sys-alpha-white-04: var(--av-ref-alpha-white-04);
+  --av-sys-alpha-white-06: var(--av-ref-alpha-white-06);
+  --av-sys-alpha-white-08: var(--av-ref-alpha-white-08);
+  --av-sys-alpha-brand-03: var(--av-ref-alpha-brand-03);
+  --av-sys-alpha-brand-06: var(--av-ref-alpha-brand-06);
+  --av-sys-alpha-brand-08: var(--av-ref-alpha-brand-08);
+  --av-sys-alpha-brand-12: var(--av-ref-alpha-brand-12);
+  --av-sys-alpha-brand-15: var(--av-ref-alpha-brand-15);
 
   /* ─── Typography fluid ─── */
   --av-sys-font-h1:         clamp(1.75rem, 1.5rem + 2vw, 3.75rem);
