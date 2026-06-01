@@ -745,11 +745,11 @@ def process_submission(sub_id: str):
         
         # Add system prompt in correct language
         from .prompts import get_system_prompt
-        full_prompt = get_system_prompt(sub.lang) + "\n\n" + full_prompt
+        system_prompt = get_system_prompt(sub.lang)
         
         # Call LLM (sync — no asyncio)
         logger.info("Calling Ollama with enhanced prompt")
-        report_md = call_ollama(full_prompt, temperature=0.2)
+        report_md = call_ollama(full_prompt, temperature=0.2, system_prompt=system_prompt)
         logger.info(f"Report generated, length: {len(report_md)} chars")
         
         # Save report

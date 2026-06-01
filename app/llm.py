@@ -16,15 +16,20 @@ API_KEY = os.getenv("OLLAMA_API_KEY", "")
 
 logger.info(f"LLM config: url={OLLAMA_URL} model={MODEL} key_set={'yes' if API_KEY else 'no'}")
 
-def call_ollama(prompt: str, temperature: float = 0.2) -> str:
+def call_ollama(prompt: str, temperature: float = 0.2, system_prompt: str = "") -> str:
     """Synchronous Ollama API call — no asyncio needed."""
     headers = {"Content-Type": "application/json"}
     if API_KEY:
         headers["Authorization"] = f"Bearer {API_KEY}"
     
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": prompt})
+    
     payload = {
         "model": MODEL,
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": messages,
         "temperature": temperature,
         "stream": False
     }

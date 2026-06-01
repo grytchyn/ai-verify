@@ -1106,6 +1106,11 @@
             // Raw report body — safe check (hidden now)
             const rawBody = document.getElementById('rawReportBody');
             if (rawBody) rawBody.innerHTML = reportHtml;
+
+            // Auto-save to profile if logged in
+            if (typeof isLoggedIn === 'function' && isLoggedIn() && typeof subId !== 'undefined' && subId) {
+                saveResult(subId);
+            }
         }
 
         function renderScoreGauge(data) {
