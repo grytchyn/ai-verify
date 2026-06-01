@@ -280,26 +280,27 @@
 
         .section-block.danger {
             background: var(--danger-bg);
-            border-left: 4px solid var(--danger);
+            box-shadow: inset 4px 0 0 var(--danger);
             border-color: rgba(244,67,54,0.2) !important;
         }
         .section-block.warning {
             background: var(--warning-bg);
-            border-left: 4px solid var(--warning);
+            box-shadow: inset 4px 0 0 var(--warning);
             border-color: rgba(245,158,11,0.2) !important;
         }
         .section-block.success {
             background: var(--success-bg);
-            border-left: 4px solid var(--success);
+            box-shadow: inset 4px 0 0 var(--success);
             border-color: rgba(16,185,129,0.2) !important;
         }
         .section-block.info {
             background: var(--brand-bg);
-            border-left: 4px solid var(--brand);
+            box-shadow: inset 4px 0 0 var(--brand);
             border-color: rgba(94,106,210,0.2) !important;
         }
         .section-block.collapsed {
             background: var(--surface);
+            box-shadow: none;
         }
 
         .section-header {
@@ -1291,7 +1292,7 @@
             }
 
             html += `
-                <div class="section-block" style="background:${conclusionBg};border-left:4px solid ${conclusionColor};border-color:${conclusionColor}33 !important;margin-top:24px;">
+                <div class="section-block" style="background:${conclusionBg};box-shadow:inset 4px 0 0 ${conclusionColor};border-color:${conclusionColor}33 !important;margin-top:24px;">
                     <div class="section-header">
                         <div class="icon-ring" style="background:${conclusionColor}20;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="${conclusionColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;">
