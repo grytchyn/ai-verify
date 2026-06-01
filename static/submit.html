@@ -799,12 +799,14 @@
                             </div>
                         </div>
 
-                        <!-- Section 4: High-Risk Categories (MOVED HERE — last section before submit) -->
+                        <!-- Section 4: High-Risk Categories (last section before submit) -->
                         <div class="form-section" id="high-risk-section">
                             <h2 data-i18n="sec4Title">⚠️ High-Risk Categories</h2>
                             <p class="section-desc" data-i18n="sec4Desc">Select which EU AI Act high-risk categories apply to your AI systems. <a href="https://artificialintelligenceact.eu/high-risk/" target="_blank" style="color: var(--accent);" data-i18n="learnMore">Learn more</a></p>
                 
-                            <div class="custom-multiselect" data-name="high_risk_categories">
+                            <div class="form-group">
+                                <label data-i18n="labelHighRiskCategories">High-Risk Categories <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
+                                <div class="custom-multiselect" data-name="high_risk_categories">
                                     <button type="button" class="ms-trigger" data-name="ai_purpose">
                                         <span class="ms-label" data-i18n="labelHighRiskCategories">High-Risk Categories</span>
                                         <span class="ms-count" style="display:none">0</span>
@@ -858,48 +860,7 @@
                                         </label>
                                     </div>
                                 </div>
-                        </div>
-
-                        <!-- Section 6: Compliance Actions (checklist) -->
-                        <div class="form-section">
-                            <h2 data-i18n="sec6Title">✅ Compliance Actions Taken</h2>
-                            <p class="section-desc" data-i18n="sec6Desc">Check which compliance measures you've already implemented. This improves your score.</p>
-                            
-                            <label class="check-item" data-value="tech_docs">
-                                <input type="checkbox" name="compliance_actions" value="tech_docs">
-                                <span class="check-box"></span>
-                                <span class="check-text" data-i18n="caTechDocs">📋 Maintain comprehensive technical documentation (Art. 11-12)</span>
-                            </label>
-                            <label class="check-item" data-value="dpo">
-                                <input type="checkbox" name="compliance_actions" value="dpo">
-                                <span class="check-box"></span>
-                                <span class="check-text" data-i18n="caDpo">👤 Appoint a Data Protection Officer (DPO)</span>
-                            </label>
-                            <label class="check-item" data-value="gdpr">
-                                <input type="checkbox" name="compliance_actions" value="gdpr">
-                                <span class="check-box"></span>
-                                <span class="check-text" data-i18n="caGdpr">🔒 Ensure GDPR compliance for AI data processing</span>
-                            </label>
-                            <label class="check-item" data-value="human_oversight">
-                                <input type="checkbox" name="compliance_actions" value="human_oversight">
-                                <span class="check-box"></span>
-                                <span class="check-text" data-i18n="caHumanOversight">👁️ Implement human oversight mechanisms — manual review, approval workflow, or human-in-the-loop (Art. 14)</span>
-                            </label>
-                            <label class="check-item" data-value="explainability">
-                                <input type="checkbox" name="compliance_actions" value="explainability">
-                                <span class="check-box"></span>
-                                <span class="check-text" data-i18n="caExplainability">🔬 Adopt explainability methods (SHAP, LIME, feature importance) (Art. 13)</span>
-                            </label>
-                            <label class="check-item" data-value="transparency">
-                                <input type="checkbox" name="compliance_actions" value="transparency">
-                                <span class="check-box"></span>
-                                <span class="check-text" data-i18n="caTransparency">📢 Publish AI transparency notice for users</span>
-                            </label>
-                            <label class="check-item" data-value="logging">
-                                <input type="checkbox" name="compliance_actions" value="logging">
-                                <span class="check-box"></span>
-                                <span class="check-text" data-i18n="caLogging">📝 Implement activity logging (inputs/outputs/timestamps) (Art. 14)</span>
-                            </label>
+                            </div>
                         </div>
 
                         <div class="form-actions">
@@ -1126,18 +1087,6 @@
                 errorTitle: "Analysis Failed",
                 errorBackBtn: "← Back to Form",
                 errorSavedMsg: "Your form data is saved. Simply scroll down and try again.",
-                footerAIVerify: "AI Verify",
-                footerPrivacy: "Privacy",
-                footerImprint: "Imprint",
-                sec6Title: "✅ Compliance Actions Taken",
-                sec6Desc: "Check which compliance measures you have already implemented. This improves your score.",
-                caTechDocs: "📋 Maintain comprehensive technical documentation (Art. 11-12)",
-                caDpo: "👤 Appoint a Data Protection Officer (DPO)",
-                caGdpr: "🔒 Ensure GDPR compliance for AI data processing",
-                caHumanOversight: "👁️ Implement human oversight mechanisms (Art. 14)",
-                caExplainability: "🔬 Adopt explainability methods (SHAP, LIME, feature importance) (Art. 13)",
-                caTransparency: "📢 Publish AI transparency notice for users",
-                caLogging: "📝 Implement activity logging (inputs/outputs/timestamps) (Art. 14)",
                 footerAIVerify: "AI Verify",
                 footerPrivacy: "Privacy",
                 footerImprint: "Imprint",
