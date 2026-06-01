@@ -494,6 +494,26 @@
         }
         .auth-save-btn:hover { background: var(--brand-hover); transform: translateY(-1px); }
         .auth-save-btn.saved { background: var(--av-sys-score-green); cursor: default; }
+
+        /* ─── PRINT STYLESHEET ─── */
+        @media print {
+            body { background: #fff !important; color: #000 !important; }
+            .site-header, .site-footer, .report-header-actions,
+            .auth-section, .lang-selector, .nav-back,
+            .btn-new, .btn-export-pdf, .btn-new-report-cta,
+            #loading, .auth-save-prompt, .raw-report-section,
+            .score-bar { display: none !important; }
+            .report-container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            .report-header { margin-top: 0 !important; padding: 20px !important; break-inside: avoid; }
+            .score-section, .section-block { break-inside: avoid; padding: 20px !important; }
+            .section-block { box-shadow: none !important; border: 1px solid #ddd !important; }
+            .section-block.danger { box-shadow: inset 4px 0 0 #f87171 !important; }
+            .section-block.warning { box-shadow: inset 4px 0 0 #fbbf24 !important; }
+            .section-block.success { box-shadow: inset 4px 0 0 #34d399 !important; }
+            .rec-card:hover { transform: none !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            @page { margin: 1.5cm; }
+        }
     </style>
 </head>
 <body>
@@ -564,6 +584,7 @@
                     <p class="time" id="reportTime"></p>
                 </div>
                 <div class="report-header-actions">
+                    <button class="btn-new" onclick="window.print()" style="cursor:pointer;">⬇ Export PDF</button>
                     <a href="/submit-page" class="btn-new">← New Report</a>
                 </div>
             </div>
@@ -1030,7 +1051,11 @@
             const score = data.score !== undefined ? data.score : 0;
 
             let color, levelKey, levelText;
-            if (score < 40) {
+            if (data.data_insufficient) {
+                color = 'var(--av-sys-score-yellow)';
+                levelText = '⚠ Incomplete Data — Review Needed';
+                levelKey = null;
+            } else if (score < 40) {
                 color = 'var(--av-sys-score-red)';
                 levelKey = 'scoreHigh';
             } else if (score <= 70) {
@@ -1040,7 +1065,7 @@
                 color = 'var(--av-sys-score-green)';
                 levelKey = 'scoreLow';
             }
-            levelText = translations[currentLang]?.[levelKey] || translations['en'][levelKey];
+            if (levelKey) levelText = translations[currentLang]?.[levelKey] || translations['en'][levelKey];
 
             const circumference = 2 * Math.PI * 58;
             const offset = circumference - (score / 100) * circumference;
@@ -1126,7 +1151,13 @@
             // Determine risk level & colors
             let riskLevel, conclusionColor, conclusionBg, conclusionIcon, conclusionTitle;
             const T = (k) => translations[currentLang]?.[k] || translations['en'][k];
-            if (score < 40) {
+            if (data.data_insufficient) {
+                riskLevel = 'insufficient';
+                conclusionColor = 'var(--av-sys-score-yellow)';
+                conclusionBg = 'var(--warning-bg)';
+                conclusionIcon = '⚠️';
+                conclusionTitle = '⚠ Incomplete Data — Review Needed';
+            } else if (score < 40) {
                 riskLevel = 'high';
                 conclusionColor = 'var(--av-sys-score-red)';
                 conclusionBg = 'var(--danger-bg)';
@@ -1283,7 +1314,9 @@
 
             // ── SECTION: OVERALL CONCLUSION (DYNAMIC COLOR — LAST BLOCK) ──
             let verdictText;
-            if (score < 40) {
+            if (data.data_insufficient) {
+                verdictText = '⚠ The available data was insufficient to produce a complete compliance assessment. Please review your inputs and provide more details for a thorough analysis.';
+            } else if (score < 40) {
                 verdictText = T('verdictHigh');
             } else if (score <= 70) {
                 verdictText = T('verdictMedium');
@@ -1335,6 +1368,14 @@
                         </div>
                     </div>
                     ${conclusionHtml}
+                </div>`;
+
+            // ── POST-REPORT CTA ──
+            html += `
+                <div style="text-align:center;margin-top:32px;">
+                    <a href="/submit-page" class="btn-new btn-new-report-cta" style="display:inline-flex;padding:14px 36px;font-size:16px;font-weight:600;background:var(--av-sys-brand);color:#fff;border:none;border-radius:var(--av-ref-radius-sm);text-decoration:none;gap:10px;transition:all 0.2s;">
+                        → Generate New Report
+                    </a>
                 </div>`;
 
             area.innerHTML = html;

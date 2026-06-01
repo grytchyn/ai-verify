@@ -55,6 +55,51 @@
         @media (max-width: 768px) {
             .page-title h1 { font-size: 28px; }
         }
+
+        /* ─── PROGRESS LABELS ─── */
+        .progress-labels {
+            position: fixed; top: 57px; left: 0; right: 0; z-index: 98;
+            display: flex; justify-content: space-between;
+            padding: 0 24px; max-width: 1320px; margin: 0 auto;
+            pointer-events: none;
+            gap: 4px;
+        }
+        .progress-labels span {
+            font-size: var(--av-ref-font-xs);
+            color: var(--av-sys-text-muted);
+            opacity: 0; transition: opacity 0.3s ease;
+            white-space: nowrap;
+            text-align: center;
+            flex: 1;
+        }
+        @media (max-width: 768px) {
+            .progress-labels span { font-size: 9px; }
+        }
+        .progress-labels span.active {
+            color: var(--av-sys-brand);
+            font-weight: var(--av-ref-weight-medium);
+            opacity: 1;
+        }
+
+        /* ─── VALIDATION ─── */
+        .field-error {
+            color: var(--av-sys-status-danger);
+            font-size: var(--av-ref-font-xs);
+            margin-top: 4px;
+            display: none;
+        }
+        .field-error.visible {
+            display: block;
+        }
+        select.field-invalid,
+        input.field-invalid,
+        textarea.field-invalid {
+            border-color: var(--av-sys-status-danger) !important;
+            box-shadow: 0 0 0 1px var(--av-sys-status-danger) !important;
+        }
+        .form-group select.field-invalid + .choices {
+            border-color: var(--av-sys-status-danger) !important;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +122,13 @@
 
     <div class="form-container">
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-labels" id="progressLabels" aria-hidden="true">
+            <span class="active" data-i18n="sec1Title">📋 Company Info</span>
+            <span data-i18n="sec2Title">🤖 AI Details</span>
+            <span data-i18n="sec3Title">🔧 Technical</span>
+            <span data-i18n="sec5Title">📄 Compliance</span>
+            <span data-i18n="sec4Title">⚠️ High-Risk</span>
+        </div>
 
         <form id="complianceForm" onsubmit="return false;">
                         
@@ -88,7 +140,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelCompanySize">Company Size</label>
-                        <select name="company_size">
+                        <select name="company_size" aria-required="true">
                             <option value="" data-i18n="optSelectSize">Select size...</option>
                             <option value="startup" data-i18n="optStartup">Startup (1-10)</option>
                             <option value="sme" data-i18n="optSme">SME (11-250)</option>
@@ -98,7 +150,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelSector">Sector / Industry</label>
-                        <select name="sector">
+                        <select name="sector" aria-required="true">
                             <option value="" data-i18n="optSelectSector">Select sector...</option>
                             <option value="aerospace" data-i18n="optAerospace">Aerospace & Defense</option>
                             <option value="agriculture" data-i18n="optAgriculture">Agriculture</option>
@@ -123,7 +175,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelRevenue">Annual Revenue</label>
-                        <select name="annual_revenue">
+                        <select name="annual_revenue" aria-required="true">
                             <option value="" data-i18n="optSelectRevenue">Select revenue band...</option>
                             <option value="under_1m" data-i18n="optUnder1m">&lt; €1M</option>
                             <option value="1m_10m" data-i18n="opt1m10m">€1M – €10M</option>
@@ -136,7 +188,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelCountry">Country</label>
-                        <select name="hq_location" id="countrySelect">
+                        <select name="hq_location" id="countrySelect" aria-describedby="countryHint">
                             <option value="" data-i18n="optSelectCountry">Select your country...</option>
                             <option value="Austria">Austria</option>
                             <option value="Belgium">Belgium</option>
@@ -171,14 +223,14 @@
                             <option value="Switzerland">Switzerland</option>
                             <option value="United Kingdom">United Kingdom</option>
                         </select>
-                        <div class="hint" data-i18n="hintCountry">EU AI Act applies to all EU member states + EEA (Iceland, Norway, Liechtenstein), UK, and Switzerland. Select where your company is based.</div>
+                        <div class="hint" id="countryHint" data-i18n="hintCountry">EU AI Act applies to all EU member states + EEA (Iceland, Norway, Liechtenstein), UK, and Switzerland. Select where your company is based.</div>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelWebsite">Website URL</label>
-                        <input type="url" name="url" data-i18n-placeholder="placeholderWebsite" placeholder="https://example.com" required>
+                        <input type="url" name="url" data-i18n-placeholder="placeholderWebsite" placeholder="https://example.com" required aria-required="true">
                     </div>
                 </div>
 
@@ -264,7 +316,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelAiSystemsCount">Number of AI Systems in Production</label>
-                        <select name="ai_systems_count" id="ai_systems_count">
+                        <select name="ai_systems_count" id="ai_systems_count" aria-required="true">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="0" data-i18n="optNoneYet">None yet</option>
                             <option value="1-3" data-i18n="opt1to3">1-3 systems</option>
@@ -274,7 +326,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelDeploymentType">Deployment Type</label>
-                        <select name="deployment_type">
+                        <select name="deployment_type" aria-required="true">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="internal" data-i18n="optInternal">Internal use only</option>
                             <option value="customer-facing" data-i18n="optCustomerFacing">Customer-facing</option>
@@ -287,7 +339,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelDecisionType">Decision Type</label>
-                        <select name="decision_type">
+                        <select name="decision_type" aria-required="true">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="fully-automated" data-i18n="optFullyAutomated">Fully automated decisions</option>
                             <option value="human-in-loop" data-i18n="optHumanInLoop">Human-in-the-loop</option>
@@ -297,7 +349,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelRiskSelfAssessment">Risk Self-Assessment</label>
-                        <select name="risk_self_assessment">
+                        <select name="risk_self_assessment" aria-required="true">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="minimal" data-i18n="optMinimalRisk">Minimal risk</option>
                             <option value="limited" data-i18n="optLimitedRisk">Limited risk</option>
@@ -534,7 +586,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelTrainingDataOrigin">Training Data Origin</label>
-                        <select name="training_data_origin">
+                        <select name="training_data_origin" aria-required="true">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="public_web" data-i18n="optPublicWeb">Public web data</option>
                             <option value="proprietary" data-i18n="optProprietaryCompany">Proprietary / company data</option>
@@ -548,7 +600,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelDataRetention">Data Retention Policy</label>
-                        <select name="data_retention">
+                        <select name="data_retention" aria-required="true">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="not_retained" data-i18n="optNotRetained">Not retained</option>
                             <option value="30_days" data-i18n="opt30Days">30 days</option>
@@ -569,7 +621,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label data-i18n="labelComplianceDoc">Existing Compliance Documentation</label>
-                                    <select name="has_documentation">
+                                    <select name="has_documentation" aria-required="true">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optYesComprehensive">Yes, comprehensive</option>
                                         <option value="partial" data-i18n="optPartially">Partially</option>
@@ -578,7 +630,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label data-i18n="labelDpo">DPO Appointed?</label>
-                                    <select name="dpo_appointed">
+                                    <select name="dpo_appointed" aria-required="true">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optYes">Yes</option>
                                         <option value="no" data-i18n="optNo">No</option>
@@ -590,7 +642,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label data-i18n="labelGdpr">GDPR Compliance Status</label>
-                                    <select name="gdpr_compliant">
+                                    <select name="gdpr_compliant" aria-required="true">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optFullyCompliant">Fully compliant</option>
                                         <option value="in_progress" data-i18n="optInProgress">In progress</option>
@@ -600,7 +652,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label data-i18n="labelCeMarking">CE Marking (for AI)</label>
-                                    <select name="ce_marking">
+                                    <select name="ce_marking" aria-required="true">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optYesObtained">Yes, obtained</option>
                                         <option value="planned" data-i18n="optPlanned">Planned</option>
@@ -1008,6 +1060,8 @@
                 errorTitle: "Analysis Failed",
                 errorBackBtn: "← Back to Form",
                 errorSavedMsg: "Your form data is saved. Simply scroll down and try again.",
+                errRequired: "This field is required",
+                errSelectRequired: "Please select at least one option",
                 footerAIVerify: "AI Verify",
                 footerPrivacy: "Privacy",
                 footerImprint: "Imprint",
@@ -1212,6 +1266,8 @@
                 errorTitle: "Analyse fehlgeschlagen",
                 errorBackBtn: "← Zurück zum Formular",
                 errorSavedMsg: "Ihre Formulardaten sind gespeichert. Scrollen Sie einfach nach unten und versuchen Sie es erneut.",
+                errRequired: "Dieses Feld ist erforderlich",
+                errSelectRequired: "Bitte wählen Sie mindestens eine Option aus",
                 footerAIVerify: "AI Verify",
                 footerPrivacy: "Datenschutz",
                 footerImprint: "Impressum",
@@ -1416,6 +1472,8 @@
                 errorTitle: "Analyse échouée",
                 errorBackBtn: "← Retour au formulaire",
                 errorSavedMsg: "Les données de votre formulaire sont sauvegardées. Il vous suffit de défiler vers le bas et de réessayer.",
+                errRequired: "Ce champ est requis",
+                errSelectRequired: "Veuillez sélectionner au moins une option",
                 footerAIVerify: "AI Verify",
                 footerPrivacy: "Confidentialité",
                 footerImprint: "Impressum",
@@ -1620,6 +1678,8 @@
                 errorTitle: "Analisi fallita",
                 errorBackBtn: "← Torna al modulo",
                 errorSavedMsg: "I dati del modulo sono salvati. Scorri verso il basso e riprova.",
+                errRequired: "Questo campo è obbligatorio",
+                errSelectRequired: "Seleziona almeno un'opzione",
                 footerAIVerify: "AI Verify",
                 footerPrivacy: "Privacy",
                 footerImprint: "Impressum",
@@ -1824,6 +1884,8 @@
                 errorTitle: "Análisis fallido",
                 errorBackBtn: "← Volver al formulario",
                 errorSavedMsg: "Los datos del formulario están guardados. Simplemente desplázate hacia abajo e inténtalo de nuevo.",
+                errRequired: "Este campo es obligatorio",
+                errSelectRequired: "Selecciona al menos una opción",
                 footerAIVerify: "AI Verify",
                 footerPrivacy: "Privacidad",
                 footerImprint: "Imprint",
@@ -1840,6 +1902,8 @@
             overlay.className = 'ms-overlay';
             overlay.addEventListener('click', () => closeAllMS());
             document.body.appendChild(overlay);
+            // Set initial aria-expanded on ms-triggers
+            document.querySelectorAll('.ms-trigger').forEach(t => t.setAttribute('aria-expanded', 'false'));
         }
 
         function toggleMS(btn, evt) {
@@ -1851,7 +1915,10 @@
             if (!wasOpen) {
                 dd.classList.add('open');
                 btn.querySelector('.ms-arrow').classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
                 if (overlay) overlay.classList.add('open');
+            } else {
+                btn.setAttribute('aria-expanded', 'false');
             }
         }
 
@@ -1882,6 +1949,7 @@
         function closeAllMS() {
             document.querySelectorAll('.ms-dropdown.open').forEach(d => d.classList.remove('open'));
             document.querySelectorAll('.ms-arrow.open').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.ms-trigger[aria-expanded="true"]').forEach(t => t.setAttribute('aria-expanded', 'false'));
             const overlay = document.getElementById('msOverlay');
             if (overlay) overlay.classList.remove('open');
         }
@@ -2103,7 +2171,36 @@
             });
         });
 
-        // ── Progress bar ──
+        // ── Progress bar (scroll-based via IntersectionObserver) ──
+        function initScrollProgress() {
+            const sections = document.querySelectorAll('.form-section');
+            const progressLabels = document.querySelectorAll('#progressLabels span');
+            if (sections.length === 0) return;
+
+            const steps = [0, 20, 40, 70, 100];
+            const fill = document.getElementById('progressFill');
+
+            const observer = new IntersectionObserver((entries) => {
+                let highestIdx = -1;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idx = Array.from(sections).indexOf(entry.target);
+                        if (idx > highestIdx) highestIdx = idx;
+                    }
+                });
+                if (highestIdx >= 0) {
+                    const pct = steps[Math.min(highestIdx, steps.length - 1)];
+                    fill.style.width = pct + '%';
+                    progressLabels.forEach((span, i) => {
+                        span.classList.toggle('active', i === highestIdx);
+                    });
+                }
+            }, { threshold: 0.3, rootMargin: '-52px 0px 0px 0px' });
+
+            sections.forEach(s => observer.observe(s));
+        }
+
+        // ── Fill-based progress (existing) ──
         function updateProgress() {
             const form = document.getElementById('complianceForm');
             const inputs = form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea');
@@ -2137,19 +2234,122 @@
             });
         });
 
+        // ── Form Validation ──
+        function validateForm() {
+            clearErrors();
+            const form = document.getElementById('complianceForm');
+            const firstInvalid = [];
+
+            // Check required single selects and text inputs
+            form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea').forEach(el => {
+                const val = el.value ? el.value.trim() : '';
+                const isSelect = el.tagName === 'SELECT';
+                if (!val || (isSelect && val === '')) {
+                    markInvalid(el, translations[currentLang]?.errRequired || 'This field is required');
+                    if (firstInvalid.length === 0) firstInvalid.push(el);
+                }
+            });
+
+            // Check at least one option in each multiselect
+            document.querySelectorAll('.custom-multiselect').forEach(ms => {
+                const name = ms.dataset.name;
+                const vals = getMSValues(name);
+                if (vals.length === 0) {
+                    const trigger = ms.querySelector('.ms-trigger');
+                    markInvalid(trigger, translations[currentLang]?.errSelectRequired || 'Please select at least one option');
+                    if (firstInvalid.length === 0) firstInvalid.push(trigger);
+                }
+            });
+
+            // Check radio groups (previous_audits)
+            const radioGroups = {};
+            form.querySelectorAll('input[type="radio"]').forEach(r => {
+                if (!radioGroups[r.name]) radioGroups[r.name] = [];
+                radioGroups[r.name].push(r);
+            });
+            Object.keys(radioGroups).forEach(name => {
+                const checked = radioGroups[name].some(r => r.checked);
+                if (!checked && name === 'previous_audits') {
+                    // Mark all radios in group
+                    radioGroups[name].forEach(r => {
+                        markInvalid(r.closest('label'), translations[currentLang]?.errRequired || 'This field is required');
+                    });
+                    if (firstInvalid.length === 0) firstInvalid.push(radioGroups[name][0]);
+                }
+            });
+
+            // Scroll to first invalid field
+            if (firstInvalid.length > 0) {
+                const el = firstInvalid[0];
+                const target = el.closest('.form-section') || el;
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            }
+            return true;
+        }
+
+        function markInvalid(el, msg) {
+            el.classList.add('field-invalid');
+            el.setAttribute('aria-invalid', 'true');
+            // Find or create error element
+            const container = el.closest('.form-group') || el.parentElement;
+            let errorEl = container.querySelector('.field-error');
+            if (!errorEl) {
+                errorEl = document.createElement('div');
+                errorEl.className = 'field-error';
+                errorEl.setAttribute('role', 'alert');
+                container.appendChild(errorEl);
+            }
+            errorEl.textContent = msg;
+            errorEl.classList.add('visible');
+            // Set aria-describedby on the field
+            const errId = 'err-' + (el.name || Math.random().toString(36).slice(2, 7));
+            errorEl.id = errId;
+            el.setAttribute('aria-describedby', errId);
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.field-invalid').forEach(el => {
+                el.classList.remove('field-invalid');
+                el.removeAttribute('aria-invalid');
+            });
+            document.querySelectorAll('.field-error.visible').forEach(el => {
+                el.classList.remove('visible');
+                el.textContent = '';
+                el.removeAttribute('id');
+            });
+            // Clear aria-describedby that was set by validation
+            document.querySelectorAll('[aria-describedby^="err-"]').forEach(el => {
+                const current = el.getAttribute('aria-describedby');
+                if (current && current.startsWith('err-')) {
+                    el.removeAttribute('aria-describedby');
+                }
+            });
+        }
+
+        // Clear error on focus
+        document.addEventListener('focusin', function(e) {
+            const field = e.target.closest('.field-invalid, .ms-trigger');
+            if (field) {
+                field.classList.remove('field-invalid');
+                field.removeAttribute('aria-invalid');
+                const container = field.closest('.form-group') || field.parentElement;
+                const errorEl = container.querySelector('.field-error.visible');
+                if (errorEl) {
+                    errorEl.classList.remove('visible');
+                    errorEl.textContent = '';
+                }
+            }
+        });
+
         // ── Form submission ──
         document.getElementById('complianceForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const form = document.getElementById('complianceForm');
 
-            // Validate required fields
-            const url = form.querySelector('[name="url"]');
-            if (!url.value.trim()) {
-                url.focus();
-                url.style.borderColor = 'var(--danger)';
-                return;
-            }
+            // Run validation
+            if (!validateForm()) return;
 
             btn.disabled = true;
             btn.textContent = '⏳ Processing...';
@@ -2198,6 +2398,7 @@
         initMS();
         loadUrlFromQuery();
         restoreFormData();
+        initScrollProgress();
 
         // ── Choices.js: Init all single-select dropdowns ──
         // Must init AFTER restoreFormData so saved values are picked up
