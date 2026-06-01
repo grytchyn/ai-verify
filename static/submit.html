@@ -39,6 +39,15 @@
             --radius: 8px;
             --radius-sm: 6px;
             --radius-lg: 12px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --transition-normal: all 0.2s ease;
+            --transition-slow: all 0.3s ease;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -1051,9 +1060,9 @@
 
             <div class="form-actions">
                 <a href="/" class="btn-secondary" data-i18n="btnCancel">← Cancel</a>
-                <button type="submit" class="btn-primary" id="submitBtn" data-i18n="btnGenerate">
-                    → Generate Compliance Report
-                </button>
+                <button type="submit" class="btn-primary" id="submitBtn" data-i18n="btnSubmit">
+                                    → Generate
+                                </button>
             </div>
         </form>
     </div>
@@ -1265,7 +1274,7 @@
                 optOtherAudit: "Other",
                 // Buttons
                 btnCancel: "← Cancel",
-                btnSubmit: "→ Generate Compliance Report",
+                btnSubmit: "→ Generate Report",
                 btnProcessing: "⏳ Processing...",
                 // Previous audits radio
                 radioYes: "Yes",
@@ -1469,7 +1478,7 @@
                 optSecurityTest: "Sicherheits-/Penetrationstest",
                 optOtherAudit: "Sonstige",
                 btnCancel: "← Abbrechen",
-                btnSubmit: "→ Compliance-Bericht erstellen",
+                btnSubmit: "→ Bericht erstellen",
                 btnProcessing: "⏳ Wird verarbeitet...",
                 radioYes: "Ja",
                 radioNo: "Nein",
@@ -1672,7 +1681,7 @@
                 optSecurityTest: "Test de sécurité / pénétration",
                 optOtherAudit: "Autre",
                 btnCancel: "← Annuler",
-                btnSubmit: "→ Générer le rapport de conformité",
+                btnSubmit: "→ Générer le rapport",
                 btnProcessing: "⏳ Traitement en cours...",
                 radioYes: "Oui",
                 radioNo: "Non",
@@ -1875,7 +1884,7 @@
                 optSecurityTest: "Test di sicurezza/penetrazione",
                 optOtherAudit: "Altro",
                 btnCancel: "← Annulla",
-                btnSubmit: "→ Genera rapporto di conformità",
+                btnSubmit: "→ Genera rapporto",
                 btnProcessing: "⏳ Elaborazione...",
                 radioYes: "Sì",
                 radioNo: "No",
@@ -2078,7 +2087,7 @@
                 optSecurityTest: "Prueba de seguridad / penetración",
                 optOtherAudit: "Otro",
                 btnCancel: "← Cancelar",
-                btnSubmit: "→ Generar informe de cumplimiento",
+                btnSubmit: "→ Generar informe",
                 btnProcessing: "⏳ Procesando...",
                 radioYes: "Sí",
                 radioNo: "No",
@@ -2244,7 +2253,7 @@
             // Update submit button if language changes
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn && !submitBtn.disabled) {
-                submitBtn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Compliance Report';
+                submitBtn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Report';
             }
             const cancelBtn = document.querySelector('a.btn-secondary');
             if (cancelBtn) cancelBtn.textContent = translations[currentLang]?.btnCancel || '← Cancel';
@@ -2447,7 +2456,7 @@
                 window.location.href = '/result-page?id=' + data.id + '&lang=' + currentLang;
             } catch (err) {
                 btn.disabled = false;
-                btn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Compliance Report';
+                btn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Report';
                 // Show error with retry — data still in cache
                 document.getElementById('errorBox').style.display = '';
                 document.getElementById('errorMsg').textContent = err.message;
