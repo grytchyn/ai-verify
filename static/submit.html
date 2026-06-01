@@ -2244,7 +2244,9 @@
             const optionalMS = ['existing_certifications'];
 
             // Check required single selects and text inputs
-            form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea').forEach(el => {
+            form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea, input[type="email"]').forEach(el => {
+                // Skip hidden fields (progressive disclosure) and optional fields
+                if (el.offsetParent === null && el.type !== 'hidden') return;
                 if (optionalFields.includes(el.name)) return; // skip optional fields
                 const val = el.value ? el.value.trim() : '';
                 const isSelect = el.tagName === 'SELECT';
@@ -2258,6 +2260,7 @@
             document.querySelectorAll('.custom-multiselect').forEach(ms => {
                 const name = ms.dataset.name;
                 if (optionalMS.includes(name)) return; // skip optional multiselects
+                if (ms.offsetParent === null) return; // skip hidden conditional multiselects
                 const vals = getMSValues(name);
                 if (vals.length === 0) {
                     const trigger = ms.querySelector('.ms-trigger');
