@@ -359,6 +359,72 @@ body {
   margin-top: var(--av-ref-space-8);
 }
 
+/* ─── Choices.js Dark Theme ─── */
+/* Unified with custom-multiselect styling below */
+.choices {
+  margin-bottom: 0 !important;
+  font-size: var(--av-ref-font-md) !important;
+}
+.choices__inner {
+  background: var(--av-comp-input-bg) !important;
+  border: 1px solid var(--av-comp-input-border) !important;
+  border-radius: var(--av-comp-input-radius) !important;
+  padding: 8px 14px !important;
+  font-size: var(--av-ref-font-md) !important;
+  color: var(--av-sys-text-heading) !important;
+  min-height: auto !important;
+}
+.choices__placeholder {
+  color: var(--av-sys-text-muted) !important;
+  opacity: 1 !important;
+}
+.choices[data-type*="select-one"] .choices__inner {
+  padding-bottom: 8px !important;
+}
+.choices__input {
+  background: var(--av-sys-surface-page) !important;
+  color: var(--av-sys-text-heading) !important;
+  font-size: var(--av-ref-font-base) !important;
+  padding: 6px 10px !important;
+  border-bottom: 1px solid var(--av-sys-border-default) !important;
+}
+.choices__list--dropdown {
+  background: var(--av-sys-surface-raised) !important;
+  border: 1px solid var(--av-sys-border-default) !important;
+  border-radius: var(--av-ref-radius-md) !important;
+  box-shadow: var(--av-sys-shadow-dropdown) !important;
+  z-index: var(--av-ref-z-dropdown) !important;
+}
+.choices__list--dropdown .choices__item {
+  color: var(--av-sys-text-body) !important;
+  font-size: var(--av-ref-font-base) !important;
+  padding: 8px 14px !important;
+}
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+  background: var(--av-sys-surface-hover) !important;
+  color: var(--av-sys-text-heading) !important;
+}
+.choices__list--dropdown .choices__item--selectable.is-selected {
+  background: var(--av-sys-brand-bg) !important;
+  color: var(--av-sys-brand) !important;
+}
+.choices__list--single {
+  padding: 0 !important;
+}
+.choices__list--single .choices__item {
+  color: var(--av-sys-text-heading) !important;
+  font-size: var(--av-ref-font-md) !important;
+}
+.choices__button {
+  border-left: 1px solid var(--av-sys-border-default) !important;
+}
+.choices[data-type*="select-one"]::after {
+  border-color: var(--av-sys-text-muted) transparent transparent transparent !important;
+}
+.choices[data-type*="select-one"].is-open::after {
+  border-color: transparent transparent var(--av-sys-text-muted) transparent !important;
+}
+
 /* ─── Custom Multiselect ─── */
 .custom-multiselect {
   position: relative;
@@ -560,44 +626,69 @@ body {
 .site-footer {
   border-top: 1px solid var(--av-sys-border-subtle);
   padding: 48px 24px;
-  text-align: center;
+  margin-top: 60px;
 }
-.footer-inner {
+.footer-content {
   max-width: var(--av-ref-container-wide);
   margin: 0 auto;
+  text-align: center;
 }
-.footer-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 32px;
+  text-align: left;
 }
-.footer-links a {
+.footer-brand .site-logo {
+  margin-bottom: 12px;
+  justify-content: flex-start;
+}
+.footer-brand p {
+  font-size: 13px;
   color: var(--av-sys-text-muted);
+  max-width: 320px;
+  line-height: 1.7;
+}
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--av-sys-text-heading);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: var(--av-sys-text-meta);
   text-decoration: none;
-  font-size: var(--av-ref-font-sm);
+  padding: 4px 0;
   transition: color var(--av-sys-motion-hover);
 }
-.footer-links a:hover {
+.footer-col a:hover {
   color: var(--av-sys-text-heading);
 }
-.footer-sep {
+.footer-bottom {
+  border-top: 1px solid var(--av-sys-border-subtle);
+  padding-top: 24px;
+  text-align: center;
+}
+.footer-bottom p {
+  font-size: 13px;
   color: var(--av-sys-text-muted);
+}
+.footer-dpo {
   font-size: 12px;
-  opacity: 0.3;
-}
-.footer-copy {
-  font-size: 11px;
   color: var(--av-sys-text-muted);
-  margin-top: 4px;
+  margin-top: 6px;
 }
-.footer-model {
-  font-size: 10px;
-  color: var(--av-sys-text-muted);
-  margin-top: 2px;
-  opacity: 0.7;
+.footer-dpo a {
+  color: var(--av-sys-brand);
+  text-decoration: none;
+}
+.footer-dpo a:hover {
+  color: var(--av-sys-brand-hover);
 }
 /* ====================================================
    RESPONSIVE (shared)
