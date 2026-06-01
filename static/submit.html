@@ -641,225 +641,225 @@
                 </div>
             </div>
 
-            <!-- Section 4: High-Risk Categories -->
-            <div class="form-section">
-                <h2 data-i18n="sec4Title">⚠️ High-Risk Categories</h2>
-                <p class="section-desc" data-i18n="sec4Desc">Select which EU AI Act high-risk categories apply to your AI systems. <a href="https://artificialintelligenceact.eu/high-risk/" target="_blank" style="color: var(--accent);" data-i18n="learnMore">Learn more</a></p>
+            <!-- Section 5: Current Compliance Status -->
+                        <div class="form-section">
+                            <h2 data-i18n="sec5Title">📄 Current Compliance Status</h2>
+                            <p class="section-desc" data-i18n="sec5Desc">Where are you on your compliance journey?</p>
                 
-                <div class="custom-multiselect" data-name="high_risk_categories">
-                        <button type="button" class="ms-trigger" data-name="ai_purpose">
-                            <span class="ms-label" data-i18n="labelHighRiskCategories">High-Risk Categories</span>
-                            <span class="ms-count" style="display:none">0</span>
-                            <span class="ms-arrow">▾</span>
-                        </button>
-                        <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="risk_biometrics">
-                                <input type="checkbox" value="risk_biometrics" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optBiometrics">Biometric identification / Remote biometric ID</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_critical_infra">
-                                <input type="checkbox" value="risk_critical_infra" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optCriticalInfra">Critical infrastructure management</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_education">
-                                <input type="checkbox" value="risk_education" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optEducationTraining">Education & vocational training</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_employment">
-                                <input type="checkbox" value="risk_employment" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optEmployment">Employment & worker management</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_credit">
-                                <input type="checkbox" value="risk_credit" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optCredit">Credit assessment & essential services</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_law_enforcement">
-                                <input type="checkbox" value="risk_law_enforcement" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optLawEnforcement">Law enforcement</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_migration">
-                                <input type="checkbox" value="risk_migration" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optMigration">Migration, asylum & border control</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_justice">
-                                <input type="checkbox" value="risk_justice" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optJustice">Administration of justice</span>
-                            </label>
-                            <label class="ms-option" data-value="risk_democratic">
-                                <input type="checkbox" value="risk_democratic" name="high_risk_categories">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optDemocratic">Democratic processes (elections/voting)</span>
-                            </label>
-                        </div>
-                    </div>
-            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label data-i18n="labelComplianceDoc">Existing Compliance Documentation</label>
+                                    <select name="has_documentation">
+                                        <option value="" data-i18n="optSelect">Select...</option>
+                                        <option value="yes" data-i18n="optYesComprehensive">Yes, comprehensive</option>
+                                        <option value="partial" data-i18n="optPartially">Partially</option>
+                                        <option value="no" data-i18n="optNotYet">Not yet</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="labelDpo">DPO Appointed?</label>
+                                    <select name="dpo_appointed">
+                                        <option value="" data-i18n="optSelect">Select...</option>
+                                        <option value="yes" data-i18n="optYes">Yes</option>
+                                        <option value="no" data-i18n="optNo">No</option>
+                                        <option value="planned" data-i18n="optPlanned">Planned</option>
+                                    </select>
+                                </div>
+                            </div>
+                
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label data-i18n="labelGdpr">GDPR Compliance Status</label>
+                                    <select name="gdpr_compliant">
+                                        <option value="" data-i18n="optSelect">Select...</option>
+                                        <option value="yes" data-i18n="optFullyCompliant">Fully compliant</option>
+                                        <option value="in_progress" data-i18n="optInProgress">In progress</option>
+                                        <option value="no" data-i18n="optNotYetStarted">Not yet started</option>
+                                        <option value="not_applicable" data-i18n="optNotApplicable">Not applicable</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="labelCeMarking">CE Marking (for AI)</label>
+                                    <select name="ce_marking">
+                                        <option value="" data-i18n="optSelect">Select...</option>
+                                        <option value="yes" data-i18n="optYesObtained">Yes, obtained</option>
+                                        <option value="planned" data-i18n="optPlanned">Planned</option>
+                                        <option value="no" data-i18n="optNotYet">Not yet</option>
+                                    </select>
+                                </div>
+                            </div>
+                
+                            <div class="form-group">
+                                <label data-i18n="labelCertifications">Existing Certifications <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
+                                <div class="custom-multiselect" data-name="existing_certifications">
+                                    <button type="button" class="ms-trigger" data-name="ai_purpose">
+                                        <span class="ms-label" data-i18n="labelCertifications">Existing Certifications</span>
+                                        <span class="ms-count" style="display:none">0</span>
+                                        <span class="ms-arrow">▾</span>
+                                    </button>
+                                    <div class="ms-dropdown">
+                                                                    <label class="ms-option" data-value="iso_27001">
+                                            <input type="checkbox" value="iso_27001" name="existing_certifications">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optIso27001">ISO 27001</span>
+                                        </label>
+                                        <label class="ms-option" data-value="iso_42001">
+                                            <input type="checkbox" value="iso_42001" name="existing_certifications">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optIso42001">ISO 42001 (AI Management)</span>
+                                        </label>
+                                        <label class="ms-option" data-value="soc2">
+                                            <input type="checkbox" value="soc2" name="existing_certifications">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optSoc2">SOC 2</span>
+                                        </label>
+                                        <label class="ms-option" data-value="iso_27701">
+                                            <input type="checkbox" value="iso_27701" name="existing_certifications">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optIso27701">ISO 27701 (Privacy)</span>
+                                        </label>
+                                        <label class="ms-option" data-value="pcidss">
+                                            <input type="checkbox" value="pcidss" name="existing_certifications">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optPcidss">PCI DSS</span>
+                                        </label>
+                                        <label class="ms-option" data-value="hipaa">
+                                            <input type="checkbox" value="hipaa" name="existing_certifications">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optHipaa">HIPAA</span>
+                                        </label>
+                                        <label class="ms-option" data-value="none">
+                                            <input type="checkbox" value="none" name="existing_certifications">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optNoneYetCert">None yet</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 8px;">
+                                    <input type="text" name="other_certifications" data-i18n-placeholder="placeholderOtherCerts" placeholder="Other certifications (comma-separated)" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text-primary);font-size:14px;">
+                                </div>
+                            </div>
+                
+                            <div class="form-group" id="previous-audits-group">
+                                <label data-i18n="labelPreviousAudits">Have you had any compliance audits before?</label>
+                                <div style="display:flex;gap:12px;margin-top:8px;">
+                                    <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;">
+                                        <input type="radio" name="previous_audits" value="yes" style="accent-color:var(--brand);">
+                                        <span style="color:var(--text-secondary);font-size:14px;" data-i18n="labelYes">Yes</span>
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;">
+                                        <input type="radio" name="previous_audits" value="no" style="accent-color:var(--brand);">
+                                        <span style="color:var(--text-secondary);font-size:14px;" data-i18n="labelNo">No</span>
+                                    </label>
+                                </div>
+                            </div>
 
-            <!-- Section 5: Compliance Status -->
-            <div class="form-section">
-                <h2 data-i18n="sec5Title">📄 Current Compliance Status</h2>
-                <p class="section-desc" data-i18n="sec5Desc">Where are you on your compliance journey?</p>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label data-i18n="labelComplianceDoc">Existing Compliance Documentation</label>
-                        <select name="has_documentation">
-                            <option value="" data-i18n="optSelect">Select...</option>
-                            <option value="yes" data-i18n="optYesComprehensive">Yes, comprehensive</option>
-                            <option value="partial" data-i18n="optPartially">Partially</option>
-                            <option value="no" data-i18n="optNotYet">Not yet</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label data-i18n="labelDpo">DPO Appointed?</label>
-                        <select name="dpo_appointed">
-                            <option value="" data-i18n="optSelect">Select...</option>
-                            <option value="yes" data-i18n="optYes">Yes</option>
-                            <option value="no" data-i18n="optNo">No</option>
-                            <option value="planned" data-i18n="optPlanned">Planned</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label data-i18n="labelGdpr">GDPR Compliance Status</label>
-                        <select name="gdpr_compliant">
-                            <option value="" data-i18n="optSelect">Select...</option>
-                            <option value="yes" data-i18n="optFullyCompliant">Fully compliant</option>
-                            <option value="in_progress" data-i18n="optInProgress">In progress</option>
-                            <option value="no" data-i18n="optNotYetStarted">Not yet started</option>
-                            <option value="not_applicable" data-i18n="optNotApplicable">Not applicable</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label data-i18n="labelCeMarking">CE Marking (for AI)</label>
-                        <select name="ce_marking">
-                            <option value="" data-i18n="optSelect">Select...</option>
-                            <option value="yes" data-i18n="optYesObtained">Yes, obtained</option>
-                            <option value="planned" data-i18n="optPlanned">Planned</option>
-                            <option value="no" data-i18n="optNotYet">Not yet</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label data-i18n="labelCertifications">Existing Certifications <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
-                    <div class="custom-multiselect" data-name="existing_certifications">
-                        <button type="button" class="ms-trigger" data-name="ai_purpose">
-                            <span class="ms-label" data-i18n="labelCertifications">Existing Certifications</span>
-                            <span class="ms-count" style="display:none">0</span>
-                            <span class="ms-arrow">▾</span>
-                        </button>
-                        <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="iso_27001">
-                                <input type="checkbox" value="iso_27001" name="existing_certifications">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optIso27001">ISO 27001</span>
-                            </label>
-                            <label class="ms-option" data-value="iso_42001">
-                                <input type="checkbox" value="iso_42001" name="existing_certifications">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optIso42001">ISO 42001 (AI Management)</span>
-                            </label>
-                            <label class="ms-option" data-value="soc2">
-                                <input type="checkbox" value="soc2" name="existing_certifications">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optSoc2">SOC 2</span>
-                            </label>
-                            <label class="ms-option" data-value="iso_27701">
-                                <input type="checkbox" value="iso_27701" name="existing_certifications">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optIso27701">ISO 27701 (Privacy)</span>
-                            </label>
-                            <label class="ms-option" data-value="pcidss">
-                                <input type="checkbox" value="pcidss" name="existing_certifications">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optPcidss">PCI DSS</span>
-                            </label>
-                            <label class="ms-option" data-value="hipaa">
-                                <input type="checkbox" value="hipaa" name="existing_certifications">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optHipaa">HIPAA</span>
-                            </label>
-                            <label class="ms-option" data-value="none">
-                                <input type="checkbox" value="none" name="existing_certifications">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optNoneYetCert">None yet</span>
-                            </label>
+                            <div class="form-group" id="audit-details" style="display:none;">
+                                <label data-i18n="labelAuditTypes">Audit Types <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
+                                <div class="custom-multiselect" data-name="audit_types">
+                                    <button type="button" class="ms-trigger" data-name="ai_purpose">
+                                        <span class="ms-label" data-i18n="labelAuditTypes">Audit Types</span>
+                                        <span class="ms-count" style="display:none">0</span>
+                                        <span class="ms-arrow">▾</span>
+                                    </button>
+                                    <div class="ms-dropdown">
+                                                                    <label class="ms-option" data-value="gdpr">
+                                            <input type="checkbox" value="gdpr" name="audit_types">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optGdprAudit">GDPR audit</span>
+                                        </label>
+                                        <label class="ms-option" data-value="iso">
+                                            <input type="checkbox" value="iso" name="audit_types">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optIsoAudit">ISO certification audit</span>
+                                        </label>
+                                        <label class="ms-option" data-value="internal_ai">
+                                            <input type="checkbox" value="internal_ai" name="audit_types">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optInternalAiAudit">Internal AI audit</span>
+                                        </label>
+                                        <label class="ms-option" data-value="third_party_ai">
+                                            <input type="checkbox" value="third_party_ai" name="audit_types">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optThirdPartyAiAudit">Third-party AI audit</span>
+                                        </label>
+                                        <label class="ms-option" data-value="security">
+                                            <input type="checkbox" value="security" name="audit_types">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optSecurityTest">Security / penetration test</span>
+                                        </label>
+                                        <label class="ms-option" data-value="other">
+                                            <input type="checkbox" value="other" name="audit_types">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optOtherAudit">Other</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div style="margin-top: 8px;">
-                        <input type="text" name="other_certifications" data-i18n-placeholder="placeholderOtherCerts" placeholder="Other certifications (comma-separated)" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text-primary);font-size:14px;">
-                    </div>
-                </div>
+
+                        <!-- Section 4: High-Risk Categories (MOVED HERE — last section before submit) -->
+                        <div class="form-section" id="high-risk-section">
+                            <h2 data-i18n="sec4Title">⚠️ High-Risk Categories</h2>
+                            <p class="section-desc" data-i18n="sec4Desc">Select which EU AI Act high-risk categories apply to your AI systems. <a href="https://artificialintelligenceact.eu/high-risk/" target="_blank" style="color: var(--accent);" data-i18n="learnMore">Learn more</a></p>
                 
-                <div class="form-group" id="previous-audits-group">
-                    <label data-i18n="labelPreviousAudits">Have you had any compliance audits before?</label>
-                    <div style="display:flex;gap:12px;margin-top:8px;">
-                        <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;">
-                            <input type="radio" name="previous_audits" value="yes" style="accent-color:var(--brand);">
-                            <span style="color:var(--text-secondary);font-size:14px;" data-i18n="labelYes">Yes</span>
-                        </label>
-                        <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;">
-                            <input type="radio" name="previous_audits" value="no" style="accent-color:var(--brand);">
-                            <span style="color:var(--text-secondary);font-size:14px;" data-i18n="labelNo">No</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group" id="audit-details" style="display:none;">
-                    <label data-i18n="labelAuditTypes">Audit Types <span style="color: var(--text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
-                    <div class="custom-multiselect" data-name="audit_types">
-                        <button type="button" class="ms-trigger" data-name="ai_purpose">
-                            <span class="ms-label" data-i18n="labelAuditTypes">Audit Types</span>
-                            <span class="ms-count" style="display:none">0</span>
-                            <span class="ms-arrow">▾</span>
-                        </button>
-                        <div class="ms-dropdown">
-                                                        <label class="ms-option" data-value="gdpr">
-                                <input type="checkbox" value="gdpr" name="audit_types">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optGdprAudit">GDPR audit</span>
-                            </label>
-                            <label class="ms-option" data-value="iso">
-                                <input type="checkbox" value="iso" name="audit_types">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optIsoAudit">ISO certification audit</span>
-                            </label>
-                            <label class="ms-option" data-value="internal_ai">
-                                <input type="checkbox" value="internal_ai" name="audit_types">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optInternalAiAudit">Internal AI audit</span>
-                            </label>
-                            <label class="ms-option" data-value="third_party_ai">
-                                <input type="checkbox" value="third_party_ai" name="audit_types">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optThirdPartyAiAudit">Third-party AI audit</span>
-                            </label>
-                            <label class="ms-option" data-value="security">
-                                <input type="checkbox" value="security" name="audit_types">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optSecurityTest">Security / penetration test</span>
-                            </label>
-                            <label class="ms-option" data-value="other">
-                                <input type="checkbox" value="other" name="audit_types">
-                                <span class="ms-check-icon"></span>
-                                <span class="ms-check-text" data-i18n="optOtherAudit">Other</span>
-                            </label>
+                            <div class="custom-multiselect" data-name="high_risk_categories">
+                                    <button type="button" class="ms-trigger" data-name="ai_purpose">
+                                        <span class="ms-label" data-i18n="labelHighRiskCategories">High-Risk Categories</span>
+                                        <span class="ms-count" style="display:none">0</span>
+                                        <span class="ms-arrow">▾</span>
+                                    </button>
+                                    <div class="ms-dropdown">
+                                                                    <label class="ms-option" data-value="risk_biometrics">
+                                            <input type="checkbox" value="risk_biometrics" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optBiometrics">Biometric identification / Remote biometric ID</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_critical_infra">
+                                            <input type="checkbox" value="risk_critical_infra" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optCriticalInfra">Critical infrastructure management</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_education">
+                                            <input type="checkbox" value="risk_education" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optEducationTraining">Education & vocational training</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_employment">
+                                            <input type="checkbox" value="risk_employment" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optEmployment">Employment & worker management</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_credit">
+                                            <input type="checkbox" value="risk_credit" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optCredit">Credit assessment & essential services</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_law_enforcement">
+                                            <input type="checkbox" value="risk_law_enforcement" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optLawEnforcement">Law enforcement</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_migration">
+                                            <input type="checkbox" value="risk_migration" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optMigration">Migration, asylum & border control</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_justice">
+                                            <input type="checkbox" value="risk_justice" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optJustice">Administration of justice</span>
+                                        </label>
+                                        <label class="ms-option" data-value="risk_democratic">
+                                            <input type="checkbox" value="risk_democratic" name="high_risk_categories">
+                                            <span class="ms-check-icon"></span>
+                                            <span class="ms-check-text" data-i18n="optDemocratic">Democratic processes (elections/voting)</span>
+                                        </label>
+                                    </div>
+                                </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-actions">
+                        <div class="form-actions">
                 <a href="/" class="btn-secondary" data-i18n="btnCancel">← Cancel</a>
                 <button type="submit" class="btn-primary" id="submitBtn" data-i18n="btnSubmit">
                                     → Generate
@@ -2155,10 +2155,10 @@
         function updateAISections() {
             const count = document.getElementById('ai_systems_count').value;
             const s3 = document.querySelector('.form-section:nth-of-type(3)');
-            const s4 = document.querySelector('.form-section:nth-of-type(4)');
             const hide = !count || count === '0';
+            const s4 = document.getElementById('high-risk-section');
             s3.style.display = hide ? 'none' : '';
-            s4.style.display = hide ? 'none' : '';
+            s4.style.display = 'block';
         }
         document.getElementById('ai_systems_count').addEventListener('change', function() {
             updateAISections();
