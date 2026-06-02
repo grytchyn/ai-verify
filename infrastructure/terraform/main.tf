@@ -244,7 +244,7 @@ output "api_endpoint" {
 
 output "database_host" {
   description = "Database host"
-  value       = modulepostgresql.rds_instances[0].endpoint
+  value       = module.postgresql.rds_instances[0].endpoint
   sensitive   = true
 }
 
