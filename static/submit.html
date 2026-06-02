@@ -637,7 +637,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label data-i18n="labelDpo">DPO Appointed?</label>
-                                    <select name="dpo_appointed" aria-required="true">
+                                    <select name="dpo_appointed">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optYes">Yes</option>
                                         <option value="no" data-i18n="optNo">No</option>
@@ -2246,8 +2246,8 @@
             clearErrors();
             const form = document.getElementById('complianceForm');
             const firstInvalid = [];
-            const optionalFields = ['other_certifications'];
-            const optionalMS = ['existing_certifications'];
+            const optionalFields = ['other_certifications', 'dpo_appointed', 'existing_certifications', 'audit_types', 'audit_details', 'has_documentation'];
+            const optionalMS = ['existing_certifications', 'audit_types'];
 
             // Check required single selects and text inputs
             form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea, input[type="email"]').forEach(el => {
@@ -2495,7 +2495,7 @@
     </div>
     <div class="footer-bottom">
       <p data-i18n="footerCopyright">© 2026 AI Verify. All rights reserved.</p>
-      <p class="footer-dpo">DPO: Konstantin Gritsch, Lübeck, Germany — <a href="mailto:dpo@ai-verify.ai">dpo@ai-verify.ai</a></p>
+      <p class="footer-dpo">DPO: Konstantin Gritsch, Lübeck, Germany — <a href="mailto:konstantin.gritsch@gmail.com">konstantin.gritsch@gmail.com</a></p>
     </div>
     <p class="footer-model" data-i18n="footerModel">AI analysis powered by Mistral AI (France 🇪🇺)</p>
   </div>
