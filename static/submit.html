@@ -94,12 +94,18 @@
         select.field-invalid,
         input.field-invalid,
         textarea.field-invalid,
-        .ms-trigger.field-invalid {
+        .ms-trigger.field-invalid,
+        label.field-invalid {
             border-color: var(--av-sys-status-danger) !important;
             box-shadow: 0 0 0 1px var(--av-sys-status-danger) !important;
         }
         .form-group select.field-invalid + .choices {
             border-color: var(--av-sys-status-danger) !important;
+        }
+        label.field-invalid {
+            outline: 2px solid var(--av-sys-status-danger) !important;
+            outline-offset: 2px !important;
+            border-radius: 4px !important;
         }
     </style>
 </head>
@@ -131,7 +137,7 @@
             <span data-i18n="sec4Title">⚠️ High-Risk</span>
         </div>
 
-        <form id="complianceForm">
+        <form id="complianceForm" method="post" novalidate>
                         
             <!-- Section 1: Company Information -->
             <div class="form-section">
@@ -364,7 +370,7 @@
                 <div class="form-group">
                     <label data-i18n="labelDataSources">Data Sources <span style="color: var(--av-sys-text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="data_sources">
-                        <button type="button" class="ms-trigger" data-name="ai_purpose">
+                        <button type="button" class="ms-trigger" data-name="data_sources">
                             <span class="ms-label" data-i18n="labelDataSources">Data Sources</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
@@ -428,7 +434,7 @@
                 <div class="form-group">
                     <label data-i18n="labelModelTypes">AI Model Types Used <span style="color: var(--av-sys-text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="model_types">
-                        <button type="button" class="ms-trigger" data-name="ai_purpose">
+                        <button type="button" class="ms-trigger" data-name="model_types">
                             <span class="ms-label" data-i18n="labelModelTypes">AI Model Types Used</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
@@ -491,7 +497,7 @@
                 <div class="form-group">
                     <label data-i18n="labelHumanOversight">Human Oversight Mechanisms <span style="color: var(--av-sys-text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="human_oversight">
-                        <button type="button" class="ms-trigger" data-name="ai_purpose">
+                        <button type="button" class="ms-trigger" data-name="human_oversight">
                             <span class="ms-label" data-i18n="labelHumanOversight">Human Oversight Mechanisms</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
@@ -539,7 +545,7 @@
                 <div class="form-group">
                     <label data-i18n="labelExplainability">Explainability Methods <span style="color: var(--av-sys-text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                     <div class="custom-multiselect" data-name="explainability">
-                        <button type="button" class="ms-trigger" data-name="ai_purpose">
+                        <button type="button" class="ms-trigger" data-name="explainability">
                             <span class="ms-label" data-i18n="labelExplainability">Explainability Methods</span>
                             <span class="ms-count" style="display:none">0</span>
                             <span class="ms-arrow">▾</span>
@@ -665,7 +671,7 @@
                             <div class="form-group">
                                 <label data-i18n="labelCertifications">Existing Certifications <span style="color: var(--av-sys-text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                                 <div class="custom-multiselect" data-name="existing_certifications">
-                                    <button type="button" class="ms-trigger" data-name="ai_purpose">
+                                    <button type="button" class="ms-trigger" data-name="existing_certifications">
                                         <span class="ms-label" data-i18n="labelCertifications">Existing Certifications</span>
                                         <span class="ms-count" style="display:none">0</span>
                                         <span class="ms-arrow">▾</span>
@@ -730,7 +736,7 @@
                             <div class="form-group" id="audit-details" style="display:none;">
                                 <label data-i18n="labelAuditTypes">Audit Types <span style="color: var(--av-sys-text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                                 <div class="custom-multiselect" data-name="audit_types">
-                                    <button type="button" class="ms-trigger" data-name="ai_purpose">
+                                    <button type="button" class="ms-trigger" data-name="audit_types">
                                         <span class="ms-label" data-i18n="labelAuditTypes">Audit Types</span>
                                         <span class="ms-count" style="display:none">0</span>
                                         <span class="ms-arrow">▾</span>
@@ -779,7 +785,7 @@
                             <div class="form-group">
                                 <label data-i18n="labelHighRiskCategories">High-Risk Categories <span style="color: var(--av-sys-text-muted); font-size: 12px;" data-i18n="selectAllHint">(select all that apply)</span></label>
                                 <div class="custom-multiselect" data-name="high_risk_categories">
-                                    <button type="button" class="ms-trigger" data-name="ai_purpose">
+                                    <button type="button" class="ms-trigger" data-name="high_risk_categories">
                                         <span class="ms-label" data-i18n="labelHighRiskCategories">High-Risk Categories</span>
                                         <span class="ms-count" style="display:none">0</span>
                                         <span class="ms-arrow">▾</span>
@@ -2156,7 +2162,7 @@
             const hide = !count || count === '0';
             const s4 = document.getElementById('high-risk-section');
             s3.style.display = hide ? 'none' : '';
-            s4.style.display = 'block';
+            s4.style.display = hide ? 'none' : '';
         }
         document.getElementById('ai_systems_count').addEventListener('change', function() {
             updateAISections();
@@ -2356,18 +2362,20 @@
             const btn = document.getElementById('submitBtn');
             const form = document.getElementById('complianceForm');
 
-            // Visual feedback: button shows brief processing state
-            btn.textContent = '⏳ Checking...';
+            // Disable button IMMEDIATELY to prevent double-submission
+            btn.disabled = true;
 
             // Run validation
             if (!validateForm()) {
+                // Button state: back to idle but visually indicate error
+                btn.disabled = false;
                 btn.textContent = translations[currentLang]?.btnSubmit || '→ Generate Report';
-                console.log('✋ Validation blocked — scroll to first error');
+                console.warn('✋ Validation blocked — scroll to first error');
                 return;
             }
 
-            btn.disabled = true;
             btn.textContent = '⏳ Processing...';
+            btn.disabled = true;
 
             // Build JSON payload that properly captures multiselect arrays
             const payload = {};
