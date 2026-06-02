@@ -1,0 +1,18 @@
+{
+  "name": "ai-verify-infrastructure",
+  "version": "2.0.0",
+  "description": "AI-Verify Infrastructure (Terraform + Kubernetes + Monitoring)",
+  "type": "module",
+  "scripts": {
+    "tf:init": "cd terraform && terraform init",
+    "tf:plan": "cd terraform && terraform plan",
+    "tf:apply": "cd terraform && terraform apply",
+    "tf:destroy": "cd terraform && terraform destroy",
+    "k8s:apply": "cd k8s && kubectl apply -f .",
+    "k8s:delete": "cd k8s && kubectl delete -f .",
+    "monitor:deploy": "cd monitoring && helm install ai-verify ."
+  },
+  "devDependencies": {
+    "@pulumi/pulumictl": "^1.0.0"
+  }
+}

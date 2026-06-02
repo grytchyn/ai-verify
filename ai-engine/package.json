@@ -1,0 +1,26 @@
+{
+  "name": "ai-verify-ai-engine",
+  "version": "2.0.0",
+  "description": "AI-Verify AI/ML Inference Engine (OpenWebUI + LLM + VectorDB)",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "deploy": "docker build -t ai-verify-ai-engine:latest . && docker push ai-verify-ai-engine:latest",
+    "prompts:sync": "node src/sync-prompts.js"
+  },
+  "dependencies": {
+    "openai": "^4.52.0",
+    "pinecone-client": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.8",
+    "typescript": "^5.5.2",
+    "tsx": "^4.16.2"
+  }
+}

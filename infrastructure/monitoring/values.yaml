@@ -1,0 +1,83 @@
+# AI-Verify Monitoring Stack — Helm Values
+
+# Prometheus configuration
+prometheus:
+  enabled: true
+  serviceAccounts:
+    server:
+      name: prometheus-server
+  retention: "30d"
+  storageSpec:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 100Gi
+
+# Grafana configuration
+grafana:
+  enabled: true
+  adminPassword: "admin"
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus-server:9090
+        isDefault: true
+  dashboards:
+    enabled: true
+
+# AlertManager configuration
+alertmanager:
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      group_by: ['alertname', 'cluster', 'service']
+      group_wait: 10s
+      group_interval: 10s
+      repeat_interval: 1h
+      receiver: 'email-notifications'
+    receivers:
+    - name: 'email-notifications'
+      email_configs:
+      - to: 'konstantin.gritsch@gmail.com'
+        from: 'alerts@ai-verify.ai'
+        smarthost: 'smtp.gmail.com:587'
+        auth_username: 'alerts@ai-verify.ai'
+        auth_password: '${SMTP_PASSWORD}'
+
+# Alert rules
+alertmanagerFiles:
+  alertmanager.yml: |
+    global:
+     resolve_timeout: 5m
+
+    route:
+      group_by: ['alertname']
+      group_wait: 10s
+      group_interval: 10s
+      repeat_interval: 1h
+      receiver: 'email-notifications'
+
+    receivers:
+    - name: 'email-notifications'
+      email_configs:
+      - to: 'konstantin.gritsch@gmail.com'
+
+# Node exporter for host monitoring
+nodeExporter:
+  enabled: true
+
+# Kube-state-metrics for Kubernetes metrics
+kubeStateMetrics:
+  enabled: true
+
+# Metrics-server for HPA
+metrics-server:
+  enabled: true
