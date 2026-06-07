@@ -516,6 +516,7 @@
         }
     </style>
     <script src="/static/i18n.js"></script>
+    <script src="/static/js/time-ago.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -604,6 +605,7 @@
                     <h1 id="reportTitle" data-i18n="reportTitle">AI Compliance Report</h1>
                     <p class="company" id="companyName"></p>
                     <p class="time" id="reportTime"></p>
+                    <p class="time time-ago" id="reportTimeAgo" style="font-size:11px; opacity:0.6; margin-top:2px;"></p>
                 </div>
                 <div class="report-header-actions">
                     <button class="btn-new" onclick="window.print()" style="cursor:pointer;">⬇ Export PDF</button>
@@ -830,6 +832,8 @@
             icon.textContent = body.classList.contains('open') ? '▼' : '▶';
         }
 
+        // ── LIVE "TIME AGO" TICKER — uses static/js/time-ago.js ──
+
         function showReport(data) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('reportContent').style.display = 'block';
@@ -840,7 +844,20 @@
             document.getElementById('reportTitle').textContent = translations[currentLang]?.reportTitle || 'AI Compliance Report';
             document.getElementById('companyName').textContent = data.company || '';
             const localeMap = {en:'en-US', de:'de-DE', fr:'fr-FR', it:'it-IT', es:'es-ES'};
-            document.getElementById('reportTime').textContent = (translations[currentLang]?.generatedLabel || 'Generated: ') + new Date().toLocaleString(localeMap[currentLang] || 'en-US');
+            const generatedLabel = translations[currentLang]?.generatedLabel || 'Generated: ';
+            const lang = currentLang;
+            let createdAt = null;
+            if (data.created_at) {
+                const iso = data.created_at.endsWith('Z') ? data.created_at : data.created_at + 'Z';
+                createdAt = new Date(iso);
+            }
+            if (createdAt && !isNaN(createdAt.getTime())) {
+                document.getElementById('reportTime').textContent =
+                    generatedLabel + createdAt.toLocaleString(localeMap[lang] || 'en-US');
+                TimeAgo.start('reportTimeAgo', data.created_at, { lang: lang });
+            } else {
+                document.getElementById('reportTime').textContent = generatedLabel + new Date().toLocaleString(localeMap[lang] || 'en-US');
+            }
 
             renderScoreGauge(data);
             renderInfographic(data);

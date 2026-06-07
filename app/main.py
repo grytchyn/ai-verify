@@ -673,7 +673,12 @@ async def get_report_html(sub_id: str, db: Session = Depends(get_db)):
     if not sub:
         raise HTTPException(status_code=404, detail="Not found")
     if sub.status != "completed" or not sub.report_path:
-        return {"status": sub.status, "html": "", "error_message": sub.error_message}
+        return {
+            "status": sub.status,
+            "html": "",
+            "error_message": sub.error_message,
+            "created_at": sub.created_at.isoformat() if sub.created_at else None,
+        }
     
     # Read the markdown report
     import markdown
@@ -702,6 +707,7 @@ async def get_report_html(sub_id: str, db: Session = Depends(get_db)):
         "title": f"{'KI-Compliance-Bericht' if sub.lang == 'de' else 'AI Compliance Report'}: {sub.company}",
         "company": sub.company,
         "summary": summary,
+        "created_at": sub.created_at.isoformat() if sub.created_at else None,
         **score_data
     }
 
