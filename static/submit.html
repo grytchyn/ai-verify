@@ -107,6 +107,8 @@
             outline-offset: 2px !important;
             border-radius: 4px !important;
         }
+        @keyframes spin { 0% { transform: translateY(-50%) rotate(0deg); } 100% { transform: translateY(-50%) rotate(360deg); } }
+        .auto-detect-success { border-color: var(--av-sys-score-green) !important; transition: border-color 0.3s; }
     </style>
 </head>
 <body>
@@ -143,7 +145,17 @@
             <div class="form-section">
                 <h2 data-i18n="sec1Title">📋 Company Information</h2>
                 <p class="section-desc" data-i18n="sec1Desc">Basic information about your organization. <span style="color: var(--av-sys-brand); font-size: 12px;" data-i18n="sec1Hint">Company name, sector, and HQ will be auto-detected from your website URL.</span></p>
-                
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="labelCompany">Company Name</label>
+                        <div style="position:relative;">
+                            <input type="text" name="company" data-i18n-placeholder="placeholderCompany" placeholder="e.g. Acme Corp" aria-required="true" style="padding-right:32px;">
+                            <span id="urlDetectSpinner" style="display:none; position:absolute; right:10px; top:50%; transform:translateY(-50%); width:16px; height:16px; border:2px solid var(--av-sys-border-default); border-top-color:var(--av-sys-brand); border-radius:50%; animation:spin 0.8s linear infinite;"></span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelCompanySize">Company Size</label>
@@ -864,6 +876,8 @@
                 sec1Desc: "Basic information about your organization.",
                 sec1Hint: "Company name, sector, and HQ will be auto-detected from your website URL.",
                 labelCompanySize: "Company Size",
+                labelCompany: "Company Name",
+                placeholderCompany: "e.g. Acme Corp",
                 labelSector: "Sector / Industry",
                 labelRevenue: "Annual Revenue",
                 labelCountry: "Country",
@@ -1082,6 +1096,8 @@
                 sec1Desc: "Grundlegende Informationen zu Ihrem Unternehmen.",
                 sec1Hint: "Unternehmensname, Branche und Standort werden automatisch aus Ihrer Website-URL erkannt.",
                 labelCompanySize: "Unternehmensgröße",
+                labelCompany: "Unternehmensname",
+                placeholderCompany: "z.B. Acme GmbH",
                 labelSector: "Branche",
                 labelRevenue: "Jahresumsatz",
                 labelCountry: "Land",
@@ -1288,6 +1304,8 @@
                 sec1Desc: "Informations de base sur votre organisation.",
                 sec1Hint: "Le nom, le secteur et le siège social seront détectés automatiquement depuis l'URL de votre site web.",
                 labelCompanySize: "Taille de l'entreprise",
+                labelCompany: "Nom de l'entreprise",
+                placeholderCompany: "ex. Acme SARL",
                 labelSector: "Secteur d'activité",
                 labelRevenue: "Revenu annuel",
                 labelCountry: "Pays",
@@ -1494,6 +1512,8 @@
                 sec1Desc: "Informazioni di base sulla tua organizzazione.",
                 sec1Hint: "Nome azienda, settore e sede saranno rilevati automaticamente dall'URL del sito web.",
                 labelCompanySize: "Dimensione azienda",
+                labelCompany: "Nome azienda",
+                placeholderCompany: "es. Acme SRL",
                 labelSector: "Settore",
                 labelRevenue: "Fatturato annuo",
                 labelCountry: "Paese",
@@ -1700,6 +1720,8 @@
                 sec1Desc: "Información básica sobre tu organización.",
                 sec1Hint: "El nombre, sector y sede se detectarán automáticamente desde la URL de tu sitio web.",
                 labelCompanySize: "Tamaño de empresa",
+                labelCompany: "Nombre de la empresa",
+                placeholderCompany: "ej. Acme SL",
                 labelSector: "Sector",
                 labelRevenue: "Ingresos anuales",
                 labelCountry: "País",
@@ -2086,6 +2108,94 @@
                 document.querySelector('[name="url"]').value = url;
             }
         }
+
+        // ── Auto-detect company info from URL ──
+        let urlDetectTimeout = null;
+        function detectCompanyFromUrl() {
+            clearTimeout(urlDetectTimeout);
+            const urlInput = document.querySelector('[name="url"]');
+            const url = urlInput ? urlInput.value.trim() : '';
+            if (!url) return;
+            
+            // Allow the user to finish typing
+            urlDetectTimeout = setTimeout(async () => {
+                const spinner = document.getElementById('urlDetectSpinner');
+                const companyInput = document.querySelector('[name="company"]');
+                const sectorSelect = document.querySelector('[name="sector"]');
+                const countrySelect = document.querySelector('[name="hq_location"]');
+                
+                // Don't overwrite if company is already filled manually
+                if (companyInput && companyInput.value.trim()) return;
+                
+                spinner.style.display = 'block';
+                
+                try {
+                    const resp = await fetch('/analyze-url?url=' + encodeURIComponent(url));
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    const data = await resp.json();
+                    
+                    // Fill company name
+                    if (data.company_name && companyInput) {
+                        companyInput.value = data.company_name;
+                        companyInput.classList.add('auto-detect-success');
+                        setTimeout(() => companyInput.classList.remove('auto-detect-success'), 2000);
+                        cacheFormData();
+                    }
+                    
+                    // Fill sector (match value or label)
+                    if (data.sector && sectorSelect) {
+                        const sectorVal = data.sector.toLowerCase().replace(/[^a-z0-9_]/g, '');
+                        const matchedOpt = Array.from(sectorSelect.options).find(opt => 
+                            opt.value === sectorVal || opt.text.toLowerCase().includes(data.sector.toLowerCase())
+                        );
+                        if (matchedOpt) {
+                            sectorSelect.value = matchedOpt.value;
+                            // If Choices.js is initialized, update its display
+                            choiceInstances.forEach(c => {
+                                try { c.setChoiceByValue(matchedOpt.value); } catch(e) {}
+                            });
+                            cacheFormData();
+                        }
+                    }
+                    
+                    // Fill HQ country
+                    if (data.hq_location && countrySelect) {
+                        const countryVal = data.hq_location.trim();
+                        const matchedOpt = Array.from(countrySelect.options).find(opt => 
+                            opt.value.toLowerCase() === countryVal.toLowerCase() ||
+                            opt.text.toLowerCase().includes(countryVal.toLowerCase())
+                        );
+                        if (matchedOpt) {
+                            countrySelect.value = matchedOpt.value;
+                            choiceInstances.forEach(c => {
+                                try { c.setChoiceByValue(matchedOpt.value); } catch(e) {}
+                            });
+                            cacheFormData();
+                        }
+                    }
+                } catch (e) {
+                    console.warn('URL auto-detect failed:', e.message);
+                    // Silently fail — form still works manually
+                } finally {
+                    spinner.style.display = 'none';
+                }
+            }, 800);
+        }
+
+        // Trigger on URL change
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.name === 'url') {
+                detectCompanyFromUrl();
+            }
+        });
+        document.addEventListener('input', function(e) {
+            if (e.target && e.target.name === 'url') {
+                detectCompanyFromUrl();
+            }
+        });
+
+        // Also auto-run on load if URL was passed from query
+        setTimeout(detectCompanyFromUrl, 300);
 
         // ── localStorage cache: save on any change ──
         function cacheFormData() {
