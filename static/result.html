@@ -586,6 +586,18 @@
             </div>
         </div>
 
+        <!-- Error section (hidden by default) -->
+        <div class="error-section" id="errorContent" style="display:none;">
+            <div style="font-size:48px; margin-bottom:16px;">❌</div>
+            <h2 data-i18n="errorTitle">Analysis Failed</h2>
+            <p id="errorMessage" data-i18n="errorDesc">Something went wrong while analyzing your compliance data.</p>
+            <div id="errorDetails" style="margin: 16px auto; max-width:500px; padding:12px; background:var(--av-sys-surface-card); border:1px solid var(--av-sys-border-default); border-radius:8px; font-size:13px; color:var(--av-sys-text-muted); text-align:left; display:none;"></div>
+            <a href="/submit-page" class="btn-new" style="display:inline-flex;padding:14px 36px;font-size:16px;font-weight:600;background:var(--av-sys-brand);color:#fff;border:none;border-radius:var(--av-ref-radius-sm);text-decoration:none;gap:10px;transition:all 0.2s;">
+                → Generate New Report
+            </a>
+            <p style="color:var(--av-sys-text-muted); font-size:13px; margin-top:16px;" data-i18n="errorRetryHint">Your form data was saved. Simply start a new report and submit again.</p>
+        </div>
+
         <div class="report-container" id="reportContent" style="display:none;">
             <div class="report-header">
                 <div class="report-header-info">
@@ -786,7 +798,7 @@
                         return;
                     } else if (data.status === 'failed') {
                         clearInterval(timer);
-                        showError();
+                        showError(data.error_message || null);
                         return;
                     } else {
                         attempt++;
@@ -807,7 +819,7 @@
             clearInterval(timer);
             // Set to 100% on timeout — indicates fail
             if (barEl) barEl.style.width = '100%';
-            showError();
+            showError('The analysis timed out after 270 seconds. Your form data is saved — please try again.');
         }
 
         function toggleRaw() {
@@ -1177,9 +1189,20 @@
             area.innerHTML = html;
         }
 
-        function showError() {
+        function showError(errMsg) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('errorContent').style.display = 'block';
+            if (errMsg) {
+                const detailsEl = document.getElementById('errorDetails');
+                if (detailsEl) {
+                    detailsEl.textContent = errMsg;
+                    detailsEl.style.display = 'block';
+                }
+                const msgEl = document.getElementById('errorMessage');
+                if (msgEl) {
+                    msgEl.textContent = translations[currentLang]?.errorDesc || 'Analysis failed. Please try again.';
+                }
+            }
         }
     </script>
     <script src="/static/auth.js"></script>
