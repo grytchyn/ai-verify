@@ -163,6 +163,7 @@
     </style>
     <script src="/static/i18n.js"></script>
     <script src="/static/js/draft.js"></script>
+    <script src="/static/js/auto-detect.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -216,7 +217,7 @@
                     <div class="form-group">
                         <label data-i18n="labelCompany">Company Name</label>
                         <div style="position:relative;">
-                            <input type="text" name="company" data-i18n-placeholder="placeholderCompany" placeholder="e.g. Acme Corp" aria-required="true" style="padding-right:32px;">
+                            <input type="text" name="company" data-i18n-placeholder="placeholderCompany" placeholder="e.g. Acme Corp" style="padding-right:32px;">
                             <span id="urlDetectSpinner" style="display:none; position:absolute; right:10px; top:50%; transform:translateY(-50%); width:16px; height:16px; border:2px solid var(--av-sys-border-default); border-top-color:var(--av-sys-brand); border-radius:50%; animation:spin 0.8s linear infinite;"></span>
                         </div>
                     </div>
@@ -225,7 +226,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelCompanySize">Company Size</label>
-                        <select name="company_size" aria-required="true">
+                        <select name="company_size">
                             <option value="" data-i18n="optSelectSize">Select size...</option>
                             <option value="startup" data-i18n="optStartup">Startup (1-10)</option>
                             <option value="sme" data-i18n="optSme">SME (11-250)</option>
@@ -235,7 +236,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelSector">Sector / Industry</label>
-                        <select name="sector" aria-required="true">
+                        <select name="sector">
                             <option value="" data-i18n="optSelectSector">Select sector...</option>
                             <option value="aerospace" data-i18n="optAerospace">Aerospace & Defense</option>
                             <option value="agriculture" data-i18n="optAgriculture">Agriculture</option>
@@ -260,7 +261,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelRevenue">Annual Revenue</label>
-                        <select name="annual_revenue" aria-required="true">
+                        <select name="annual_revenue">
                             <option value="" data-i18n="optSelectRevenue">Select revenue band...</option>
                             <option value="under_1m" data-i18n="optUnder1m">&lt; €1M</option>
                             <option value="1m_10m" data-i18n="opt1m10m">€1M – €10M</option>
@@ -401,7 +402,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelAiSystemsCount">Number of AI Systems in Production</label>
-                        <select name="ai_systems_count" id="ai_systems_count" aria-required="true">
+                        <select name="ai_systems_count" id="ai_systems_count">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="0" data-i18n="optNoneYet">None yet</option>
                             <option value="1-3" data-i18n="opt1to3">1-3 systems</option>
@@ -411,7 +412,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelDeploymentType">Deployment Type</label>
-                        <select name="deployment_type" aria-required="true">
+                        <select name="deployment_type">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="internal" data-i18n="optInternal">Internal use only</option>
                             <option value="customer-facing" data-i18n="optCustomerFacing">Customer-facing</option>
@@ -424,7 +425,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelDecisionType">Decision Type</label>
-                        <select name="decision_type" aria-required="true">
+                        <select name="decision_type">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="fully-automated" data-i18n="optFullyAutomated">Fully automated decisions</option>
                             <option value="human-in-loop" data-i18n="optHumanInLoop">Human-in-the-loop</option>
@@ -434,7 +435,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelRiskSelfAssessment">Risk Self-Assessment</label>
-                        <select name="risk_self_assessment" aria-required="true">
+                        <select name="risk_self_assessment">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="minimal" data-i18n="optMinimalRisk">Minimal risk</option>
                             <option value="limited" data-i18n="optLimitedRisk">Limited risk</option>
@@ -671,7 +672,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-i18n="labelTrainingDataOrigin">Training Data Origin</label>
-                        <select name="training_data_origin" aria-required="true">
+                        <select name="training_data_origin">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="public_web" data-i18n="optPublicWeb">Public web data</option>
                             <option value="proprietary" data-i18n="optProprietaryCompany">Proprietary / company data</option>
@@ -685,7 +686,7 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelDataRetention">Data Retention Policy</label>
-                        <select name="data_retention" aria-required="true">
+                        <select name="data_retention">
                             <option value="" data-i18n="optSelect">Select...</option>
                             <option value="not_retained" data-i18n="optNotRetained">Not retained</option>
                             <option value="30_days" data-i18n="opt30Days">30 days</option>
@@ -706,7 +707,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label data-i18n="labelComplianceDoc">Existing Compliance Documentation</label>
-                                    <select name="has_documentation" aria-required="true">
+                                    <select name="has_documentation">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optYesComprehensive">Yes, comprehensive</option>
                                         <option value="partial" data-i18n="optPartially">Partially</option>
@@ -727,7 +728,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label data-i18n="labelGdpr">GDPR Compliance Status</label>
-                                    <select name="gdpr_compliant" aria-required="true">
+                                    <select name="gdpr_compliant">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optFullyCompliant">Fully compliant</option>
                                         <option value="in_progress" data-i18n="optInProgress">In progress</option>
@@ -737,7 +738,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label data-i18n="labelCeMarking">CE Marking (for AI)</label>
-                                    <select name="ce_marking" aria-required="true">
+                                    <select name="ce_marking">
                                         <option value="" data-i18n="optSelect">Select...</option>
                                         <option value="yes" data-i18n="optYesObtained">Yes, obtained</option>
                                         <option value="planned" data-i18n="optPlanned">Planned</option>
@@ -1120,93 +1121,16 @@
             }
         }
 
-        // ── Auto-detect company info from URL ──
-        let urlDetectTimeout = null;
-        function detectCompanyFromUrl() {
-            clearTimeout(urlDetectTimeout);
-            const urlInput = document.querySelector('[name="url"]');
-            const url = urlInput ? urlInput.value.trim() : '';
-            if (!url) return;
-            
-            // Allow the user to finish typing
-            urlDetectTimeout = setTimeout(async () => {
-                const spinner = document.getElementById('urlDetectSpinner');
-                const companyInput = document.querySelector('[name="company"]');
-                const sectorSelect = document.querySelector('[name="sector"]');
-                const countrySelect = document.querySelector('[name="hq_location"]');
-                
-                // Don't overwrite if company is already filled manually
-                if (companyInput && companyInput.value.trim()) return;
-                
-                spinner.style.display = 'block';
-                
-                try {
-                    const resp = await fetch('/analyze-url?url=' + encodeURIComponent(url));
-                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-                    const data = await resp.json();
-                    
-                    // Fill company name
-                    if (data.company_name && companyInput) {
-                        companyInput.value = data.company_name;
-                        companyInput.classList.add('auto-detect-success');
-                        setTimeout(() => companyInput.classList.remove('auto-detect-success'), 2000);
-                        cacheFormData();
-                    }
-                    
-                    // Fill sector (match value or label)
-                    if (data.sector && sectorSelect) {
-                        const sectorVal = data.sector.toLowerCase().replace(/[^a-z0-9_]/g, '');
-                        const matchedOpt = Array.from(sectorSelect.options).find(opt => 
-                            opt.value === sectorVal || opt.text.toLowerCase().includes(data.sector.toLowerCase())
-                        );
-                        if (matchedOpt) {
-                            sectorSelect.value = matchedOpt.value;
-                            // If Choices.js is initialized, update its display
-                            choiceInstances.forEach(c => {
-                                try { c.setChoiceByValue(matchedOpt.value); } catch(e) {}
-                            });
-                            cacheFormData();
-                        }
-                    }
-                    
-                    // Fill HQ country
-                    if (data.hq_location && countrySelect) {
-                        const countryVal = data.hq_location.trim();
-                        const matchedOpt = Array.from(countrySelect.options).find(opt => 
-                            opt.value.toLowerCase() === countryVal.toLowerCase() ||
-                            opt.text.toLowerCase().includes(countryVal.toLowerCase())
-                        );
-                        if (matchedOpt) {
-                            countrySelect.value = matchedOpt.value;
-                            choiceInstances.forEach(c => {
-                                try { c.setChoiceByValue(matchedOpt.value); } catch(e) {}
-                            });
-                            cacheFormData();
-                        }
-                    }
-                } catch (e) {
-                    console.warn('URL auto-detect failed:', e.message);
-                    // Silently fail — form still works manually
-                } finally {
-                    spinner.style.display = 'none';
-                }
-            }, 800);
-        }
-
-        // Trigger on URL change
-        document.addEventListener('change', function(e) {
-            if (e.target && e.target.name === 'url') {
-                detectCompanyFromUrl();
-            }
+        // ── Auto-detect company info from URL — uses static/js/auto-detect.js ──
+        // choiceInstances is populated later by initChoices() — pass a getter
+        // so AutoDetect always sees the current list.
+        AutoDetect.init({
+            urlInputName: 'url',
+            fieldMap: { company: 'company', sector: 'sector', hq_location: 'hq_location' },
+            debounceMs: 800,
+            getChoices: () => (typeof choiceInstances !== 'undefined' ? choiceInstances : []),
+            onFill: null,
         });
-        document.addEventListener('input', function(e) {
-            if (e.target && e.target.name === 'url') {
-                detectCompanyFromUrl();
-            }
-        });
-
-        // Also auto-run on load if URL was passed from query
-        setTimeout(detectCompanyFromUrl, 300);
 
         // ── localStorage cache: save on any change ──
         function cacheFormData() {
@@ -1416,55 +1340,32 @@
         });
 
         // ── Form Validation ──
+        // Policy: ONLY url is required. Everything else is optional.
+        // If the form is essentially empty, show a soft warning (still allows submit).
         function validateForm() {
             clearErrors();
             const form = document.getElementById('complianceForm');
             const firstInvalid = [];
-            const optionalFields = ['other_certifications', 'dpo_appointed', 'existing_certifications', 'audit_types', 'audit_details', 'has_documentation'];
-            const optionalMS = ['existing_certifications', 'audit_types'];
 
-            // Check required single selects and text inputs
-            form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea, input[type="email"]').forEach(el => {
-                // Skip hidden fields (progressive disclosure) and optional fields
-                if (el.offsetParent === null && el.type !== 'hidden') return;
-                if (optionalFields.includes(el.name)) return; // skip optional fields
-                const val = el.value ? el.value.trim() : '';
-                const isSelect = el.tagName === 'SELECT';
-                if (!val || (isSelect && val === '')) {
-                    markInvalid(el, translations[currentLang]?.errRequired || 'This field is required');
-                    if (firstInvalid.length === 0) firstInvalid.push(el);
+            // HARD requirement: URL must be filled (only hard block)
+            const urlInput = form.querySelector('[name="url"]');
+            if (urlInput) {
+                const urlVal = urlInput.value ? urlInput.value.trim() : '';
+                if (!urlVal) {
+                    markInvalid(urlInput, translations[currentLang]?.errRequired || 'This field is required');
+                    firstInvalid.push(urlInput);
+                } else if (!isValidUrl(urlVal)) {
+                    markInvalid(urlInput, translations[currentLang]?.errUrl || 'Please enter a valid URL (e.g. https://example.com)');
+                    firstInvalid.push(urlInput);
                 }
-            });
+            }
 
-            // Check at least one option in each required multiselect
-            document.querySelectorAll('.custom-multiselect').forEach(ms => {
-                const name = ms.dataset.name;
-                if (optionalMS.includes(name)) return; // skip optional multiselects
-                if (ms.offsetParent === null) return; // skip hidden conditional multiselects
-                const vals = getMSValues(name);
-                if (vals.length === 0) {
-                    const trigger = ms.querySelector('.ms-trigger');
-                    markInvalid(trigger, translations[currentLang]?.errSelectRequired || 'Please select at least one option');
-                    if (firstInvalid.length === 0) firstInvalid.push(trigger);
-                }
-            });
-
-            // Check radio groups (previous_audits)
-            const radioGroups = {};
-            form.querySelectorAll('input[type="radio"]').forEach(r => {
-                if (!radioGroups[r.name]) radioGroups[r.name] = [];
-                radioGroups[r.name].push(r);
-            });
-            Object.keys(radioGroups).forEach(name => {
-                const checked = radioGroups[name].some(r => r.checked);
-                if (!checked && name === 'previous_audits') {
-                    // Mark all radios in group
-                    radioGroups[name].forEach(r => {
-                        markInvalid(r.closest('label'), translations[currentLang]?.errRequired || 'This field is required');
-                    });
-                    if (firstInvalid.length === 0) firstInvalid.push(radioGroups[name][0]);
-                }
-            });
+            // Soft check: if no fields at all are filled, warn but don't block
+            // (User can still submit — backend accepts empty submissions with reduced accuracy)
+            if (firstInvalid.length === 0 && countFilledFields(form) === 0) {
+                showSoftWarning(translations[currentLang]?.errEmptyForm
+                    || 'You can submit with an empty form, but more details = more accurate compliance analysis.');
+            }
 
             // Scroll to first invalid field
             if (firstInvalid.length > 0) {
@@ -1474,6 +1375,35 @@
                 return false;
             }
             return true;
+        }
+
+        function isValidUrl(str) {
+            try {
+                const u = new URL(str.startsWith('http') ? str : 'https://' + str);
+                return !!u.hostname && u.hostname.includes('.');
+            } catch(e) { return false; }
+        }
+
+        function countFilledFields(form) {
+            let n = 0;
+            form.querySelectorAll('input[type="text"], input[type="url"], select:not([multiple]), textarea').forEach(el => {
+                if (el.value && el.value.trim()) n++;
+            });
+            form.querySelectorAll('input[type="radio"]:checked').forEach(() => n++);
+            document.querySelectorAll('.custom-multiselect').forEach(ms => {
+                if (getMSValues(ms.dataset.name).length > 0) n++;
+            });
+            return n;
+        }
+
+        // Soft warning banner — non-blocking, just informational
+        function showSoftWarning(msg) {
+            // Reuse the existing #draftBanner for soft warnings (it's the only top-of-form banner)
+            // Or use a console warning. For minimal intrusion, use console + toast.
+            console.info('[AI Verify] Soft warning:', msg);
+            if (typeof Draft !== 'undefined' && Draft.showToast) {
+                Draft.showToast(msg, 'success');
+            }
         }
 
         function markInvalid(el, msg) {

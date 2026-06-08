@@ -26,6 +26,74 @@ import markdown
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# ───────────────────────────────────────────────────────
+# Post-process LLM report to fill empty sections
+# ───────────────────────────────────────────────────────
+def postprocess_report_sections(report_md: str, lang: str) -> str:
+    """Ensure sections 2, 4, 5 always have content if headers exist."""
+    lang_codes = {"en": "EN", "de": "GERMAN", "fr": "FRENCH", "it": "ITALIAN", "es": "SPANISH"}
+    target_lang = lang_codes.get(lang, "ENGLISH")
+    
+    # Fallback content per language
+    fallbacks = {
+        "EN": "• No critical compliance issues identified — insufficient data available to assess AI systems.",
+        "GERMAN": "• Keine kritischen Compliance-Probleme gefunden — nicht genügend Daten für KI-Systeme verfügbar.",
+        "FRENCH": "• Aucun problème critique de conformité identifié — données insuffisantes pour évaluer les systèmes IA.",
+        "ITALIAN": "• Nessun problema critico di conformità identificato — dati insufficienti per valutare i sistemi IA.",
+        "SPANISH": "• No se han identificado problemas críticos de cumplimiento — datos insuficientes para evaluar los sistemas de IA.",
+    }
+    
+    section_name_map = {
+        "EN": ("## 2. KEY FINDINGS", "## 4. CRITICAL GAPS", "## 5. TOP RECOMMENDATIONS"),
+        "GERMAN": ("## 2. WICHTIGSTE ERKENNTNISSE", "## 4. KRITISCHE LÜCKEN", "## 5. WICHTIGSTE EMPFEHLUNGEN"),
+        "FRENCH": ("## 2. PRINCIPAUX CONSTATS", "## 4. LACUNES CRITIQUES", "## 5. PRINCIPALES RECOMMANDATIONS"),
+        "ITALIAN": ("## 2. PRINCIPALI RISULTATI", "## 4. LACUNE CRITICHE", "## 5. PRINCIPALI RACCOMANDAZIONI"),
+        "SPANISH": ("## 2. CONCLUSIONES CLAVE", "## 4. LOMAS CRÍTICAS", "## 5. RECOMENDACIONES CLAVE"),
+    }
+    
+    target = section_name_map.get(target_lang, section_name_map["EN"])
+    fallback_text = fallbacks.get(target_lang, fallbacks["EN"])
+    
+    # Rebuild report with empty sections populated
+    sections_to_check = target
+    lines = report_md.split("\n")
+    out_lines = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        out_lines.append(line)
+        
+        # Check if this is an empty section header
+        if any(line.strip().startswith(sec) for sec in sections_to_check):
+            # Look ahead for next section header or end of file
+            j = i + 1
+            has_content = False
+            while j < len(lines):
+                next_line = lines[j].strip()
+                if next_line.startswith("## "):
+                    break  # Found next section, no content in between
+                if next_line and not next_line.startswith("-"):
+                    has_content = True
+                    break
+                if next_line.startswith("-") and len(next_line) > 2:  # Has a bullet with content
+                    has_content = True
+                j += 1
+            
+            # If no content, inject fallback
+            if not has_content and j > i + 1:
+                # Remove trailing empty lines from current section
+                while out_lines and not out_lines[-1].strip():
+                    out_lines.pop()
+                # Insert fallback
+                out_lines.append("")
+                out_lines.append(fallback_text)
+                out_lines.append("")
+        
+        i += 1
+    
+    return "\n".join(out_lines)
+
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="AI Compliance Consultant")
@@ -757,6 +825,11 @@ def process_submission(sub_id: str):
         logger.info("Calling Ollama with enhanced prompt")
         report_md = call_ollama(full_prompt, temperature=0.2, system_prompt=system_prompt)
         logger.info(f"Report generated, length: {len(report_md)} chars")
+        
+        # Post-process: ensure sections 2, 4, 5 always have content if headers exist
+        lang = getattr(sub, 'lang', 'en')
+        report_md = postprocess_report_sections(report_md, lang)
+        logger.info(f"Report post-processed, length: {len(report_md)} chars")
         
         # Save report
         report_path = save_report(report_md, sub_id)
