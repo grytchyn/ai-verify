@@ -497,22 +497,56 @@
 
         /* ─── PRINT STYLESHEET ─── */
         @media print {
-            body { background: #fff !important; color: #000 !important; }
+            body {
+                background: #121212 !important;
+                color: #f0f0f0 !important;
+            }
             .site-header, .site-footer, .report-header-actions,
             .auth-section, .lang-selector, .nav-back,
             .btn-new, .btn-export-pdf, .btn-new-report-cta,
             #loading, .auth-save-prompt, .raw-report-section,
             .score-bar { display: none !important; }
-            .report-container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            .report-header { margin-top: 0 !important; padding: 20px !important; break-inside: avoid; }
-            .score-section, .section-block { break-inside: avoid; padding: 20px !important; }
-            .section-block { box-shadow: none !important; border: 1px solid #ddd !important; }
-            .section-block.danger { box-shadow: inset 4px 0 0 #f87171 !important; }
-            .section-block.warning { box-shadow: inset 4px 0 0 #fbbf24 !important; }
-            .section-block.success { box-shadow: inset 4px 0 0 #34d399 !important; }
-            .rec-card:hover { transform: none !important; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            @page { margin: 1.5cm; }
+            .report-container {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .report-header {
+                margin-top: 0 !important;
+                padding: 20px !important;
+                break-inside: avoid;
+            }
+            .score-section, .section-block {
+                break-inside: avoid;
+                padding: 20px !important;
+            }
+            .section-block {
+                background: #1e1e1e !important;
+                border: 1px solid #333 !important;
+                box-shadow: none !important;
+            }
+            .section-block.danger {
+                box-shadow: inset 4px 0 0 #f87171 !important;
+            }
+            .section-block.warning {
+                box-shadow: inset 4px 0 0 #fbbf24 !important;
+            }
+            .section-block.success {
+                box-shadow: inset 4px 0 0 #34d399 !important;
+            }
+            .rec-card:hover {
+                transform: none !important;
+            }
+            a {
+                color: #f0f0f0 !important;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            @page {
+                margin: 1.5cm;
+            }
         }
     </style>
     <script src="/static/i18n.js"></script>
@@ -664,7 +698,7 @@
           <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5e6ad2"/><stop offset="100%" stop-color="#7170ff"/></linearGradient></defs><path d="M16 2L5 7v7c0 7.5 4.25 14.5 11 17 6.75-2.5 11-9.5 11-17V7L16 2z" fill="url(#g)"/><path d="M11 16l4 4 7-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="8" r="2.5" fill="#10b981" stroke="#08090a" stroke-width="1.5"/></svg></div>
           AI Verify
         </a>
-        <p data-i18n="footerDesc">Automated EU AI Act analysis for small and medium-sized businesses. Not legal advice.</p>
+
       </div>
       <div class="footer-col">
         <h4 data-i18n="footerLinks">Links</h4>
